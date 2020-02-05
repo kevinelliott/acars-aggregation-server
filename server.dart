@@ -18,7 +18,7 @@ constructConfig(parsedArgs) {
       'user': parsedArgs['database-user'],
       'pass': parsedArgs['database-pass'],
       'name': parsedArgs['database-name'],
-      'ssl': false
+      'ssl': parsedArgs['database-ssl'],
     },
     'ingest-acarsdec': parsedArgs['ingest-acarsdec'],
     'ingest-acarsdec-port': int.parse(parsedArgs['ingest-acarsdec-port']),
@@ -50,6 +50,7 @@ parseArgs(arguments) {
                                              Platform.environment['USERNAME'])
     ..addOption('database-pass', defaultsTo: Platform.environment['DATABASE_PASS'] ?? '')
     ..addOption('database-name', defaultsTo: Platform.environment['DATABASE_NAME'] ?? 'airframes')
+    ..addFlag('database-ssl', defaultsTo: Platform.environment['DATABASE_SSL'].toLowerCase() == 'true' ?? false)
     ..addFlag('ingest-acarsdec', defaultsTo: true)
     ..addOption('ingest-acarsdec-port', defaultsTo: Platform.environment['INGEST_ACARSDEC_PORT'] ?? '5550')
     ..addFlag('ingest-acarsdeco2', defaultsTo: true)
@@ -77,6 +78,7 @@ printSettings() {
   print('User : ${parsedArgs['database-user']}');
   print('Pass : *not displayed*');
   print('Name : ${parsedArgs['database-name']}');
+  print('SSL  : ${parsedArgs['database-ssl']}');
   print('');
 
   print('INGESTS');
