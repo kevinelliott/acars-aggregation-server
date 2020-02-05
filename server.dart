@@ -50,7 +50,7 @@ parseArgs(arguments) {
                                              Platform.environment['USERNAME'])
     ..addOption('database-pass', defaultsTo: Platform.environment['DATABASE_PASS'] ?? '')
     ..addOption('database-name', defaultsTo: Platform.environment['DATABASE_NAME'] ?? 'airframes')
-    ..addFlag('database-ssl', defaultsTo: Platform.environment['DATABASE_SSL'].toLowerCase() == 'true' ?? false)
+    ..addFlag('database-ssl', defaultsTo: (Platform.environment['DATABASE_SSL'] != null ? Platform.environment['DATABASE_SSL'].toLowerCase() == 'true' : false))
     ..addFlag('ingest-acarsdec', defaultsTo: true)
     ..addOption('ingest-acarsdec-port', defaultsTo: Platform.environment['INGEST_ACARSDEC_PORT'] ?? '5550')
     ..addFlag('ingest-acarsdeco2', defaultsTo: true)
