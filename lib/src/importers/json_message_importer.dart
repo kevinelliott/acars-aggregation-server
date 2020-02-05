@@ -283,7 +283,7 @@ class JsonMessageImporter {
       }
 
       if (message != null) {
-        natsClient.publish(message.toString(), 'message.created', onSuccess: () => {});
+        natsClient.publish('{ id: ${message.id} }', 'message.created', onSuccess: () => { logger.fine('[${jsonMessage.sourceType} / ${jsonMessage.source}] Published message to NATS') });
       }
     }
 

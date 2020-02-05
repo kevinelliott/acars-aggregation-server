@@ -236,7 +236,7 @@ class SBSMessageImporter {
     }
 
     if (message != null) {
-      natsClient.publish(message.toString(), 'message.created', onSuccess: () => {});
+        natsClient.publish('{ id: ${message.id} }', 'message.created', onSuccess: () => { logger.fine('[${message.sourceType} / ${message.source}] Published message to NATS') });
     }
 
     return message;
