@@ -11,9 +11,16 @@ class JaeroADSCProcessor extends Processor {
   JaeroADSCProcessor(Source source, this.databaseExecutor, this.natsClient, Logger logger) : super(source, logger) {
   }
 
+  logPrefix() {
+    return '[${source.name}/${source.type}]';
+  }
+
   Future parse(String str) async {
     SBSParser parser = new SBSParser(source, logger);
     SBSMessage sbsMessage = await parser.parse(str);
+    if (sbsMessage == null) {
+      logger.error('${logPrefix()} Error parsing a useful SBS Message. Incoming was: ${str}');
+    }
     return sbsMessage;
   }
 
