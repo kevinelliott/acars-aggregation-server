@@ -5,6 +5,7 @@ class Source {
   String protocol;        // Protocol used between client and ingest (SBS, ACARS, Custom)
   String format;          // Format used by the source protocol (text, JSON, binary)
   String networkProtocol; // Protocol used on the network tier (TCP, UDP, HTTP)
+  String remoteIp;        // IP address of the source
 
   Source(this.name, this.application, this.type, this.protocol, this.format, this.networkProtocol);
 }

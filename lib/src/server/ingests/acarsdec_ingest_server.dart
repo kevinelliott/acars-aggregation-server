@@ -21,6 +21,7 @@ class AcarsdecIngestServer extends UDPIngestServer {
       this.logger = Logger('Ingest(${name}) #${++packetCount}');
       var str = String.fromCharCodes(datagram.data);
       this.logger.debug('Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
+      this.source.remoteIp = datagram.address.address;
       processor.logger = logger;
       processor.process(str);
     }, timeout: new Duration(days: 365));

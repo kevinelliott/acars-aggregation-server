@@ -22,14 +22,9 @@ class JaeroADSCProcessor extends Processor {
     var sbsMessageImporter = new SBSMessageImporter(sbsMessage, natsClient, databaseExecutor, logger);
     await sbsMessageImporter.identifyTail();
 
-    // var station;
-    // jsonMessageImporter.findOrCreateStation()
-    //   .then((value) => station = value)
-    //   .catchError((e) {
-    //     logger.error('[${jsonMessage.source}] Error occurred while inserting station: ${e}');
-    //   });
+    var station = await sbsMessageImporter.findOrCreateStationById(source.remoteIp);
     var airframe = await sbsMessageImporter.findOrCreateAirframe();
     var flight = await sbsMessageImporter.updateOrCreateFlight(airframe);
-    var message = await sbsMessageImporter.insertOrSkipMessage(null, airframe, flight);
+    var message = await sbsMessageImporter.insertOrSkipMessage(station, airframe, flight);
   }
 }

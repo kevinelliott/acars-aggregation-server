@@ -145,33 +145,33 @@ class SBSMessageImporter {
     return flight;
   }
 
-  // Future findOrCreateStation() async {
-  //   var stationQuery = new StationQuery();
-  //   stationQuery.where
-  //     ..ident.equals(sbsMessage.stationIdent);
-  //   var station = await stationQuery.getOne(executor);
-  //   if (station != null && station.id != null) {
-  //     this.logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] Retrieved station (id: ${station.id})');
-  //   } else {
-  //     var stationInsertQuery = new StationQuery();
-  //     stationInsertQuery.values
-  //       ..ident = jsonMessage.stationIdent
-  //       ..ipAddress = 'soon'
-  //       ..lastReportAt = DateTime.now().toUtc()
-  //       ..messagesCount = 1;
-  //     try {
-  //       station = await stationInsertQuery.insert(executor);
-  //       this.logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] Inserted station (id: ${station.id})');
-  //       natsClient.publish(station.toString(), 'station.created', onSuccess: () => {});
-  //     }
-  //     catch(e) {
-  //       this.logger.error('[${jsonMessage.sourceType} / ${jsonMessage.source}] Unable to insert station: ${e}');
-  //       station = await findOrCreateStation();
-  //     }
-  //   }
+  Future findOrCreateStationById(String ipAddress) async {
+    var stationQuery = new StationQuery();
+    stationQuery.where
+      ..ipAddress.equals(ipAddress);
+    var station = await stationQuery.getOne(executor);
 
-  //   return station;
-  // }
+    if (station != null && station.id != null) {
+      this.logger.debug('${logPrefix()} Retrieved station (id: ${station.id})');
+    } else {
+      var stationInsertQuery = new StationQuery();
+      stationInsertQuery.values
+        ..ident = 'UNKNOWN-CBAND-ADSC'
+        ..ipAddress = ipAddress
+        ..lastReportAt = DateTime.now().toUtc()
+        ..messagesCount = 1;
+      try {
+        station = await stationInsertQuery.insert(executor);
+        this.logger.debug('${logPrefix()} Inserted station (id: ${station.id})');
+        natsClient.publish(station.toString(), 'station.created', onSuccess: () => {});
+      }
+      catch(e) {
+        this.logger.error('${logPrefix()} Unable to insert station: ${e}');
+      }
+    }
+
+    return station;
+  }
 
   Future identifyTail() async {
     // FAA Aircraft Registration Touchup
