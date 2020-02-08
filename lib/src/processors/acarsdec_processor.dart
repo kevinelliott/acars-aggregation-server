@@ -21,12 +21,7 @@ class AcarsdecProcessor extends Processor {
     var jsonMessage = await parseJson(str);
     var jsonMessageImporter = new JsonMessageImporter(jsonMessage, natsClient, databaseExecutor, logger);
 
-    var station;
-    jsonMessageImporter.findOrCreateStation()
-      .then((value) => station = value)
-      .catchError((e) {
-        logger.error('[${jsonMessage.source}] Error occurred while inserting station: ${e}');
-      });
+    var station = await jsonMessageImporter.findOrCreateStation();
     var airframe = await jsonMessageImporter.findOrCreateAirframe();
     var flight = await jsonMessageImporter.updateOrCreateFlight(airframe);
     var message = await jsonMessageImporter.insertOrSkipMessage(station, airframe, flight);

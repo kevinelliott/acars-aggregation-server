@@ -13,6 +13,7 @@ export 'src/models/arinc.dart';
 export 'src/models/jaero_acars_message.dart';
 export 'src/models/sbs_message.dart';
 export 'src/models/source.dart';
+export 'src/models/station_message_count.dart';
 
 export 'src/parsers/jaero_acars_parser.dart';
 export 'src/parsers/sbs_parser.dart';

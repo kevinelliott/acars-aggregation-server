@@ -1,7 +1,8 @@
-import 'package:acars_aggregation_server/aas.dart';
 import 'package:angel_orm_postgres/angel_orm_postgres.dart';
 import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
+
+import 'package:acars_aggregation_server/aas.dart';
 
 class SBSMessageImporter {
   SBSMessage sbsMessage;
@@ -163,6 +164,19 @@ class SBSMessageImporter {
       try {
         station = await stationInsertQuery.insert(executor);
         this.logger.debug('${logPrefix()} Inserted station (id: ${station.id})');
+
+        var stationMessageCountQuery = new StationMessageCountQuery();
+        stationMessageCountQuery.values
+          ..stationId = station.idAsInt
+          ..messagesCount = 1;
+        try {
+          var stationMessageCount = await stationMessageCountQuery.insert(executor);
+          this.logger.debug('${logPrefix()} Inserted station message count (id: ${stationMessageCount.id}');
+        }
+        catch(e) {
+          this.logger.error('${logPrefix()} Unable to insert station message count: ${e}');
+        }
+
         natsClient.publish(station.toString(), 'station.created', onSuccess: () => {});
       }
       catch(e) {

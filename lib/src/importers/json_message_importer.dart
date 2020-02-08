@@ -170,8 +170,9 @@ class JsonMessageImporter {
       ..ident.equals(jsonMessage.stationIdent);
     var station = await stationQuery.getOne(executor);
     if (station != null && station.id != null) {
-      this.logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] Retrieved station (id: ${station.id})');
+      this.logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] Retrieved station (id: ${station.id}, ident: ${station.ident}, ident from msg: ${jsonMessage.stationIdent})');
     } else {
+      this.logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] Unable to find a station for ident: ${jsonMessage.stationIdent}');
       var stationInsertQuery = new StationQuery();
       stationInsertQuery.values
         ..ident = jsonMessage.stationIdent
@@ -185,7 +186,6 @@ class JsonMessageImporter {
       }
       catch(e) {
         this.logger.error('[${jsonMessage.sourceType} / ${jsonMessage.source}] Unable to insert station: ${e}');
-        station = await findOrCreateStation();
       }
     }
 
@@ -211,6 +211,7 @@ class JsonMessageImporter {
   }
 
   Future insertOrSkipMessage(station, airframe, flight) async {
+    this.logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] station (${station.id}, ${station.ident}');
     var existingMessage;
     var message;
     if (jsonMessage.messageNumber != null) {
