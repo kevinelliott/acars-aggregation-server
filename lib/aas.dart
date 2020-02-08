@@ -11,6 +11,7 @@ export 'src/importers/sbs_message_importer.dart';
 
 export 'src/models/arinc.dart';
 export 'src/models/jaero_acars_message.dart';
+export 'src/models/message_report.dart';
 export 'src/models/sbs_message.dart';
 export 'src/models/source.dart';
 export 'src/models/station_message_count.dart';

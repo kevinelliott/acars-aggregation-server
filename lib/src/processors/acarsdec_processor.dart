@@ -19,7 +19,7 @@ class AcarsdecProcessor extends Processor {
 
   Future process(String str) async {
     var jsonMessage = await parseJson(str);
-    var jsonMessageImporter = new JsonMessageImporter(jsonMessage, natsClient, databaseExecutor, logger);
+    var jsonMessageImporter = new JsonMessageImporter(source, jsonMessage, natsClient, databaseExecutor, logger);
 
     var station = await jsonMessageImporter.findOrCreateStation();
     var airframe = await jsonMessageImporter.findOrCreateAirframe();

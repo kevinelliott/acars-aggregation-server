@@ -8,12 +8,14 @@ class JsonMessageImporter {
   NatsClient natsClient;
   PostgreSqlExecutorPool executor;
   Logger logger;
+  Source source;
 
-  JsonMessageImporter(JsonMessage jsonMessage, NatsClient natsClient, executor, Logger logger) {
+  JsonMessageImporter(Source source, JsonMessage jsonMessage, NatsClient natsClient, executor, Logger logger) {
     this.jsonMessage = jsonMessage;
     this.natsClient = natsClient;
     this.executor = executor;
     this.logger = logger;
+    this.source = source;
 
     calculateVdlFields();
     identifyTail();
@@ -176,7 +178,7 @@ class JsonMessageImporter {
       var stationInsertQuery = new StationQuery();
       stationInsertQuery.values
         ..ident = jsonMessage.stationIdent
-        ..ipAddress = 'soon'
+        ..ipAddress = 'pending'
         ..lastReportAt = DateTime.now().toUtc()
         ..messagesCount = 1;
       try {
@@ -211,10 +213,9 @@ class JsonMessageImporter {
   }
 
   Future insertOrSkipMessage(station, airframe, flight) async {
-    this.logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] station (${station.id}, ${station.ident}');
     var existingMessage;
     var message;
-    if (jsonMessage.messageNumber != null) {
+    if (jsonMessage.tail != null && jsonMessage.messageNumber != null) {
       var query = new MessageQuery();
       query.where
         ..tail.equals(jsonMessage.tail)
@@ -225,6 +226,29 @@ class JsonMessageImporter {
 
     if (existingMessage != null) {
       this.logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] Existing message! Not inserting.' + existingMessage.toString());
+      var messageReportQuery = new MessageReportQuery();
+      messageReportQuery.values
+        ..stationId = station.idAsInt
+        ..messageId = message.idAsInt
+        ..firstToReport = false
+        ..sourceName = this.source.name
+        ..sourceApplication = this.source.application
+        ..sourceType = this.source.type
+        ..sourceFormat = this.source.format
+        ..sourceProtocol = this.source.protocol
+        ..sourceNetworkProtocol = this.source.networkProtocol
+        ..sourceRemoteIp = this.source.remoteIp
+        ..frequency = message.frequency
+        ..channel = message.channel;
+      try {
+        var messageReport = await messageReportQuery.insert(executor);
+        if (messageReport != null) {
+          logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] Inserted message report (id: ${messageReport.id})');
+        }
+      }
+      catch(e) {
+        logger.error('[${jsonMessage.sourceType} / ${jsonMessage.source}] Unable to insert message report: ${e}');
+      }
     } else {
       var messageQuery = new MessageQuery();
       messageQuery.values
@@ -284,6 +308,30 @@ class JsonMessageImporter {
       }
 
       if (message != null) {
+        var messageReportQuery = new MessageReportQuery();
+        messageReportQuery.values
+          ..stationId = station.idAsInt
+          ..messageId = message.idAsInt
+          ..firstToReport = true
+          ..sourceName = this.source.name
+          ..sourceApplication = this.source.application
+          ..sourceType = this.source.type
+          ..sourceFormat = this.source.format
+          ..sourceProtocol = this.source.protocol
+          ..sourceNetworkProtocol = this.source.networkProtocol
+          ..sourceRemoteIp = this.source.remoteIp
+          ..frequency = message.frequency
+          ..channel = message.channel;
+        try {
+          var messageReport = await messageReportQuery.insert(executor);
+          if (messageReport != null) {
+            logger.debug('[${jsonMessage.sourceType} / ${jsonMessage.source}] Inserted message report (id: ${messageReport.id})');
+          }
+        }
+        catch(e) {
+          logger.error('[${jsonMessage.sourceType} / ${jsonMessage.source}] Unable to insert message report: ${e}');
+        }
+
         natsClient.publish('{ "id": ${message.id} }', 'message.created', onSuccess: () => { logger.fine('[${jsonMessage.sourceType} / ${jsonMessage.source}] Published message to NATS') });
       }
     }
