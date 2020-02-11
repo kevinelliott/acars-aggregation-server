@@ -300,6 +300,7 @@ class JsonMessageImporter {
         var stationUpdateQuery = new StationQuery();
         stationUpdateQuery
           ..where.id.equals(station.idAsInt)
+          ..values.ipAddress = source.remoteIp
           ..values.lastReportAt = DateTime.now().toUtc();
         station = await stationUpdateQuery.updateOne(executor);
         if (station != null) {
