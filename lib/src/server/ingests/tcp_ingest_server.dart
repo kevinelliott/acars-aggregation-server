@@ -23,12 +23,11 @@ class TCPIngestServer extends IngestServer {
     receiver.then((ServerSocket server) {
       server.listen((Socket socket) {
         this.logger.debug('New TCP connection from ${socket.remoteAddress.address}:${socket.remotePort}');
-        this.source.remoteIp = socket.remoteAddress.address;
         socket.listen((List<int> data) {
           String result = new String.fromCharCodes(data);
           this.logger.debug('Received TCP packet from ${socket.remoteAddress.address}:${socket.remotePort}: ${result}');
           processor.logger = logger;
-          processor.process(result);
+          processor.process(result, socket.remoteAddress.address);
         });
       });
     });

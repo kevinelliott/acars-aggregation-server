@@ -166,7 +166,7 @@ class JsonMessageImporter {
     return flight;
   }
 
-  Future findOrCreateStation() async {
+  Future findOrCreateStation(String ipAddress) async {
     var stationQuery = new StationQuery();
     stationQuery.where
       ..ident.equals(jsonMessage.stationIdent);
@@ -178,7 +178,7 @@ class JsonMessageImporter {
       var stationInsertQuery = new StationQuery();
       stationInsertQuery.values
         ..ident = jsonMessage.stationIdent
-        ..ipAddress = 'pending'
+        ..ipAddress = ipAddress
         ..lastReportAt = DateTime.now().toUtc()
         ..messagesCount = 1;
       try {
@@ -212,7 +212,7 @@ class JsonMessageImporter {
     }
   }
 
-  Future insertOrSkipMessage(station, airframe, flight) async {
+  Future insertOrSkipMessage(station, airframe, flight, String ipAddress) async {
     var existingMessage;
     var message;
     if (jsonMessage.tail != null && jsonMessage.messageNumber != null) {
@@ -237,7 +237,7 @@ class JsonMessageImporter {
         ..sourceFormat = this.source.format
         ..sourceProtocol = this.source.protocol
         ..sourceNetworkProtocol = this.source.networkProtocol
-        ..sourceRemoteIp = this.source.remoteIp
+        ..sourceRemoteIp = ipAddress
         ..frequency = message.frequency
         ..channel = message.channel;
       try {
@@ -300,7 +300,7 @@ class JsonMessageImporter {
         var stationUpdateQuery = new StationQuery();
         stationUpdateQuery
           ..where.id.equals(station.idAsInt)
-          ..values.ipAddress = source.remoteIp
+          ..values.ipAddress = ipAddress
           ..values.lastReportAt = DateTime.now().toUtc();
         station = await stationUpdateQuery.updateOne(executor);
         if (station != null) {
@@ -320,7 +320,7 @@ class JsonMessageImporter {
           ..sourceFormat = this.source.format
           ..sourceProtocol = this.source.protocol
           ..sourceNetworkProtocol = this.source.networkProtocol
-          ..sourceRemoteIp = this.source.remoteIp
+          ..sourceRemoteIp = ipAddress
           ..frequency = message.frequency
           ..channel = message.channel;
         try {

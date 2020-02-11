@@ -27,9 +27,8 @@ class UDPIngestServer extends IngestServer {
       this.logger = Logger('Ingest(${name}) #${++packetCount}');
       var str = String.fromCharCodes(datagram.data);
       this.logger.debug('Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
-      this.source.remoteIp = datagram.address.address;
       processor.logger = logger;
-      processor.process(str);
+      processor.process(str, datagram.address.address);
     }, timeout: new Duration(days: 365));
   }
 }

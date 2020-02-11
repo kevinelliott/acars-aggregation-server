@@ -9,6 +9,6 @@ class Processor {
   Processor(Source this.source, Logger this.logger) {
   }
 
-  Future process(String str) async {
+  Future process(String str, String ipAddress) async {
   }
 }

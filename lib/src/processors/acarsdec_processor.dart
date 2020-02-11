@@ -17,13 +17,13 @@ class AcarsdecProcessor extends Processor {
     return jsonMessage;
   }
 
-  Future process(String str) async {
+  Future process(String str, String ipAddress) async {
     var jsonMessage = await parseJson(str);
     var jsonMessageImporter = new JsonMessageImporter(source, jsonMessage, natsClient, databaseExecutor, logger);
 
-    var station = await jsonMessageImporter.findOrCreateStation();
+    var station = await jsonMessageImporter.findOrCreateStation(ipAddress);
     var airframe = await jsonMessageImporter.findOrCreateAirframe();
     var flight = await jsonMessageImporter.updateOrCreateFlight(airframe);
-    var message = await jsonMessageImporter.insertOrSkipMessage(station, airframe, flight);
+    var message = await jsonMessageImporter.insertOrSkipMessage(station, airframe, flight, ipAddress);
   }
 }

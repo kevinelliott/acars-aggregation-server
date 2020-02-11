@@ -17,7 +17,7 @@ class JaeroACARSProcessor extends Processor {
     return parsed;
   }
 
-  Future process(String str) async {
+  Future process(String str, String ipAddress) async {
     var parsed = await parse(str);
   }
 }

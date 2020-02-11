@@ -24,12 +24,12 @@ class JaeroADSCProcessor extends Processor {
     return sbsMessage;
   }
 
-  Future process(String str) async {
+  Future process(String str, String ipAddress) async {
     SBSMessage sbsMessage = await parse(str);
     var sbsMessageImporter = new SBSMessageImporter(sbsMessage, natsClient, databaseExecutor, logger);
     await sbsMessageImporter.identifyTail();
 
-    var station = await sbsMessageImporter.findOrCreateStationById(source.remoteIp);
+    var station = await sbsMessageImporter.findOrCreateStationById(ipAddress);
     var airframe = await sbsMessageImporter.findOrCreateAirframe();
     var flight = await sbsMessageImporter.updateOrCreateFlight(airframe);
     var message = await sbsMessageImporter.insertOrSkipMessage(station, airframe, flight);
