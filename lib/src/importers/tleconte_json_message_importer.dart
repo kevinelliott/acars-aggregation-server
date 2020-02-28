@@ -42,11 +42,6 @@ class TLeconteJsonMessageImporter {
   Future findOrCreateAirframe() async {
     var airframe;
 
-    if (jsonMessage.error >= 2) {
-      this.logger.debug('[${jsonMessage.sourceType}] Message error level (${jsonMessage.error}) is too high to be reliable to lookup or create an airframe');
-      return;
-    }
-
     if (jsonMessage.tail != null) {
       var tail = new Tail(jsonMessage.tail);
       var tailSanitized = tail.sanitize();
@@ -62,6 +57,11 @@ class TLeconteJsonMessageImporter {
         if (airframe != null && airframe.id != null) {
           this.logger.debug('[${jsonMessage.sourceType}] Retrieved airframe (id: ${airframe.id})');
         } else {
+          if (jsonMessage.error >= 2) {
+            this.logger.debug('[${jsonMessage.sourceType}] Message error level (${jsonMessage.error}) is too high to be reliable to create an airframe');
+            return;
+          }
+
           var airframeInsertQuery = new AirframeQuery();
           airframeInsertQuery.values
             ..tail = jsonMessage.tail;
