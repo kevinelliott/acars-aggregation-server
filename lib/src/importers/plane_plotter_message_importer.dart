@@ -4,36 +4,36 @@ import 'package:quick_log/quick_log.dart';
 
 import 'package:acars_aggregation_server/aas.dart';
 
-class SBSMessageImporter {
-  SBSMessage sbsMessage;
+class PlanePlotterMessageImporter {
+  PlanePlotterMessage ppMessage;
   NatsClient natsClient;
   PostgreSqlExecutorPool executor;
   Logger logger;
 
-  SBSMessageImporter(SBSMessage sbsMessage, NatsClient natsClient, PostgreSqlExecutorPool executor, Logger logger) {
-    this.sbsMessage = sbsMessage;
+  PlanePlotterMessageImporter(PlanePlotterMessage ppMessage, NatsClient natsClient, PostgreSqlExecutorPool executor, Logger logger) {
+    this.ppMessage = ppMessage;
     this.executor = executor;
     this.logger = logger;
     this.natsClient = natsClient;
   }
 
   logPrefix() {
-    return '[${sbsMessage.source.name}/${sbsMessage.source.type}]';
+    return '[${ppMessage.source.name}/${ppMessage.source.type}]';
   }
 
   Future findOrCreateAirframe() async {
     var airframe;
-    if (sbsMessage.tail != null) {
+    if (ppMessage.tail != null) {
       var airframeQuery = new AirframeQuery();
       airframeQuery.where
-        ..tail.equals(sbsMessage.tail);
+        ..tail.equals(ppMessage.tail);
       airframe = await airframeQuery.getOne(executor);
       if (airframe != null && airframe.id != null) {
         this.logger.debug('${logPrefix()} Retrieved airframe (id: ${airframe.id})');
       } else {
         var airframeInsertQuery = new AirframeQuery();
         airframeInsertQuery.values
-          ..tail = sbsMessage.tail;
+          ..tail = ppMessage.tail;
         try {
           airframe = await airframeInsertQuery.insert(executor);
           this.logger.debug('${logPrefix()} Inserted airframe (id: ${airframe.id})');
@@ -54,11 +54,11 @@ class SBSMessageImporter {
   Future updateOrCreateFlight(airframe) async {
     Flight flight;
     if (airframe != null) {
-      if (sbsMessage.flightNumber != null && sbsMessage.flightNumber != '') {
+      if (ppMessage.flightNumber != null && ppMessage.flightNumber != '') {
         var flightQuery = new FlightQuery();
         flightQuery.where
           ..airframeId.equals(airframe.idAsInt)
-          ..flight.equals(sbsMessage.flightNumber)
+          ..flight.equals(ppMessage.flightNumber)
           ..createdAt.greaterThanOrEqualTo(DateTime.now().toUtc().subtract(new Duration(days: 1)));
         flight = await flightQuery.getOne(executor);
 
@@ -68,33 +68,33 @@ class SBSMessageImporter {
             ..where.id.equals(flight.idAsInt)
             ..values.status = 'in-flight'
             ..values.updatedAt = DateTime.now().toUtc();
-          if (sbsMessage.latitude != null) {
-            flightUpdateQuery.values.latitude = sbsMessage.latitude;
-          }
-          if (sbsMessage.longitude != null) {
-            flightUpdateQuery.values.longitude = sbsMessage.longitude;
-          }
-          if (sbsMessage.altitude != null) {
-            flightUpdateQuery.values.altitude = sbsMessage.altitude;
-          }
+          // if (ppMessage.latitude != null) {
+          //   flightUpdateQuery.values.latitude = ppMessage.latitude;
+          // }
+          // if (ppMessage.longitude != null) {
+          //   flightUpdateQuery.values.longitude = ppMessage.longitude;
+          // }
+          // if (ppMessage.altitude != null) {
+          //   flightUpdateQuery.values.altitude = ppMessage.altitude;
+          // }
           flight = await flightUpdateQuery.updateOne(executor);
           this.logger.debug('${logPrefix()} Updated flight (id: ${flight.id})');
         } else {
           var flightInsertQuery = new FlightQuery();
           flightInsertQuery.values
             ..airframeId = airframe.idAsInt
-            ..flight = sbsMessage.flightNumber
+            ..flight = ppMessage.flightNumber
             ..messagesCount = 1
             ..status = 'in-flight';
-          if (sbsMessage.latitude != null) {
-            flightInsertQuery.values.latitude = sbsMessage.latitude;
-          }
-          if (sbsMessage.longitude != null) {
-            flightInsertQuery.values.longitude = sbsMessage.longitude;
-          }
-          if (sbsMessage.altitude != null) {
-            flightInsertQuery.values.altitude = sbsMessage.altitude;
-          }
+          // if (ppMessage.latitude != null) {
+          //   flightInsertQuery.values.latitude = ppMessage.latitude;
+          // }
+          // if (ppMessage.longitude != null) {
+          //   flightInsertQuery.values.longitude = ppMessage.longitude;
+          // }
+          // if (ppMessage.altitude != null) {
+          //   flightInsertQuery.values.altitude = ppMessage.altitude;
+          // }
           try {
             flight = await flightInsertQuery.insert(executor);
             this.logger.debug('${logPrefix()} Inserted flight (id: ${flight.id})');
@@ -121,15 +121,15 @@ class SBSMessageImporter {
             ..where.id.equals(flight.idAsInt)
             ..values.status = 'in-flight'
             ..values.updatedAt = DateTime.now().toUtc();
-          if (sbsMessage.latitude != null) {
-            flightUpdateQuery.values.latitude = sbsMessage.latitude;
-          }
-          if (sbsMessage.longitude != null) {
-            flightUpdateQuery.values.longitude = sbsMessage.longitude;
-          }
-          if (sbsMessage.altitude != null) {
-            flightUpdateQuery.values.altitude = sbsMessage.altitude;
-          }
+          // if (ppMessage.latitude != null) {
+          //   flightUpdateQuery.values.latitude = ppMessage.latitude;
+          // }
+          // if (ppMessage.longitude != null) {
+          //   flightUpdateQuery.values.longitude = ppMessage.longitude;
+          // }
+          // if (ppMessage.altitude != null) {
+          //   flightUpdateQuery.values.altitude = ppMessage.altitude;
+          // }
           flight = await flightUpdateQuery.updateOne(executor);
           if (flight != null) {
             this.logger.debug('${logPrefix()} Updated flight (id: ${flight.id})');
@@ -157,7 +157,7 @@ class SBSMessageImporter {
     } else {
       var stationInsertQuery = new StationQuery();
       stationInsertQuery.values
-        ..ident = 'UNKNOWN-CBAND-ADSC'
+        ..ident = 'UNKNOWN-${ppMessage.source.name.toUpperCase()}-${ppMessage.source.type.toUpperCase()}'
         ..ipAddress = ipAddress
         ..lastReportAt = DateTime.now().toUtc()
         ..messagesCount = 1;
@@ -187,35 +187,17 @@ class SBSMessageImporter {
     return station;
   }
 
-  Future identifyTail() async {
-    // FAA Aircraft Registration Touchup
-    if (sbsMessage.hexIdent != null && (sbsMessage.tail == null || sbsMessage.tail == '')) {
-      this.logger.debug('${logPrefix()} The tail is missing but we have ICAO. Checking FAA DB...');
-      var faaQuery = new FaaAircraftRegistrationQuery();
-      faaQuery.where
-        ..modeSCodeHex.equals(sbsMessage.hexIdent.toUpperCase());
-      var faaRegistration = await faaQuery.getOne(executor);
-
-      if (faaRegistration != null) {
-        this.logger.debug('${logPrefix()} Match found! Updating tail to be "N${faaRegistration.nNumber}".');
-        sbsMessage.tail = 'N${faaRegistration.nNumber}';
-      } else {
-        this.logger.debug('${logPrefix()} No match found. Leaving blank.');
-      }
-    }
-  }
-
   Future insertOrSkipMessage(station, airframe, flight) async {
     var message;
 
     var messageQuery = new MessageQuery();
     messageQuery.values
-      ..timestamp = DateTime.parse('${sbsMessage.dateGenerated} ${sbsMessage.timeGenerated}')
-      ..source = sbsMessage.source.name
-      ..sourceType = sbsMessage.source.type
-      ..flight = sbsMessage.flightNumber
-      ..tail = sbsMessage.tail
-      ..text = sbsMessage.squawk;
+      ..timestamp = DateTime.now()
+      ..source = ppMessage.source.name
+      ..sourceType = ppMessage.source.type
+      ..flight = ppMessage.flightNumber
+      ..tail = ppMessage.tail
+      ..text = ppMessage.text;
     if (station != null) {
       messageQuery.values.stationId = station.idAsInt;
     }
@@ -225,15 +207,15 @@ class SBSMessageImporter {
     if (flight != null) {
       messageQuery.values.flightId = flight.idAsInt;
     }
-    if (sbsMessage.latitude != null) {
-      messageQuery.values.latitude = sbsMessage.latitude;
-    }
-    if (sbsMessage.longitude != null) {
-      messageQuery.values.longitude = sbsMessage.longitude;
-    }
-    if (sbsMessage.altitude != null) {
-      messageQuery.values.altitude = sbsMessage.altitude;
-    }
+    // if (ppMessage.latitude != null) {
+    //   messageQuery.values.latitude = ppMessage.latitude;
+    // }
+    // if (ppMessage.longitude != null) {
+    //   messageQuery.values.longitude = ppMessage.longitude;
+    // }
+    // if (ppMessage.altitude != null) {
+    //   messageQuery.values.altitude = ppMessage.altitude;
+    // }
     message = await messageQuery.insert(executor);
     logger.debug('${logPrefix()} Inserted message (id: ${message.id})');
     logger.fine('Message = ${message.toString()}');

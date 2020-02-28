@@ -8,8 +8,8 @@ dependencies:
   json_annotation: ^3.0.1
   nats:
     git: https://github.com/c16a/nats-dart.git
-  quick_log: 0.4.0
-  udp: ^3.0.1
+  quick_log: ^0.4.0
+  udp: ^3.0.2
 dev_dependencies:
   angel_orm_generator: ^2.0.5
   build_runner: ^1.7.3

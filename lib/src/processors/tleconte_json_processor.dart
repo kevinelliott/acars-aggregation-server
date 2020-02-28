@@ -4,11 +4,11 @@ import 'package:quick_log/quick_log.dart';
 
 import 'package:acars_aggregation_server/aas.dart';
 
-class AcarsdecProcessor extends Processor {
+class TLeconteJsonProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
   NatsClient natsClient;
 
-  AcarsdecProcessor(Source source, this.databaseExecutor, this.natsClient, Logger logger) : super(source, logger) {
+  TLeconteJsonProcessor(Source source, this.databaseExecutor, this.natsClient, Logger logger) : super(source, logger) {
   }
 
   Future parseJson(String str) async {
@@ -19,7 +19,7 @@ class AcarsdecProcessor extends Processor {
 
   Future process(String str, String ipAddress) async {
     var jsonMessage = await parseJson(str);
-    var jsonMessageImporter = new JsonMessageImporter(source, jsonMessage, natsClient, databaseExecutor, logger);
+    var jsonMessageImporter = new TLeconteJsonMessageImporter(source, jsonMessage, natsClient, databaseExecutor, logger);
 
     var station = await jsonMessageImporter.findOrCreateStation(ipAddress);
     var airframe = await jsonMessageImporter.findOrCreateAirframe();

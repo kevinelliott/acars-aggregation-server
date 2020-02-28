@@ -4,10 +4,10 @@ import 'package:udp/udp.dart';
 
 import 'package:acars_aggregation_server/aas.dart';
 
-class AcarsdecIngestServer extends UDPIngestServer {
-  AcarsdecIngestServer(name, config, databaseConfig) : super(name, config, databaseConfig) {
-    this.source = Source('acarsdec', 'acarsdec', 'ACARS', 'TLeconte', 'JSON', 'UDP');
-    this.processor = TLeconteJsonProcessor(source, databaseConfig.executor(), natsClient, logger);
+class Dumpvdl2IngestServer extends UDPIngestServer {
+  Dumpvdl2IngestServer(name, config, databaseConfig) : super(name, config, databaseConfig) {
+    this.source = Source('dumpvdl2', 'dumpvdl2', 'VDL', 'PlanePlotter', 'text', 'UDP');
+    this.processor = PlanePlotterProcessor(source, databaseConfig.executor(), natsClient, logger);
   }
 
   Future start() async {

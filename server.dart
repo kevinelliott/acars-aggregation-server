@@ -53,7 +53,7 @@ parseArgs(arguments) {
     ..addFlag('database-ssl', defaultsTo: (Platform.environment['DATABASE_SSL'] != null ? Platform.environment['DATABASE_SSL'].toLowerCase() == 'true' : false))
     ..addFlag('ingest-acarsdec', defaultsTo: true)
     ..addOption('ingest-acarsdec-port', defaultsTo: Platform.environment['INGEST_ACARSDEC_PORT'] ?? '5550')
-    ..addFlag('ingest-acarsdeco2', defaultsTo: true)
+    ..addFlag('ingest-acarsdeco2', defaultsTo: false)
     ..addOption('ingest-acarsdeco2-port', defaultsTo: Platform.environment['INGEST_ACARSDEC_PORT'] ?? '5551')
     ..addFlag('ingest-dumpvdl2', defaultsTo: true)
     ..addOption('ingest-dumpvdl2-port', defaultsTo: Platform.environment['INGEST_DUMPVDL2_PORT'] ?? '5552')
@@ -82,13 +82,13 @@ printSettings() {
   print('');
 
   print('INGESTS');
-  print('acarsdec (ACARS)     : ${parsedArgs['ingest-acarsdec'] ? "Enabled (Transport: UDP, Port: ${parsedArgs['ingest-acarsdec-port']}, Format: JSON)" : 'Disabled'}');
+  print('acarsdec (ACARS)     : ${parsedArgs['ingest-acarsdec'] ? "Enabled (Transport: UDP, Port: ${parsedArgs['ingest-acarsdec-port']}, Format: TLeconte JSON)" : 'Disabled'}');
   print('acarsdeco2 (ACARS)   : ${parsedArgs['ingest-acarsdeco2'] ? "Enabled (Transport: TCP, Port: ${parsedArgs['ingest-acarsdeco2-port']}, Format: SBS)" : 'Disabled'}');
-  print('dumpvdl2 (VDL)       : ${parsedArgs['ingest-dumpvdl2'] ? "Enabled (Transport: UDP, Port: ${parsedArgs['ingest-dumpvdl2-port']}, Format: PP)" : 'Disabled'}');
+  print('dumpvdl2 (VDL)       : ${parsedArgs['ingest-dumpvdl2'] ? "Enabled (Transport: UDP, Port: ${parsedArgs['ingest-dumpvdl2-port']}, Format: PlanePlotter)" : 'Disabled'}');
   print('JAERO C-Band (ACARS) : ${parsedArgs['ingest-jaero-c-acars'] ? "Enabled (Transport: UDP, Port: ${parsedArgs['ingest-jaero-c-acars-port']}, Format: Custom)" : 'Disabled'}');
   print('JAERO C-Band (ADS-C) : ${parsedArgs['ingest-jaero-c-adsc'] ? "Enabled (Transport: TCP, Port: ${parsedArgs['ingest-jaero-c-adsc-port']}, Format: SBS)" : 'Disabled'}');
   print('JAERO L-Band (ACARS) : ${parsedArgs['ingest-jaero-l-acars'] ? "Enabled (Transport: UDP, Port: ${parsedArgs['ingest-jaero-l-acars-port']}, Format: Custom)" : 'Disabled'}');
-  print('vdlm2dec             : ${parsedArgs['ingest-vdlm2dec'] ? "Enabled (Transport: UDP, Port: ${parsedArgs['ingest-vdlm2dec-port']}, Format: JSON)" : 'Disabled'}');
+  print('vdlm2dec (VDL)       : ${parsedArgs['ingest-vdlm2dec'] ? "Enabled (Transport: UDP, Port: ${parsedArgs['ingest-vdlm2dec-port']}, Format: TLeconte JSON)" : 'Disabled'}');
   print('');
 }
 
@@ -111,6 +111,10 @@ Future main(List<String> arguments) async {
   IngestServerConfig acarsdecConfig = IngestServerConfig('UDP', config['ingest-acarsdec-port'], 'acarsdec', config['nats']['host'], config['nats']['port']);
   var acarsdecServer = AcarsdecIngestServer('acarsdec', acarsdecConfig, databaseConfig);
   acarsdecServer.start();
+
+  IngestServerConfig dumpvdl2Config = IngestServerConfig('UDP', config['ingest-dumpvdl2-port'], 'dumpvdl2', config['nats']['host'], config['nats']['port']);
+  var dumpvdl2Server = Dumpvdl2IngestServer('dumpvdl2', dumpvdl2Config, databaseConfig);
+  dumpvdl2Server.start();
 
   IngestServerConfig vdlm2decConfig = IngestServerConfig('UDP', config['ingest-vdlm2dec-port'], 'vdlm2dec', config['nats']['host'], config['nats']['port']);
   var vdlm2decServer = AcarsdecIngestServer('vdlm2dec', vdlm2decConfig, databaseConfig);
