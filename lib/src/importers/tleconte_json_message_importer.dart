@@ -57,7 +57,7 @@ class TLeconteJsonMessageImporter {
         if (airframe != null && airframe.id != null) {
           this.logger.debug('[${jsonMessage.sourceType}] Retrieved airframe (id: ${airframe.id})');
         } else {
-          if (jsonMessage.error >= 2) {
+          if (jsonMessage.error != null && jsonMessage.error >= 2) {
             this.logger.debug('[${jsonMessage.sourceType}] Message error level (${jsonMessage.error}) is too high to be reliable to create an airframe');
             return;
           }
