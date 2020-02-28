@@ -64,7 +64,7 @@ class TLeconteJsonMessageImporter {
 
           var airframeInsertQuery = new AirframeQuery();
           airframeInsertQuery.values
-            ..tail = jsonMessage.tail;
+            ..tail = tailSanitized;
           try {
             airframe = await airframeInsertQuery.insert(executor);
             this.logger.debug('[${jsonMessage.sourceType}] Inserted airframe (id: ${airframe.id})');
@@ -176,7 +176,7 @@ class TLeconteJsonMessageImporter {
         }
       }
     } else {
-      this.logger.debug('[${jsonMessage.sourceType}] No related flight');
+      this.logger.debug('[${jsonMessage.sourceType}] No airframe, no related flight');
     }
 
     return flight;
