@@ -95,7 +95,7 @@ printSettings() {
 Future main(List<String> arguments) async {
   Logger.writer = ConsolePrinter(minLevel: LogLevel.info);
 
-  print('Acars Aggregation Server v0.0.1');
+  print('Acars Aggregation Server v0.2.0');
   print('');
 
   parsedArgs = parseArgs(arguments);
