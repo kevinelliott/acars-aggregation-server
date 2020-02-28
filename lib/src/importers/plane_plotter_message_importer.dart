@@ -23,17 +23,17 @@ class PlanePlotterMessageImporter {
 
   Future findOrCreateAirframe() async {
     var airframe;
-    if (ppMessage.tail != null) {
+    if (ppMessage.sanitizedTail != null) {
       var airframeQuery = new AirframeQuery();
       airframeQuery.where
-        ..tail.equals(ppMessage.tail);
+        ..tail.equals(ppMessage.sanitizedTail);
       airframe = await airframeQuery.getOne(executor);
       if (airframe != null && airframe.id != null) {
         this.logger.debug('${logPrefix()} Retrieved airframe (id: ${airframe.id})');
       } else {
         var airframeInsertQuery = new AirframeQuery();
         airframeInsertQuery.values
-          ..tail = ppMessage.tail;
+          ..tail = ppMessage.sanitizedTail;
         try {
           airframe = await airframeInsertQuery.insert(executor);
           this.logger.debug('${logPrefix()} Inserted airframe (id: ${airframe.id})');
@@ -196,7 +196,7 @@ class PlanePlotterMessageImporter {
       ..source = ppMessage.source.name
       ..sourceType = ppMessage.source.type
       ..flight = ppMessage.flightNumber
-      ..tail = ppMessage.tail
+      ..tail = ppMessage.sanitizedTail
       ..text = ppMessage.text;
     if (station != null) {
       messageQuery.values.stationId = station.idAsInt;

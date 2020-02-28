@@ -23,17 +23,17 @@ class SBSMessageImporter {
 
   Future findOrCreateAirframe() async {
     var airframe;
-    if (sbsMessage.tail != null) {
+    if (sbsMessage.sanitizedTail != null) {
       var airframeQuery = new AirframeQuery();
       airframeQuery.where
-        ..tail.equals(sbsMessage.tail);
+        ..tail.equals(sbsMessage.sanitizedTail);
       airframe = await airframeQuery.getOne(executor);
       if (airframe != null && airframe.id != null) {
         this.logger.debug('${logPrefix()} Retrieved airframe (id: ${airframe.id})');
       } else {
         var airframeInsertQuery = new AirframeQuery();
         airframeInsertQuery.values
-          ..tail = sbsMessage.tail;
+          ..tail = sbsMessage.sanitizedTail;
         try {
           airframe = await airframeInsertQuery.insert(executor);
           this.logger.debug('${logPrefix()} Inserted airframe (id: ${airframe.id})');
@@ -199,6 +199,7 @@ class SBSMessageImporter {
       if (faaRegistration != null) {
         this.logger.debug('${logPrefix()} Match found! Updating tail to be "N${faaRegistration.nNumber}".');
         sbsMessage.tail = 'N${faaRegistration.nNumber}';
+        sbsMessage.sanitizedTail = 'N${faaRegistration.nNumber}';
       } else {
         this.logger.debug('${logPrefix()} No match found. Leaving blank.');
       }
@@ -214,7 +215,7 @@ class SBSMessageImporter {
       ..source = sbsMessage.source.name
       ..sourceType = sbsMessage.source.type
       ..flight = sbsMessage.flightNumber
-      ..tail = sbsMessage.tail
+      ..tail = sbsMessage.sanitizedTail
       ..text = sbsMessage.squawk;
     if (station != null) {
       messageQuery.values.stationId = station.idAsInt;

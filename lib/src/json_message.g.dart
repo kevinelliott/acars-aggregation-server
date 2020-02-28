@@ -35,7 +35,7 @@ JsonMessage _$JsonMessageFromJson(Map<String, dynamic> json) {
     longitude: (json['lon'] as num)?.toDouble(),
     altitude: json['alt'] as int,
     blockEnd: json['end'] as bool,
-  );
+  )..sanitizedTail = json['sanitizedTail'] as String;
 }
 
 Map<String, dynamic> _$JsonMessageToJson(JsonMessage instance) =>
@@ -57,6 +57,7 @@ Map<String, dynamic> _$JsonMessageToJson(JsonMessage instance) =>
       'block_id': instance.blockId,
       'ack': JsonMessage._optionalNullToString(instance.ack),
       'tail': instance.tail,
+      'sanitizedTail': instance.sanitizedTail,
       'flight': instance.flightNumber,
       'msgno': instance.messageNumber,
       'data': instance.data,

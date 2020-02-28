@@ -30,6 +30,7 @@ class JsonMessage {
   @JsonKey(fromJson: _stringFromOptionalBool, toJson: _optionalNullToString)
   final String ack;
   String tail;
+  String sanitizedTail;
   @JsonKey(name: 'flight')
   final String flightNumber;
   @JsonKey(name: 'msgno')

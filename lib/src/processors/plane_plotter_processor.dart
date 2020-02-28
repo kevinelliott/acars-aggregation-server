@@ -18,7 +18,9 @@ class PlanePlotterProcessor extends Processor {
   Future parse(String str) async {
     PlanePlotterMessageParser parser = new PlanePlotterMessageParser(source, logger);
     PlanePlotterMessage ppMessage = await parser.parse(str);
-    if (ppMessage == null) {
+    if (ppMessage != null) {
+      ppMessage.sanitizedTail = new Tail(ppMessage.tail).sanitize();
+    } else {
       logger.error('${logPrefix()} Error parsing a useful PlanePlotter Message. Incoming was: ${str}');
     }
     return ppMessage;

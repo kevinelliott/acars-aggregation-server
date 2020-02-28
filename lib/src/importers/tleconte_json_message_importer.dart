@@ -42,17 +42,15 @@ class TLeconteJsonMessageImporter {
   Future findOrCreateAirframe() async {
     var airframe;
 
-    if (jsonMessage.tail != null) {
-      var tail = new Tail(jsonMessage.tail);
-      var tailSanitized = tail.sanitize();
-      if (jsonMessage.tail != tailSanitized) {
-        this.logger.debug("[${jsonMessage.sourceType}] Sanitized tail from '${jsonMessage.tail}' to ${tailSanitized}'");
+    if (jsonMessage.sanitizedTail != null) {
+      if (jsonMessage.tail != jsonMessage.sanitizedTail) {
+        this.logger.debug("[${jsonMessage.sourceType}] Sanitized tail from '${jsonMessage.tail}' to ${jsonMessage.sanitizedTail}'");
       }
 
-      if (tailSanitized != '') {
+      if (jsonMessage.sanitizedTail != '') {
         var airframeQuery = new AirframeQuery();
         airframeQuery.where
-          ..tail.equals(tailSanitized);
+          ..tail.equals(jsonMessage.sanitizedTail);
         airframe = await airframeQuery.getOne(executor);
         if (airframe != null && airframe.id != null) {
           this.logger.debug('[${jsonMessage.sourceType}] Retrieved airframe (id: ${airframe.id})');
@@ -64,7 +62,7 @@ class TLeconteJsonMessageImporter {
 
           var airframeInsertQuery = new AirframeQuery();
           airframeInsertQuery.values
-            ..tail = tailSanitized;
+            ..tail = jsonMessage.sanitizedTail;
           try {
             airframe = await airframeInsertQuery.insert(executor);
             this.logger.debug('[${jsonMessage.sourceType}] Inserted airframe (id: ${airframe.id})');
@@ -222,6 +220,7 @@ class TLeconteJsonMessageImporter {
       if (faaRegistration != null) {
         this.logger.debug('[${jsonMessage.sourceType}] Match found! Updating tail to be "N${faaRegistration.nNumber}".');
         jsonMessage.tail = 'N${faaRegistration.nNumber}';
+        jsonMessage.sanitizedTail = 'N${faaRegistration.nNumber}';
       } else {
         this.logger.debug('[${jsonMessage.sourceType}] No match found. Leaving blank.');
       }
@@ -231,10 +230,10 @@ class TLeconteJsonMessageImporter {
   Future insertOrSkipMessage(station, airframe, flight, String ipAddress) async {
     var existingMessage;
     var message;
-    if (jsonMessage.tail != null && jsonMessage.messageNumber != null) {
+    if (jsonMessage.sanitizedTail != null && jsonMessage.messageNumber != null) {
       var query = new MessageQuery();
       query.where
-        ..tail.equals(jsonMessage.tail)
+        ..tail.equals(jsonMessage.sanitizedTail)
         ..messageNumber.equals(jsonMessage.messageNumber)
         ..createdAt.equals(DateTime.now().toUtc().subtract(new Duration(minutes: 5)));
       existingMessage = await query.getOne(executor);
@@ -282,7 +281,7 @@ class TLeconteJsonMessageImporter {
         ..label = jsonMessage.label
         ..blockId = jsonMessage.blockId
         ..ack = jsonMessage.ack
-        ..tail = jsonMessage.tail
+        ..tail = jsonMessage.sanitizedTail
         ..flight = jsonMessage.flightNumber
         ..messageNumber = jsonMessage.messageNumber
         ..data = jsonMessage.data

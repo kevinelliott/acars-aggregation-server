@@ -14,6 +14,8 @@ class TLeconteJsonProcessor extends Processor {
   Future parseJson(String str) async {
     JsonMessageParser jsonParser = new JsonMessageParser(logger);
     JsonMessage jsonMessage = await jsonParser.parse(str);
+    if (jsonMessage.tail != null)
+      jsonMessage.sanitizedTail = new Tail(jsonMessage.tail).sanitize();
     return jsonMessage;
   }
 

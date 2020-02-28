@@ -6,6 +6,7 @@ import 'message.dart';
 class PlanePlotterMessage extends Message {
   String mode;                  // Mode (i.e. 2)
   String tail;                  // Tail / Registration
+  String sanitizedTail;         // Sanitized
   String ack;                   // ACK (i.e. M, !)
   String label;                 // Label (i.e. H1)
   String blockId;               // Block ID (i.e. 7)

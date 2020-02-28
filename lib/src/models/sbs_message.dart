@@ -13,6 +13,7 @@ class SBSMessage extends Message {
   String timeLogged;
   String flightNumber;     // Flight Number
   String tail;             // Tail / Registration
+  String sanitizedTail;    // Sanitized
   int altitude;            // Mode C altitude. Height relative to 1013.2mb (Flight Level). Not height AMSL.
   int groundSpeed;         // Speed over ground (not indicated airspeed).
   String track;            // Track of aircraft (not heading). Derived from the velocity E/W and velocity N/S.
