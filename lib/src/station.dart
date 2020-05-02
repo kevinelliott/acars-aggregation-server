@@ -17,6 +17,9 @@ abstract class _Station extends Model {
   double get longitude;
   // @Column(isNullable: true)
   // int get altitude;
+  String get sourceApplication;
+  String get sourceType;
+  String get sourceProtocol;
   DateTime get lastReportAt;
   int get messagesCount;
 }

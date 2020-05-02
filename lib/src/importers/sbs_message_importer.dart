@@ -243,6 +243,8 @@ class SBSMessageImporter {
       var stationUpdateQuery = new StationQuery();
       stationUpdateQuery
         ..where.id.equals(station.idAsInt)
+        ..values.sourceApplication = message.source
+        ..values.sourceType = message.sourceType
         ..values.lastReportAt = DateTime.now().toUtc();
       station = await stationUpdateQuery.updateOne(executor);
       if (station != null) {

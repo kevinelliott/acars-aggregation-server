@@ -316,6 +316,9 @@ class TLeconteJsonMessageImporter {
         stationUpdateQuery
           ..where.id.equals(station.idAsInt)
           ..values.ipAddress = ipAddress
+          ..values.sourceApplication = this.source.application
+          ..values.sourceType = this.source.type
+          ..values.sourceProtocol = this.source.protocol
           ..values.lastReportAt = DateTime.now().toUtc();
         station = await stationUpdateQuery.updateOne(executor);
         if (station != null) {

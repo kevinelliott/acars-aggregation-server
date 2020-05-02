@@ -1,16 +1,16 @@
 name: acars_aggregation_server
 version: 0.0.1
 dependencies:
-  args: ^1.5.2
+  args: ^1.6.0
   angel_orm: ^2.0.2
   angel_orm_postgres: ^1.0.0
-  convert:
+  convert: ^2.1.1
   json_annotation: ^3.0.1
   nats:
     git: https://github.com/c16a/nats-dart.git
   quick_log: ^0.4.0
-  udp: ^3.0.2
+  udp: ^3.0.3
 dev_dependencies:
   angel_orm_generator: ^2.0.5
-  build_runner: ^1.7.3
-  json_serializable: ^3.2.5
+  build_runner: ^1.9.0
+  json_serializable: ^3.3.0

@@ -128,9 +128,9 @@ Future main(List<String> arguments) async {
   var jaeroCADSCServer = JaeroADSCIngestServer('jaero-c-adsc', jaeroCADSCConfig, databaseConfig);
   jaeroCADSCServer.start();
 
-  // IngestServerConfig jaeroLAcarsConfig = IngestServerConfig('UDP', config['ingest-jaero-l-acars-port'], 'jaero-l-band-acars', config['nats']['host'], config['nats']['port']);
-  // var jaeroLAcarsServer = UDPIngestServer('jaero-l-band-acars', jaeroLAcarsConfig, databaseConfig);
-  // jaeroLAcarsServer.start();
+  IngestServerConfig jaeroLAcarsConfig = IngestServerConfig('UDP', config['ingest-jaero-l-acars-port'], 'jaero-l-band-acars', config['nats']['host'], config['nats']['port']);
+  var jaeroLAcarsServer = JaeroACARSIngestServer('jaero-l-band-acars', jaeroLAcarsConfig, databaseConfig);
+  jaeroLAcarsServer.start();
 
   // var dumpvdl2Receiver = await UDP.bind(Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config['ingest-dumpvdl2-port'])));
   // runZoned(() {

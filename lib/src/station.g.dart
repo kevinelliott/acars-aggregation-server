@@ -39,6 +39,9 @@ class StationQuery extends Query<Station, StationQueryWhere> {
       'email',
       'latitude',
       'longitude',
+      'source_application',
+      'source_type',
+      'source_protocol',
       'last_report_at',
       'messages_count'
     ];
@@ -65,8 +68,11 @@ class StationQuery extends Query<Station, StationQueryWhere> {
         email: (row[5] as String),
         latitude: double.tryParse(row[6].toString()),
         longitude: double.tryParse(row[7].toString()),
-        lastReportAt: (row[8] as DateTime),
-        messagesCount: (row[9] as int));
+        sourceApplication: (row[8] as String),
+        sourceType: (row[9] as String),
+        sourceProtocol: (row[10] as String),
+        lastReportAt: (row[11] as DateTime),
+        messagesCount: (row[12] as int));
     return model;
   }
 
@@ -86,6 +92,10 @@ class StationQueryWhere extends QueryWhere {
         email = StringSqlExpressionBuilder(query, 'email'),
         latitude = NumericSqlExpressionBuilder<double>(query, 'latitude'),
         longitude = NumericSqlExpressionBuilder<double>(query, 'longitude'),
+        sourceApplication =
+            StringSqlExpressionBuilder(query, 'source_application'),
+        sourceType = StringSqlExpressionBuilder(query, 'source_type'),
+        sourceProtocol = StringSqlExpressionBuilder(query, 'source_protocol'),
         lastReportAt = DateTimeSqlExpressionBuilder(query, 'last_report_at'),
         messagesCount =
             NumericSqlExpressionBuilder<int>(query, 'messages_count');
@@ -106,6 +116,12 @@ class StationQueryWhere extends QueryWhere {
 
   final NumericSqlExpressionBuilder<double> longitude;
 
+  final StringSqlExpressionBuilder sourceApplication;
+
+  final StringSqlExpressionBuilder sourceType;
+
+  final StringSqlExpressionBuilder sourceProtocol;
+
   final DateTimeSqlExpressionBuilder lastReportAt;
 
   final NumericSqlExpressionBuilder<int> messagesCount;
@@ -121,6 +137,9 @@ class StationQueryWhere extends QueryWhere {
       email,
       latitude,
       longitude,
+      sourceApplication,
+      sourceType,
+      sourceProtocol,
       lastReportAt,
       messagesCount
     ];
@@ -173,6 +192,21 @@ class StationQueryValues extends MapQueryValues {
   }
 
   set longitude(double value) => values['longitude'] = value.toString();
+  String get sourceApplication {
+    return (values['source_application'] as String);
+  }
+
+  set sourceApplication(String value) => values['source_application'] = value;
+  String get sourceType {
+    return (values['source_type'] as String);
+  }
+
+  set sourceType(String value) => values['source_type'] = value;
+  String get sourceProtocol {
+    return (values['source_protocol'] as String);
+  }
+
+  set sourceProtocol(String value) => values['source_protocol'] = value;
   DateTime get lastReportAt {
     return (values['last_report_at'] as DateTime);
   }
@@ -191,6 +225,9 @@ class StationQueryValues extends MapQueryValues {
     email = model.email;
     latitude = model.latitude;
     longitude = model.longitude;
+    sourceApplication = model.sourceApplication;
+    sourceType = model.sourceType;
+    sourceProtocol = model.sourceProtocol;
     lastReportAt = model.lastReportAt;
     messagesCount = model.messagesCount;
   }
@@ -211,6 +248,9 @@ class Station extends _Station {
       this.email,
       this.latitude,
       this.longitude,
+      this.sourceApplication,
+      this.sourceType,
+      this.sourceProtocol,
       this.lastReportAt,
       this.messagesCount});
 
@@ -242,6 +282,15 @@ class Station extends _Station {
   final double longitude;
 
   @override
+  final String sourceApplication;
+
+  @override
+  final String sourceType;
+
+  @override
+  final String sourceProtocol;
+
+  @override
   final DateTime lastReportAt;
 
   @override
@@ -256,6 +305,9 @@ class Station extends _Station {
       String email,
       double latitude,
       double longitude,
+      String sourceApplication,
+      String sourceType,
+      String sourceProtocol,
       DateTime lastReportAt,
       int messagesCount}) {
     return Station(
@@ -267,6 +319,9 @@ class Station extends _Station {
         email: email ?? this.email,
         latitude: latitude ?? this.latitude,
         longitude: longitude ?? this.longitude,
+        sourceApplication: sourceApplication ?? this.sourceApplication,
+        sourceType: sourceType ?? this.sourceType,
+        sourceProtocol: sourceProtocol ?? this.sourceProtocol,
         lastReportAt: lastReportAt ?? this.lastReportAt,
         messagesCount: messagesCount ?? this.messagesCount);
   }
@@ -281,6 +336,9 @@ class Station extends _Station {
         other.email == email &&
         other.latitude == latitude &&
         other.longitude == longitude &&
+        other.sourceApplication == sourceApplication &&
+        other.sourceType == sourceType &&
+        other.sourceProtocol == sourceProtocol &&
         other.lastReportAt == lastReportAt &&
         other.messagesCount == messagesCount;
   }
@@ -296,6 +354,9 @@ class Station extends _Station {
       email,
       latitude,
       longitude,
+      sourceApplication,
+      sourceType,
+      sourceProtocol,
       lastReportAt,
       messagesCount
     ]);
@@ -303,7 +364,7 @@ class Station extends _Station {
 
   @override
   String toString() {
-    return "Station(id=$id, createdAt=$createdAt, updatedAt=$updatedAt, ident=$ident, ipAddress=$ipAddress, email=$email, latitude=$latitude, longitude=$longitude, lastReportAt=$lastReportAt, messagesCount=$messagesCount)";
+    return "Station(id=$id, createdAt=$createdAt, updatedAt=$updatedAt, ident=$ident, ipAddress=$ipAddress, email=$email, latitude=$latitude, longitude=$longitude, sourceApplication=$sourceApplication, sourceType=$sourceType, sourceProtocol=$sourceProtocol, lastReportAt=$lastReportAt, messagesCount=$messagesCount)";
   }
 
   Map<String, dynamic> toJson() {
@@ -356,6 +417,9 @@ class StationSerializer extends Codec<Station, Map> {
         email: map['email'] as String,
         latitude: map['latitude'] as double,
         longitude: map['longitude'] as double,
+        sourceApplication: map['source_application'] as String,
+        sourceType: map['source_type'] as String,
+        sourceProtocol: map['source_protocol'] as String,
         lastReportAt: map['last_report_at'] != null
             ? (map['last_report_at'] is DateTime
                 ? (map['last_report_at'] as DateTime)
@@ -377,6 +441,9 @@ class StationSerializer extends Codec<Station, Map> {
       'email': model.email,
       'latitude': model.latitude,
       'longitude': model.longitude,
+      'source_application': model.sourceApplication,
+      'source_type': model.sourceType,
+      'source_protocol': model.sourceProtocol,
       'last_report_at': model.lastReportAt?.toIso8601String(),
       'messages_count': model.messagesCount
     };
@@ -393,6 +460,9 @@ abstract class StationFields {
     email,
     latitude,
     longitude,
+    sourceApplication,
+    sourceType,
+    sourceProtocol,
     lastReportAt,
     messagesCount
   ];
@@ -412,6 +482,12 @@ abstract class StationFields {
   static const String latitude = 'latitude';
 
   static const String longitude = 'longitude';
+
+  static const String sourceApplication = 'source_application';
+
+  static const String sourceType = 'source_type';
+
+  static const String sourceProtocol = 'source_protocol';
 
   static const String lastReportAt = 'last_report_at';
 

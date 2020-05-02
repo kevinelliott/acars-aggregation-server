@@ -39,7 +39,7 @@ class JaeroACARSParser {
     logger.fine('Label      : ${acarsMessage.label}');
     logger.fine('Msg Number : ${acarsMessage.messageNumber}');
     logger.fine('');
-    if (acarsMessage.label != 'H1')
+    if (lines.sublist(2).length > 0 && acarsMessage.label != 'H1')
       var arincParsed = parseARINCLine(lines[2].trim());
     logger.fine('Text       : ${acarsMessage.text}');
   }
@@ -61,6 +61,7 @@ class JaeroACARSParser {
   }
 
   parseARINCLine(String line) {
+    logger.fine('Line       : ${line}');
     if (line.length < 10) return; // Too short to be an ARINC message
 
     List parts = line.split('/');
