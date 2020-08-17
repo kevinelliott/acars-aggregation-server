@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:typed_data';
-
 import 'package:acars_aggregation_server/src/models/arinc.dart';
 import 'package:acars_aggregation_server/src/models/jaero_acars_message.dart';
 import 'package:convert/convert.dart';
@@ -10,8 +6,7 @@ import 'package:quick_log/quick_log.dart';
 class JaeroACARSParser {
   Logger logger;
 
-  JaeroACARSParser(this.logger) {
-  }
+  JaeroACARSParser(this.logger) {}
 
   Future parse(String str) async {
     var lines = str.split('\n');
@@ -27,8 +22,7 @@ class JaeroACARSParser {
         bits[5],
         bits[6],
         bits[7],
-        lines.sublist(1).join('\n')
-    );
+        lines.sublist(1).join('\n'));
 
     logger.fine('ACARS');
     logger.fine('Timestamp  : ${acarsMessage.date} ${acarsMessage.time}');
@@ -93,31 +87,46 @@ class JaeroACARSParser {
         var appMessageBytes = hex.decode(appMessage);
         logger.fine('App Message Bytes   : ${appMessageBytes}');
         bool fail = false;
-        for(int i = 0; (i < appMessageBytes.length && !fail);) {
+        for (int i = 0; (i < appMessageBytes.length && !fail);) {
           var appDataType = appMessageBytes[i];
           switch (appDataType) {
             case ADSApplicationDataType.Acknowledgement:
-              if (i + 2 > appMessageBytes.length) { fail = true; break; }
+              if (i + 2 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Acknowledgement');
               var adsContractRequestNumber = appMessageBytes[i + 1];
-              logger.fine('ADS Contract Request Number: ${adsContractRequestNumber}');
+              logger.fine(
+                  'ADS Contract Request Number: ${adsContractRequestNumber}');
               i += 2;
               break;
             case ADSApplicationDataType.NegativeAcknowledgement:
-              if (i + 4 > appMessageBytes.length) { fail = true; break; }
+              if (i + 4 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Negative Acknowledgement');
               var adsContractRequestNumber = appMessageBytes[i + 1];
-              var reason = String.fromCharCodes(appMessageBytes.sublist(i + 2, i + 2 + 16));
-              logger.fine('ADS Contract Request Number: ${adsContractRequestNumber}, Reason: ${reason}');
+              var reason = String.fromCharCodes(
+                  appMessageBytes.sublist(i + 2, i + 2 + 16));
+              logger.fine(
+                  'ADS Contract Request Number: ${adsContractRequestNumber}, Reason: ${reason}');
               i += 4;
               break;
             case ADSApplicationDataType.NoncomplianceNotification:
-              if (i + 6 > appMessageBytes.length) { fail = true; break; }
+              if (i + 6 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Noncompliance Notification');
               i += 6;
               break;
             case ADSApplicationDataType.CancelEmergencyMode:
-              if (i + 1 > appMessageBytes.length) { fail = true; break; }
+              if (i + 1 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Cancel Emergency Mode');
               i += 1;
               break;
@@ -127,47 +136,74 @@ class JaeroACARSParser {
             case ADSApplicationDataType.VerticalRateChangeEvent:
             case ADSApplicationDataType.AltitudeRangeEvent:
             case ADSApplicationDataType.WaypointChangeEvent:
-              if (i + 11 > appMessageBytes.length) { fail = true; break; }
+              if (i + 11 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine(ADSApplicationDataType.value(appDataType));
               i += 11;
               break;
             case ADSApplicationDataType.FlightIdentificationGroup:
-              if (i + 7 > appMessageBytes.length) { fail = true; break; }
+              if (i + 7 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Flight Identification Group');
               i += 7;
               break;
             case ADSApplicationDataType.PredictedRouteGroup:
-              if (i + 18 > appMessageBytes.length) { fail = true; break; }
+              if (i + 18 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Predicted Route Group');
               i += 18;
               break;
             case ADSApplicationDataType.EarthReferenceGroup:
-              if (i + 6 > appMessageBytes.length) { fail = true; break; }
+              if (i + 6 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Earth Reference Group');
               i += 6;
               break;
             case ADSApplicationDataType.AirReferenceGroup:
-              if (i + 6 > appMessageBytes.length) { fail = true; break; }
+              if (i + 6 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Air Reference Group');
               i += 6;
               break;
             case ADSApplicationDataType.MeteorologicalGroup:
-              if (i + 5 > appMessageBytes.length) { fail = true; break; }
+              if (i + 5 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Meteorological Group');
               i += 5;
               break;
             case ADSApplicationDataType.AirframeIdentificationGroup:
-              if (i + 4 > appMessageBytes.length) { fail = true; break; }
+              if (i + 4 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Airframe Identification Group');
               i += 4;
               break;
             case ADSApplicationDataType.IntermediateProjectedIntentGroup:
-              if (i + 9 > appMessageBytes.length) { fail = true; break; }
+              if (i + 9 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Intermediate Projected Intent Group');
               i += 9;
               break;
             case ADSApplicationDataType.FixedProjectedIntentGroup:
-              if (i + 10 > appMessageBytes.length) { fail = true; break; }
+              if (i + 10 > appMessageBytes.length) {
+                fail = true;
+                break;
+              }
               logger.fine('Fixed Projected Intent Group');
               i += 10;
               break;

@@ -8,8 +8,9 @@ class JaeroADSCProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
   NatsClient natsClient;
 
-  JaeroADSCProcessor(Source source, this.databaseExecutor, this.natsClient, Logger logger) : super(source, logger) {
-  }
+  JaeroADSCProcessor(
+      Source source, this.databaseExecutor, this.natsClient, Logger logger)
+      : super(source, logger) {}
 
   logPrefix() {
     return '[${source.name}/${source.type}]';
@@ -18,22 +19,28 @@ class JaeroADSCProcessor extends Processor {
   Future parse(String str) async {
     SBSParser parser = new SBSParser(source, logger);
     SBSMessage sbsMessage = await parser.parse(str);
-    if (sbsMessage.tail != null) {
-      sbsMessage.sanitizedTail = new Tail(sbsMessage.tail).sanitize();
+    if (sbsMessage.hexIdent != null) {
+      if (sbsMessage.tail != null) {
+        sbsMessage.sanitizedTail = new Tail(sbsMessage.tail).sanitize();
+      }
     } else {
-      logger.error('${logPrefix()} Error parsing a useful SBS Message. Incoming was: ${str}');
+      logger.error(
+          '${logPrefix()} Error parsing a useful SBS Message. Incoming was: ${str}');
     }
     return sbsMessage;
   }
 
   Future process(String str, String ipAddress) async {
     SBSMessage sbsMessage = await parse(str);
-    var sbsMessageImporter = new SBSMessageImporter(sbsMessage, natsClient, databaseExecutor, logger);
+    var sbsMessageImporter = new SBSMessageImporter(
+        sbsMessage, natsClient, databaseExecutor, logger);
     await sbsMessageImporter.identifyTail();
 
-    var station = await sbsMessageImporter.findOrCreateStationByIpAddress(ipAddress);
+    var station =
+        await sbsMessageImporter.findOrCreateStationByIpAddress(ipAddress);
     var airframe = await sbsMessageImporter.findOrCreateAirframe();
     var flight = await sbsMessageImporter.updateOrCreateFlight(airframe);
-    var message = await sbsMessageImporter.insertOrSkipMessage(station, airframe, flight);
+    var message =
+        await sbsMessageImporter.insertOrSkipMessage(station, airframe, flight);
   }
 }

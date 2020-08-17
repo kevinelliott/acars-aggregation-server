@@ -6,8 +6,7 @@ import 'package:quick_log/quick_log.dart';
 class JsonMessageParser {
   Logger logger;
 
-  JsonMessageParser(this.logger) {
-  }
+  JsonMessageParser(this.logger) {}
 
   Future parse(String str) async {
     var jsonMessage = JsonMessage.fromJson(jsonDecode(str));

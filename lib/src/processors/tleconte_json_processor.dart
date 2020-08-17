@@ -8,24 +8,37 @@ class TLeconteJsonProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
   NatsClient natsClient;
 
-  TLeconteJsonProcessor(Source source, this.databaseExecutor, this.natsClient, Logger logger) : super(source, logger) {
-  }
+  TLeconteJsonProcessor(
+      Source source, this.databaseExecutor, this.natsClient, Logger logger)
+      : super(source, logger) {}
 
   Future parseJson(String str) async {
-    JsonMessageParser jsonParser = new JsonMessageParser(logger);
-    JsonMessage jsonMessage = await jsonParser.parse(str);
-    if (jsonMessage.tail != null)
-      jsonMessage.sanitizedTail = new Tail(jsonMessage.tail).sanitize();
-    return jsonMessage;
+    try {
+      JsonMessageParser jsonParser = new JsonMessageParser(logger);
+      JsonMessage jsonMessage = await jsonParser.parse(str);
+      if (jsonMessage.tail != null)
+        jsonMessage.sanitizedTail = new Tail(jsonMessage.tail).sanitize();
+      return jsonMessage;
+    } catch (err) {
+      logger.error(err.toString());
+      return null;
+    }
   }
 
   Future process(String str, String ipAddress) async {
     var jsonMessage = await parseJson(str);
-    var jsonMessageImporter = new TLeconteJsonMessageImporter(source, jsonMessage, natsClient, databaseExecutor, logger);
+    if (jsonMessage != null) {
+      var jsonMessageImporter = new TLeconteJsonMessageImporter(
+          source, jsonMessage, natsClient, databaseExecutor, logger);
 
-    var station = await jsonMessageImporter.findOrCreateStation(ipAddress);
-    var airframe = await jsonMessageImporter.findOrCreateAirframe();
-    var flight = await jsonMessageImporter.updateOrCreateFlight(airframe);
-    var message = await jsonMessageImporter.insertOrSkipMessage(station, airframe, flight, ipAddress);
+      var station = await jsonMessageImporter.findOrCreateStation(ipAddress);
+      var airframe = await jsonMessageImporter.findOrCreateAirframe();
+      var flight = await jsonMessageImporter.updateOrCreateFlight(airframe);
+      var message = await jsonMessageImporter.insertOrSkipMessage(
+          station, airframe, flight, ipAddress);
+    } else {
+      logger.error(
+          "There was an error trying to parse invalid JSON input. Skipping...");
+    }
   }
 }

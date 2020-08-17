@@ -1,10 +1,7 @@
-import 'package:acars_aggregation_server/aas.dart';
-
 class Tail {
   String sourceText;
 
-  Tail(String this.sourceText) {
-  }
+  Tail(String this.sourceText) {}
 
   String sanitize() {
     return sourceText.replaceAll('-', '');

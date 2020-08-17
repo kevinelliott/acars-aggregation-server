@@ -14,3 +14,6 @@ dev_dependencies:
   angel_orm_generator: ^2.0.5
   build_runner: ^1.7.3
   json_serializable: ^3.2.5
+dependency_overrides:
+  http_multi_server: 2.2.0
+  postgres: 2.1.1

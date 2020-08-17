@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:core';
 import 'dart:io';
 
@@ -7,8 +6,8 @@ import 'package:logging/logging.dart';
 import 'package:postgres/postgres.dart';
 
 class DatabaseConfig {
-  DatabaseConfig(this.type, this.host, this.port, this.user, this.pass, this.name, this.ssl) {
-  }
+  DatabaseConfig(this.type, this.host, this.port, this.user, this.pass,
+      this.name, this.ssl) {}
 
   var type = 'postgres';
   var host;
@@ -19,22 +18,14 @@ class DatabaseConfig {
   bool ssl = false;
 
   executor() {
-    var executor = new PostgreSqlExecutorPool(
-      Platform.numberOfProcessors,
-      () {
-        return new PostgreSQLConnection(
-          host,
-          port,
-          name,
+    var executor = new PostgreSqlExecutorPool(Platform.numberOfProcessors, () {
+      return new PostgreSQLConnection(host, port, name,
           username: user,
           password: pass,
           timeZone: 'UTC',
           timeoutInSeconds: 30,
-          useSSL: ssl
-        );
-      },
-      logger: new Logger('Database')
-    );
+          useSSL: ssl);
+    }, logger: new Logger('Database'));
     return executor;
   }
 }
