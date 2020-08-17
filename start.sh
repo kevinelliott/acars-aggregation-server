@@ -8,7 +8,7 @@ else
 fi
 
 cd /srv/aggregation-server
-../build.sh
+./build.sh
 
 /srv/aggregation-server/bin/server.exe \
   --database-host=${DATABASE_HOST} \
