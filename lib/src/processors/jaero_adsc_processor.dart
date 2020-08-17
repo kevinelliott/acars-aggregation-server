@@ -19,13 +19,15 @@ class JaeroADSCProcessor extends Processor {
   Future parse(String str) async {
     SBSParser parser = new SBSParser(source, logger);
     SBSMessage sbsMessage = await parser.parse(str);
-    if (sbsMessage.hexIdent != null) {
-      if (sbsMessage.tail != null) {
-        sbsMessage.sanitizedTail = new Tail(sbsMessage.tail).sanitize();
+    if (sbsMessage != null) {
+      if (sbsMessage.hexIdent != null) {
+        if (sbsMessage.tail != null) {
+          sbsMessage.sanitizedTail = new Tail(sbsMessage.tail).sanitize();
+        }
+      } else {
+        logger.error(
+            '${logPrefix()} Error parsing a useful SBS Message. Incoming was: ${str}');
       }
-    } else {
-      logger.error(
-          '${logPrefix()} Error parsing a useful SBS Message. Incoming was: ${str}');
     }
     return sbsMessage;
   }
