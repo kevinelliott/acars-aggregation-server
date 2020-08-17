@@ -32,7 +32,10 @@ class JaeroADSCIngestServer extends TCPIngestServer {
           this.logger.debug(
               'Received TCP packet from ${socket.remoteAddress.address}:${socket.remotePort}: ${result}');
           processor.logger = logger;
-          processor.process(result, socket.remoteAddress.address);
+          List<String> lines = result.split('\n');
+          lines.forEach((line) {
+            processor.process(result, socket.remoteAddress.address);
+          });
         });
       });
     });

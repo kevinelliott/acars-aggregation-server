@@ -84,6 +84,9 @@ class SBSMessageImporter {
           if (sbsMessage.altitude != null) {
             flightUpdateQuery.values.altitude = sbsMessage.altitude;
           }
+          if (sbsMessage.track != null) {
+            flightUpdateQuery.values.track = sbsMessage.track;
+          }
           flight = await flightUpdateQuery.updateOne(executor);
           this.logger.debug('${logPrefix()} Updated flight (id: ${flight.id})');
         } else {
@@ -101,6 +104,9 @@ class SBSMessageImporter {
           }
           if (sbsMessage.altitude != null) {
             flightInsertQuery.values.altitude = sbsMessage.altitude;
+          }
+          if (sbsMessage.track != null) {
+            flightInsertQuery.values.track = sbsMessage.track;
           }
           try {
             flight = await flightInsertQuery.insert(executor);
@@ -141,6 +147,9 @@ class SBSMessageImporter {
           }
           if (sbsMessage.altitude != null) {
             flightUpdateQuery.values.altitude = sbsMessage.altitude;
+          }
+          if (sbsMessage.track != null) {
+            flightUpdateQuery.values.track = sbsMessage.track;
           }
           flight = await flightUpdateQuery.updateOne(executor);
           if (flight != null) {

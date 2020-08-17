@@ -20,6 +20,8 @@ abstract class _Flight extends Model {
   double get longitude;
   @Column(isNullable: true)
   int get altitude;
+  @Column(isNullable: true)
+  double get track;
   int get messagesCount;
   @Column(isNullable: false)
   String get status;

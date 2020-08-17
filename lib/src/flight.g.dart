@@ -20,7 +20,7 @@ class FlightQuery extends Query<Flight, FlightQueryWhere> {
 
   @override
   get casts {
-    return {'latitude': 'text', 'longitude': 'text'};
+    return {'latitude': 'text', 'longitude': 'text', 'track': 'text'};
   }
 
   @override
@@ -41,6 +41,7 @@ class FlightQuery extends Query<Flight, FlightQueryWhere> {
       'latitude',
       'longitude',
       'altitude',
+      'track',
       'messages_count',
       'status'
     ];
@@ -69,8 +70,9 @@ class FlightQuery extends Query<Flight, FlightQueryWhere> {
         latitude: double.tryParse(row[7].toString()),
         longitude: double.tryParse(row[8].toString()),
         altitude: (row[9] as int),
-        messagesCount: (row[10] as int),
-        status: (row[11] as String));
+        track: double.tryParse(row[10].toString()),
+        messagesCount: (row[11] as int),
+        status: (row[12] as String));
     return model;
   }
 
@@ -94,6 +96,7 @@ class FlightQueryWhere extends QueryWhere {
         latitude = NumericSqlExpressionBuilder<double>(query, 'latitude'),
         longitude = NumericSqlExpressionBuilder<double>(query, 'longitude'),
         altitude = NumericSqlExpressionBuilder<int>(query, 'altitude'),
+        track = NumericSqlExpressionBuilder<double>(query, 'track'),
         messagesCount =
             NumericSqlExpressionBuilder<int>(query, 'messages_count'),
         status = StringSqlExpressionBuilder(query, 'status');
@@ -118,6 +121,8 @@ class FlightQueryWhere extends QueryWhere {
 
   final NumericSqlExpressionBuilder<int> altitude;
 
+  final NumericSqlExpressionBuilder<double> track;
+
   final NumericSqlExpressionBuilder<int> messagesCount;
 
   final StringSqlExpressionBuilder status;
@@ -135,6 +140,7 @@ class FlightQueryWhere extends QueryWhere {
       latitude,
       longitude,
       altitude,
+      track,
       messagesCount,
       status
     ];
@@ -144,7 +150,7 @@ class FlightQueryWhere extends QueryWhere {
 class FlightQueryValues extends MapQueryValues {
   @override
   get casts {
-    return {'latitude': 'decimal', 'longitude': 'decimal'};
+    return {'latitude': 'decimal', 'longitude': 'decimal', 'track': 'decimal'};
   }
 
   String get id {
@@ -197,6 +203,11 @@ class FlightQueryValues extends MapQueryValues {
   }
 
   set altitude(int value) => values['altitude'] = value;
+  double get track {
+    return double.tryParse((values['track'] as String));
+  }
+
+  set track(double value) => values['track'] = value.toString();
   int get messagesCount {
     return (values['messages_count'] as int);
   }
@@ -217,6 +228,7 @@ class FlightQueryValues extends MapQueryValues {
     latitude = model.latitude;
     longitude = model.longitude;
     altitude = model.altitude;
+    track = model.track;
     messagesCount = model.messagesCount;
     status = model.status;
   }
@@ -239,6 +251,7 @@ class Flight extends _Flight {
       this.latitude,
       this.longitude,
       this.altitude,
+      this.track,
       this.messagesCount,
       this.status});
 
@@ -276,6 +289,9 @@ class Flight extends _Flight {
   final int altitude;
 
   @override
+  final double track;
+
+  @override
   final int messagesCount;
 
   @override
@@ -292,6 +308,7 @@ class Flight extends _Flight {
       double latitude,
       double longitude,
       int altitude,
+      double track,
       int messagesCount,
       String status}) {
     return Flight(
@@ -305,6 +322,7 @@ class Flight extends _Flight {
         latitude: latitude ?? this.latitude,
         longitude: longitude ?? this.longitude,
         altitude: altitude ?? this.altitude,
+        track: track ?? this.track,
         messagesCount: messagesCount ?? this.messagesCount,
         status: status ?? this.status);
   }
@@ -321,6 +339,7 @@ class Flight extends _Flight {
         other.latitude == latitude &&
         other.longitude == longitude &&
         other.altitude == altitude &&
+        other.track == track &&
         other.messagesCount == messagesCount &&
         other.status == status;
   }
@@ -338,6 +357,7 @@ class Flight extends _Flight {
       latitude,
       longitude,
       altitude,
+      track,
       messagesCount,
       status
     ]);
@@ -345,7 +365,7 @@ class Flight extends _Flight {
 
   @override
   String toString() {
-    return "Flight(id=$id, createdAt=$createdAt, updatedAt=$updatedAt, airframeId=$airframeId, flight=$flight, departingAirport=$departingAirport, destinationAirport=$destinationAirport, latitude=$latitude, longitude=$longitude, altitude=$altitude, messagesCount=$messagesCount, status=$status)";
+    return "Flight(id=$id, createdAt=$createdAt, updatedAt=$updatedAt, airframeId=$airframeId, flight=$flight, departingAirport=$departingAirport, destinationAirport=$destinationAirport, latitude=$latitude, longitude=$longitude, altitude=$altitude, track=$track, messagesCount=$messagesCount, status=$status)";
   }
 
   Map<String, dynamic> toJson() {
@@ -400,6 +420,7 @@ class FlightSerializer extends Codec<Flight, Map> {
         latitude: map['latitude'] as double,
         longitude: map['longitude'] as double,
         altitude: map['altitude'] as int,
+        track: map['track'] as double,
         messagesCount: map['messages_count'] as int,
         status: map['status'] as String);
   }
@@ -419,6 +440,7 @@ class FlightSerializer extends Codec<Flight, Map> {
       'latitude': model.latitude,
       'longitude': model.longitude,
       'altitude': model.altitude,
+      'track': model.track,
       'messages_count': model.messagesCount,
       'status': model.status
     };
@@ -437,6 +459,7 @@ abstract class FlightFields {
     latitude,
     longitude,
     altitude,
+    track,
     messagesCount,
     status
   ];
@@ -460,6 +483,8 @@ abstract class FlightFields {
   static const String longitude = 'longitude';
 
   static const String altitude = 'altitude';
+
+  static const String track = 'track';
 
   static const String messagesCount = 'messages_count';
 
