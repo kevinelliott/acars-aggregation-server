@@ -11,19 +11,25 @@ class SBSParser {
   Future parse(String str) async {
     var parts = str.split(',');
     logger.fine(parts.toString());
+    logger.fine('Parts length ${parts.length}');
 
-    switch (parts[0]) {
-      case 'AIR':
-        return parseAIR(parts);
-      case 'ID':
-        return parseAIR(parts);
-      case 'MSG':
-        return parseMSG(parts);
-      case 'SEL':
-        return parseSEL(parts);
-      case 'STA':
-        return parseSTA(parts);
-      default:
+    if (parts.length >= 22) {
+      switch (parts[0]) {
+        case 'AIR':
+          return parseAIR(parts);
+        case 'ID':
+          return parseAIR(parts);
+        case 'MSG':
+          return parseMSG(parts);
+        case 'SEL':
+          return parseSEL(parts);
+        case 'STA':
+          return parseSTA(parts);
+        default:
+      }
+    } else {
+      logger.error(
+          'The number of parts of the SBS message is only ${parts.length} but should be 22 or greater. Skipping!');
     }
   }
 
@@ -74,7 +80,7 @@ class SBSParser {
     return sbsMessage;
   }
 
-  SBSMessage parseMSG(parts) {
+  SBSMessage parseMSG(List parts) {
     SBSMessage sbsMessage;
 
     switch (parts[1]) {

@@ -34,7 +34,7 @@ class JaeroADSCIngestServer extends TCPIngestServer {
           processor.logger = logger;
           List<String> lines = result.trimRight().split('\n');
           lines.forEach((line) {
-            // print("line: " + line);
+            print("line: " + line);
             if (line != null && line != '') {
               processor.process(line, socket.remoteAddress.address);
             }
