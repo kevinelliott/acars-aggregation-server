@@ -19,36 +19,7 @@ constructConfig(parsedArgs) {
       'name': parsedArgs['database-name'],
       'ssl': parsedArgs['database-ssl'],
     },
-    'health-check-server': parsedArgs['health-check-server'],
-    'health-check-server-port':
-        int.parse(parsedArgs['health-check-server-port']),
-    'ingest-acarsdec': parsedArgs['ingest-acarsdec'],
-    'ingest-acarsdec-port': int.parse(parsedArgs['ingest-acarsdec-port']),
-    'ingest-acarsdeco2': parsedArgs['ingest-acarsdec'],
-    'ingest-acarsdeco2-port': int.parse(parsedArgs['ingest-acarsdec-port']),
-    'ingest-airframes-grpc': parsedArgs['ingest-airframes-grpc'],
-    'ingest-airframes-grpc-port':
-        int.parse(parsedArgs['ingest-airframes-grpc-port']),
-    'ingest-dumpvdl2': parsedArgs['ingest-dumpvdl2'],
-    'ingest-dumpvdl2-port': int.parse(parsedArgs['ingest-dumpvdl2-port']),
-    'ingest-jaero-c-acars': parsedArgs['ingest-jaero-c-acars'],
-    'ingest-jaero-c-acars-port':
-        int.parse(parsedArgs['ingest-jaero-c-acars-port']),
-    'ingest-jaero-c-adsc': parsedArgs['ingest-jaero-c-acars'],
-    'ingest-jaero-c-adsc-port':
-        int.parse(parsedArgs['ingest-jaero-c-adsc-port']),
-    'ingest-jaero-l-acars': parsedArgs['ingest-jaero-l-acars'],
-    'ingest-jaero-l-acars-port':
-        int.parse(parsedArgs['ingest-jaero-l-acars-port']),
-    'ingest-vdlm2dec': parsedArgs['ingest-vdlm2dec'],
-    'ingest-vdlm2dec-port': int.parse(parsedArgs['ingest-vdlm2dec-port']),
-    'ingest-airframes-json': parsedArgs['ingest-airframes-json'],
-    'ingest-airframes-json-port':
-        int.parse(parsedArgs['ingest-airframes-json-port']),
-    'nats': {
-      'host': parsedArgs['nats-host'],
-      'port': int.parse(parsedArgs['nats-port'])
-    }
+    'verbose': parsedArgs['verbose']
   };
 }
 
