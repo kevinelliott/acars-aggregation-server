@@ -1,14 +1,12 @@
 import 'package:quick_log/quick_log.dart';
 
-import 'package:acars_aggregation_server/aas.dart';
+import 'package:airframes_aggregation_server/common.dart';
 
 class Processor {
   Source source;
   Logger logger;
 
-  Processor(Source this.source, Logger this.logger) {
-  }
+  Processor(Source this.source, Logger this.logger) {}
 
-  Future process(String str, String ipAddress) async {
-  }
+  Future process(String str, String ipAddress) async {}
 }

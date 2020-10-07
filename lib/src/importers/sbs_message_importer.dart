@@ -3,7 +3,7 @@ import 'package:angel_orm_postgres/angel_orm_postgres.dart';
 import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
 
-import 'package:acars_aggregation_server/aas.dart';
+import 'package:airframes_aggregation_server/common.dart';
 
 class SBSMessageImporter {
   SBSMessage sbsMessage;
@@ -20,7 +20,7 @@ class SBSMessageImporter {
   }
 
   logPrefix() {
-    return '[${sbsMessage.source.name}/${sbsMessage.source.type}]';
+    return '[${sbsMessage.source.name}/${sbsMessage.source.transmissionType}]';
   }
 
   Future findOrCreateAirframe() async {
@@ -243,7 +243,7 @@ class SBSMessageImporter {
       ..timestamp = DateTime.parse(
           '${sbsMessage.dateGenerated} ${sbsMessage.timeGenerated}')
       ..source = sbsMessage.source.name
-      ..sourceType = sbsMessage.source.type
+      ..sourceType = sbsMessage.source.transmissionType
       ..flight = sbsMessage.flightNumber
       ..tail = sbsMessage.sanitizedTail
       ..text = sbsMessage.squawk;

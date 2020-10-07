@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:quick_log/quick_log.dart';
 import 'package:udp/udp.dart';
 
-import 'package:acars_aggregation_server/aas.dart';
+import 'package:airframes_aggregation_server/common.dart';
 
 class AcarsdecIngestServer extends UDPIngestServer {
   AcarsdecIngestServer(name, config, databaseConfig)
       : super(name, config, databaseConfig) {
-    this.source =
-        Source('acarsdec', 'acarsdec', 'ACARS', 'TLeconte', 'JSON', 'UDP');
+    this.source = Source(
+        'acarsdec', 'acarsdec', 'unknown', 'udp', 'ACARS', 'TLeconte', 'JSON');
     this.processor = TLeconteJsonProcessor(
         source, databaseConfig.executor(), natsClient, logger);
   }

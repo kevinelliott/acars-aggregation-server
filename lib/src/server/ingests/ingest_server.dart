@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:acars_aggregation_server/src/processors/processor.dart';
 import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
 
-import 'package:acars_aggregation_server/aas.dart';
+import 'package:airframes_aggregation_server/common.dart';
 
 class IngestServer {
   IngestServerConfig config;
@@ -23,8 +22,8 @@ class IngestServer {
         ConsolePrinter(minLevel: LogLevel.fine, enableInReleaseMode: true);
     this.logger = Logger('Ingest(${name})');
     this.natsClient = NatsClient(config.natsHost, config.natsPort);
-    this.source = Source(
-        'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown');
+    this.source = Source('unknown', 'unknown', 'unknown', 'unknown', 'unknown',
+        'unknown', 'unknown');
     this.processor = Processor(source, logger);
   }
 

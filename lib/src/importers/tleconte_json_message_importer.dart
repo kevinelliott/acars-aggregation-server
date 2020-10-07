@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:acars_aggregation_server/aas.dart';
+import 'package:airframes_aggregation_server/common.dart';
 import 'package:angel_orm_postgres/angel_orm_postgres.dart';
 import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
@@ -280,9 +280,9 @@ class TLeconteJsonMessageImporter {
         ..firstToReport = false
         ..sourceName = this.source.name
         ..sourceApplication = this.source.application
-        ..sourceType = this.source.type
-        ..sourceFormat = this.source.format
-        ..sourceProtocol = this.source.protocol
+        ..sourceType = this.source.transmissionType
+        ..sourceFormat = this.source.dataProtocolFormat
+        ..sourceProtocol = this.source.dataProtocol
         ..sourceNetworkProtocol = this.source.networkProtocol
         ..sourceRemoteIp = ipAddress
         ..frequency = message.frequency
@@ -366,9 +366,9 @@ class TLeconteJsonMessageImporter {
           ..firstToReport = true
           ..sourceName = this.source.name
           ..sourceApplication = this.source.application
-          ..sourceType = this.source.type
-          ..sourceFormat = this.source.format
-          ..sourceProtocol = this.source.protocol
+          ..sourceType = this.source.transmissionType
+          ..sourceFormat = this.source.dataProtocolFormat
+          ..sourceProtocol = this.source.dataProtocol
           ..sourceNetworkProtocol = this.source.networkProtocol
           ..sourceRemoteIp = ipAddress
           ..frequency = message.frequency

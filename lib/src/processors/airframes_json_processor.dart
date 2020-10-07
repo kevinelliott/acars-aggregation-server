@@ -4,21 +4,18 @@ import 'package:quick_log/quick_log.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
 
-class TLeconteJsonProcessor extends Processor {
+class AirframesJsonProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
   NatsClient natsClient;
 
-  TLeconteJsonProcessor(
+  AirframesJsonProcessor(
       Source source, this.databaseExecutor, this.natsClient, Logger logger)
       : super(source, logger) {}
 
   Future parseJson(String str) async {
     try {
-      JsonMessageParser jsonParser = new JsonMessageParser(logger);
-      JsonMessage jsonMessage = await jsonParser.parse(str);
-      if (jsonMessage.tail != null)
-        jsonMessage.sanitizedTail = new Tail(jsonMessage.tail).sanitize();
-      return jsonMessage;
+      AirframesJsonParser jsonParser = new AirframesJsonParser(logger);
+      dynamic json = await jsonParser.parse(str);
     } catch (err) {
       logger.error(err.toString());
       return null;

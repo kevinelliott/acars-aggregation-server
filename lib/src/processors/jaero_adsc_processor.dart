@@ -2,7 +2,7 @@ import 'package:nats/nats.dart';
 import 'package:angel_orm_postgres/angel_orm_postgres.dart';
 import 'package:quick_log/quick_log.dart';
 
-import 'package:acars_aggregation_server/aas.dart';
+import 'package:airframes_aggregation_server/common.dart';
 
 class JaeroADSCProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
@@ -13,7 +13,7 @@ class JaeroADSCProcessor extends Processor {
       : super(source, logger) {}
 
   logPrefix() {
-    return '[${source.name}/${source.type}]';
+    return '[${source.name}/${source.transmissionType}]';
   }
 
   Future parse(String str) async {

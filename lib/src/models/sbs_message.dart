@@ -1,6 +1,6 @@
-import 'message.dart';
+import 'basic_message.dart';
 
-class SBSMessage extends Message {
+class SBSMessage extends BasicMessage {
   String type;
   String transmissionType;
   String sessionId; // Not used generally

@@ -4,12 +4,12 @@ import 'package:udp/udp.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
 
-class Dumpvdl2IngestServer extends UDPIngestServer {
-  Dumpvdl2IngestServer(name, config, databaseConfig)
+class AirframesJsonIngestServer extends UDPIngestServer {
+  AirframesJsonIngestServer(name, config, databaseConfig)
       : super(name, config, databaseConfig) {
-    this.source = Source('dumpvdl2', 'dumpvdl2', 'unknown', 'udp', 'vdl',
-        'PlanePlotter', 'text');
-    this.processor = PlanePlotterProcessor(
+    this.source = Source('airframes-client', 'afc', 'unknown', 'udp', 'mixed',
+        'af.json.v1', 'json');
+    this.processor = AirframesJsonProcessor(
         source, databaseConfig.executor(), natsClient, logger);
   }
 
@@ -25,7 +25,7 @@ class Dumpvdl2IngestServer extends UDPIngestServer {
         'Listening on ${config.transport} port ${config.port} for incoming JSON messages from ${config.clientApplication} clients...');
     receiver.listen((datagram) {
       this.logger = Logger('Ingest(${name}) #${++packetCount}');
-      var str = String.fromCharCodes(datagram.data);
+      var str = String.fromCharCodes(datagram.data).trim();
       this.logger.debug(
           'Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
       processor.logger = logger;
