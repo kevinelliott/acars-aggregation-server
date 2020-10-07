@@ -1,5 +1,5 @@
-import 'package:airframes_aggregation_server/src/models/arinc.dart';
-import 'package:airframes_aggregation_server/src/models/jaero_acars_message.dart';
+import 'package:airframes_aggregation_server/models/arinc.dart';
+import 'package:airframes_aggregation_server/models/jaero_acars_message.dart';
 import 'package:convert/convert.dart';
 import 'package:quick_log/quick_log.dart';
 
