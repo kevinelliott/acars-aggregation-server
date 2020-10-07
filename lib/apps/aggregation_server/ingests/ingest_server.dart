@@ -4,6 +4,7 @@ import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
+import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class IngestServer {
   IngestServerConfig config;

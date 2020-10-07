@@ -3,6 +3,7 @@ import 'package:angel_orm_postgres/angel_orm_postgres.dart';
 import 'package:quick_log/quick_log.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
+import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class PlanePlotterProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;

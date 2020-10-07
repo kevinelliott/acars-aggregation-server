@@ -1,19 +1,21 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
+import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
-class TCPIngestServer extends IngestServer {
-  TCPIngestServer(name, config, databaseConfig)
+class JaeroADSCIngestServer extends TCPIngestServer {
+  JaeroADSCIngestServer(String name, config, databaseConfig)
       : super(name, config, databaseConfig) {
     this.logger = Logger('Ingest(${name})');
-    this.source = Source(
-        name, 'unknown', 'unknown', 'unknown', 'tcp', 'unknown', 'unknown');
-    this.processor = Processor(source, logger);
+    this.source = Source(name.substring(0, 10), 'JAERO', 'unknown', 'tcp',
+        'ADS-C', 'sbs', 'text');
     this.natsClient = NatsClient(config.natsHost, config.natsPort);
+
+    this.processor = JaeroADSCProcessor(
+        source, databaseConfig.executor(), natsClient, logger);
   }
 
   Future start() async {
@@ -31,9 +33,12 @@ class TCPIngestServer extends IngestServer {
           this.logger.debug(
               'Received TCP packet from ${socket.remoteAddress.address}:${socket.remotePort}: ${result}');
           processor.logger = logger;
-          List<String> lines = result.split('\n');
+          List<String> lines = result.trimRight().split('\n');
           lines.forEach((line) {
-            processor.process(line, socket.remoteAddress.address);
+            print("line: " + line);
+            if (line != null && line != '') {
+              processor.process(line, socket.remoteAddress.address);
+            }
           });
         });
       });

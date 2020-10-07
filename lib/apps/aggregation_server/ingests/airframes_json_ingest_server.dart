@@ -3,6 +3,7 @@ import 'package:quick_log/quick_log.dart';
 import 'package:udp/udp.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
+import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class AirframesJsonIngestServer extends UDPIngestServer {
   AirframesJsonIngestServer(name, config, databaseConfig)

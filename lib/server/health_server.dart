@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dart_express/dart_express.dart';
-import 'package:path/path.dart' as path;
 import 'package:quick_log/quick_log.dart';
 
 class HealthServer {

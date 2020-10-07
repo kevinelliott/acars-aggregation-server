@@ -6,6 +6,7 @@ import 'package:args/args.dart';
 import 'package:quick_log/quick_log.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
+import 'support.dart';
 
 var config = {};
 var parsedArgs;
