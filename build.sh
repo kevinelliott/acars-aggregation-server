@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo Getting dependencies
+apt install protobuf
 pub get
 echo
 
