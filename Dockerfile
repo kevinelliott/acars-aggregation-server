@@ -1,4 +1,4 @@
-FROM google/dart-runtime:2.9.0-11.0.dev
+FROM google/dart-runtime:2.12.0-96.0.dev
 
 ENV DATABASE_HOST=db
 ENV DATABASE_PORT=5432
