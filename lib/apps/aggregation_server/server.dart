@@ -11,7 +11,7 @@ import 'support.dart';
 var config = {};
 var parsedArgs;
 
-final VERSION = '0.2.2';
+final VERSION = '0.2.3';
 
 constructConfig(parsedArgs) {
   return {
@@ -88,22 +88,22 @@ parseArgs(arguments) {
     ..addFlag('ingest-acarsdeco2', defaultsTo: false)
     ..addOption('ingest-acarsdeco2-port',
         defaultsTo: Platform.environment['INGEST_ACARSDEC_PORT'] ?? '5551')
-    ..addFlag('ingest-dumpvdl2', defaultsTo: true)
+    ..addFlag('ingest-dumpvdl2', defaultsTo: false)
     ..addOption('ingest-dumpvdl2-port',
         defaultsTo: Platform.environment['INGEST_DUMPVDL2_PORT'] ?? '5552')
-    ..addFlag('ingest-jaero-c-acars', defaultsTo: true)
+    ..addFlag('ingest-jaero-c-acars', defaultsTo: false)
     ..addOption('ingest-jaero-c-acars-port',
         defaultsTo: Platform.environment['INGEST_JAERO_C_ACARS_PORT'] ?? '5561')
-    ..addFlag('ingest-jaero-c-adsc', defaultsTo: true)
+    ..addFlag('ingest-jaero-c-adsc', defaultsTo: false)
     ..addOption('ingest-jaero-c-adsc-port',
         defaultsTo: Platform.environment['INGEST_JAERO_C_ADSC_PORT'] ?? '5562')
-    ..addFlag('ingest-jaero-l-acars', defaultsTo: true)
+    ..addFlag('ingest-jaero-l-acars', defaultsTo: false)
     ..addOption('ingest-jaero-l-acars-port',
         defaultsTo: Platform.environment['INGEST_JAERO_L_ACARS_PORT'] ?? '5571')
-    ..addFlag('ingest-vdlm2dec', defaultsTo: true)
+    ..addFlag('ingest-vdlm2dec', defaultsTo: false)
     ..addOption('ingest-vdlm2dec-port',
         defaultsTo: Platform.environment['INGEST_VDLM2DEC_PORT'] ?? '5555')
-    ..addFlag('ingest-airframes-json', defaultsTo: true)
+    ..addFlag('ingest-airframes-json', defaultsTo: false)
     ..addOption('ingest-airframes-json-port',
         defaultsTo:
             Platform.environment['INGEST_AIRFRAMES_JSON_PORT'] ?? '6000')

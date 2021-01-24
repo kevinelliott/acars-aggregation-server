@@ -1,5 +1,5 @@
 name: airframes_aggregation_server
-version: 0.0.1
+version: 0.2.3
 dependencies:
   args: ^1.5.2
   angel_orm: ^2.0.2
