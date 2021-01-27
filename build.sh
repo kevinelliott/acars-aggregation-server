@@ -7,6 +7,7 @@ pub global activate protoc_plugin
 echo
 
 echo Building protos
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 protoc --dart_out=grpc:lib/generated -Ilib/protos lib/protos/airframes.proto
 echo
 
