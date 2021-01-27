@@ -2,6 +2,7 @@
 
 echo Getting dependencies
 pub get
+pub upgrade
 pub global activate protoc_plugin
 echo
 
@@ -15,5 +16,5 @@ echo
 
 echo Building native executables
 dart2native lib/apps/aggregation_server/server.dart -o bin/server.exe -v
-dart2native lib/apps/leaderboard_generator/leaderboard_generator.dart -o bin/leaderboard_generator.exe -v
+#dart2native lib/apps/leaderboard_generator/leaderboard_generator.dart -o bin/leaderboard_generator.exe -v
 echo
