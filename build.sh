@@ -1,8 +1,8 @@
 #!/bin/sh
 
 echo Getting dependencies
+pub upgrade --force
 pub get
-pub upgrade
 pub global activate protoc_plugin
 echo
 

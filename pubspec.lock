@@ -121,12 +121,12 @@ packages:
     source: hosted
     version: "1.10.2"
   build_runner_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.1"
+    version: "5.2.0"
   built_collection:
     dependency: transitive
     description:
@@ -527,7 +527,7 @@ packages:
       name: reflectable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.7"
+    version: "2.2.5"
   rxdart:
     dependency: transitive
     description:

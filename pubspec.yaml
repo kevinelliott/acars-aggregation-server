@@ -6,6 +6,7 @@ dependencies:
   args: ^1.5.2
   angel_orm: ^2.0.2
   angel_orm_postgres: ^1.0.0
+  build_runner_core: 5.2.0
   convert:
   json_annotation: ^3.0.1
   nats:
