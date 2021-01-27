@@ -13,7 +13,7 @@ dependencies:
   quick_log: ^0.4.0
   udp: ^3.0.2
   # dart_json_mapper: ^1.5.20
-  async: ^2.2.0
+  async: 2.4.0
   grpc: ^2.8.0
   protobuf: ^1.1.0
   dart_express: ^0.5.3
