@@ -23,6 +23,5 @@ dev_dependencies:
   json_serializable: ^3.2.5
 dependency_overrides:
   analyzer: 0.39.4
-  build_runner_core: 4.2.0
   http_multi_server: 2.2.0
   postgres: 2.1.1

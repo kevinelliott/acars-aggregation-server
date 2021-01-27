@@ -98,7 +98,7 @@ packages:
       name: build_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1+1"
+    version: "0.4.2"
   build_daemon:
     dependency: transitive
     description:
@@ -121,12 +121,12 @@ packages:
     source: hosted
     version: "1.9.0"
   build_runner_core:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.0"
+    version: "5.1.0"
   built_collection:
     dependency: transitive
     description:
@@ -399,7 +399,7 @@ packages:
       name: mustache4dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0-dev.1.0"
+    version: "3.0.0-dev.0.0"
   nats:
     dependency: "direct main"
     description:
@@ -521,13 +521,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  reflectable:
-    dependency: transitive
-    description:
-      name: reflectable
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.4"
   rxdart:
     dependency: transitive
     description:
