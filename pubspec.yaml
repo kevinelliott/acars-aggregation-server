@@ -18,6 +18,7 @@ dependencies:
   protobuf: ^1.1.0
   dart_express: ^0.5.3
 dev_dependencies:
+  analyzer: 0.39.10
   angel_orm_generator: ^2.0.5
   build_runner: ^1.7.3
   json_serializable: ^3.2.5

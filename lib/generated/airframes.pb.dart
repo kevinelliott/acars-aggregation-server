@@ -2,8 +2,8 @@
 //  Generated code. Do not modify.
 //  source: airframes.proto
 //
-// @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -14,31 +14,103 @@ import 'airframes.pbenum.dart';
 export 'airframes.pbenum.dart';
 
 class AcarsdecMessage extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AcarsdecMessage', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
-    ..a<$core.double>(1, 'timestamp', $pb.PbFieldType.OD)
-    ..aOS(2, 'stationId')
-    ..a<$core.int>(3, 'channel', $pb.PbFieldType.OU3)
-    ..a<$core.double>(4, 'frequency', $pb.PbFieldType.OD)
-    ..a<$core.int>(5, 'level', $pb.PbFieldType.OS3)
-    ..a<$core.int>(6, 'error', $pb.PbFieldType.OU3)
-    ..aOS(7, 'mode')
-    ..aOS(8, 'label')
-    ..aOS(9, 'blockId')
-    ..aOS(10, 'ack')
-    ..aOS(11, 'tail')
-    ..aOS(12, 'flight')
-    ..aOS(13, 'messageNumber')
-    ..aOS(14, 'text')
-    ..aOB(15, 'end')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AcarsdecMessage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OD)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stationId')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frequency', $pb.PbFieldType.OD)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'level', $pb.PbFieldType.OS3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error', $pb.PbFieldType.OU3)
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blockId')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ack')
+    ..aOS(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tail')
+    ..aOS(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'flight')
+    ..aOS(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageNumber')
+    ..aOS(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'text')
+    ..aOB(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'end')
     ..hasRequiredFields = false
   ;
 
   AcarsdecMessage._() : super();
-  factory AcarsdecMessage() => create();
+  factory AcarsdecMessage({
+    $core.double timestamp,
+    $core.String stationId,
+    $core.int channel,
+    $core.double frequency,
+    $core.int level,
+    $core.int error,
+    $core.String mode,
+    $core.String label,
+    $core.String blockId,
+    $core.String ack,
+    $core.String tail,
+    $core.String flight,
+    $core.String messageNumber,
+    $core.String text,
+    $core.bool end,
+  }) {
+    final _result = create();
+    if (timestamp != null) {
+      _result.timestamp = timestamp;
+    }
+    if (stationId != null) {
+      _result.stationId = stationId;
+    }
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    if (frequency != null) {
+      _result.frequency = frequency;
+    }
+    if (level != null) {
+      _result.level = level;
+    }
+    if (error != null) {
+      _result.error = error;
+    }
+    if (mode != null) {
+      _result.mode = mode;
+    }
+    if (label != null) {
+      _result.label = label;
+    }
+    if (blockId != null) {
+      _result.blockId = blockId;
+    }
+    if (ack != null) {
+      _result.ack = ack;
+    }
+    if (tail != null) {
+      _result.tail = tail;
+    }
+    if (flight != null) {
+      _result.flight = flight;
+    }
+    if (messageNumber != null) {
+      _result.messageNumber = messageNumber;
+    }
+    if (text != null) {
+      _result.text = text;
+    }
+    if (end != null) {
+      _result.end = end;
+    }
+    return _result;
+  }
   factory AcarsdecMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AcarsdecMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   AcarsdecMessage clone() => AcarsdecMessage()..mergeFromMessage(this);
-  AcarsdecMessage copyWith(void Function(AcarsdecMessage) updates) => super.copyWith((message) => updates(message as AcarsdecMessage));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AcarsdecMessage copyWith(void Function(AcarsdecMessage) updates) => super.copyWith((message) => updates(message as AcarsdecMessage)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AcarsdecMessage create() => AcarsdecMessage._();
@@ -185,40 +257,148 @@ class AcarsdecMessage extends $pb.GeneratedMessage {
 }
 
 class Vdlm2decMessage extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Vdlm2decMessage', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
-    ..a<$core.double>(1, 'timestamp', $pb.PbFieldType.OD)
-    ..aOS(2, 'stationId')
-    ..a<$core.int>(3, 'channel', $pb.PbFieldType.OU3)
-    ..a<$core.double>(4, 'frequency', $pb.PbFieldType.OD)
-    ..a<$core.int>(5, 'fromIcao', $pb.PbFieldType.OU3)
-    ..a<$core.int>(6, 'toIcao', $pb.PbFieldType.OU3)
-    ..a<$core.int>(7, 'level', $pb.PbFieldType.OS3)
-    ..a<$core.int>(8, 'error', $pb.PbFieldType.OU3)
-    ..aOS(9, 'mode')
-    ..aOS(10, 'label')
-    ..aOS(11, 'blockId')
-    ..aOS(12, 'ack')
-    ..aOS(13, 'tail')
-    ..aOS(14, 'flight')
-    ..aOS(15, 'messageNumber')
-    ..aOS(16, 'text')
-    ..aOB(17, 'end')
-    ..aOS(18, 'departureAirport')
-    ..aOS(19, 'destinationAirport')
-    ..aOS(20, 'arrivalEta')
-    ..aOS(21, 'gateOut')
-    ..aOS(22, 'groundOff')
-    ..aOS(23, 'groundOn')
-    ..aOS(24, 'gateIn')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Vdlm2decMessage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OD)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stationId')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frequency', $pb.PbFieldType.OD)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fromIcao', $pb.PbFieldType.OU3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'toIcao', $pb.PbFieldType.OU3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'level', $pb.PbFieldType.OS3)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error', $pb.PbFieldType.OU3)
+    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..aOS(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blockId')
+    ..aOS(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ack')
+    ..aOS(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tail')
+    ..aOS(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'flight')
+    ..aOS(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageNumber')
+    ..aOS(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'text')
+    ..aOB(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'end')
+    ..aOS(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'departureAirport')
+    ..aOS(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'destinationAirport')
+    ..aOS(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arrivalEta')
+    ..aOS(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gateOut')
+    ..aOS(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groundOff')
+    ..aOS(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groundOn')
+    ..aOS(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gateIn')
     ..hasRequiredFields = false
   ;
 
   Vdlm2decMessage._() : super();
-  factory Vdlm2decMessage() => create();
+  factory Vdlm2decMessage({
+    $core.double timestamp,
+    $core.String stationId,
+    $core.int channel,
+    $core.double frequency,
+    $core.int fromIcao,
+    $core.int toIcao,
+    $core.int level,
+    $core.int error,
+    $core.String mode,
+    $core.String label,
+    $core.String blockId,
+    $core.String ack,
+    $core.String tail,
+    $core.String flight,
+    $core.String messageNumber,
+    $core.String text,
+    $core.bool end,
+    $core.String departureAirport,
+    $core.String destinationAirport,
+    $core.String arrivalEta,
+    $core.String gateOut,
+    $core.String groundOff,
+    $core.String groundOn,
+    $core.String gateIn,
+  }) {
+    final _result = create();
+    if (timestamp != null) {
+      _result.timestamp = timestamp;
+    }
+    if (stationId != null) {
+      _result.stationId = stationId;
+    }
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    if (frequency != null) {
+      _result.frequency = frequency;
+    }
+    if (fromIcao != null) {
+      _result.fromIcao = fromIcao;
+    }
+    if (toIcao != null) {
+      _result.toIcao = toIcao;
+    }
+    if (level != null) {
+      _result.level = level;
+    }
+    if (error != null) {
+      _result.error = error;
+    }
+    if (mode != null) {
+      _result.mode = mode;
+    }
+    if (label != null) {
+      _result.label = label;
+    }
+    if (blockId != null) {
+      _result.blockId = blockId;
+    }
+    if (ack != null) {
+      _result.ack = ack;
+    }
+    if (tail != null) {
+      _result.tail = tail;
+    }
+    if (flight != null) {
+      _result.flight = flight;
+    }
+    if (messageNumber != null) {
+      _result.messageNumber = messageNumber;
+    }
+    if (text != null) {
+      _result.text = text;
+    }
+    if (end != null) {
+      _result.end = end;
+    }
+    if (departureAirport != null) {
+      _result.departureAirport = departureAirport;
+    }
+    if (destinationAirport != null) {
+      _result.destinationAirport = destinationAirport;
+    }
+    if (arrivalEta != null) {
+      _result.arrivalEta = arrivalEta;
+    }
+    if (gateOut != null) {
+      _result.gateOut = gateOut;
+    }
+    if (groundOff != null) {
+      _result.groundOff = groundOff;
+    }
+    if (groundOn != null) {
+      _result.groundOn = groundOn;
+    }
+    if (gateIn != null) {
+      _result.gateIn = gateIn;
+    }
+    return _result;
+  }
   factory Vdlm2decMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Vdlm2decMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Vdlm2decMessage clone() => Vdlm2decMessage()..mergeFromMessage(this);
-  Vdlm2decMessage copyWith(void Function(Vdlm2decMessage) updates) => super.copyWith((message) => updates(message as Vdlm2decMessage));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Vdlm2decMessage copyWith(void Function(Vdlm2decMessage) updates) => super.copyWith((message) => updates(message as Vdlm2decMessage)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Vdlm2decMessage create() => Vdlm2decMessage._();
@@ -446,7 +626,7 @@ class Vdlm2decMessage extends $pb.GeneratedMessage {
 }
 
 class FrameRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FrameRequest', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FrameRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -454,8 +634,16 @@ class FrameRequest extends $pb.GeneratedMessage {
   factory FrameRequest() => create();
   factory FrameRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FrameRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FrameRequest clone() => FrameRequest()..mergeFromMessage(this);
-  FrameRequest copyWith(void Function(FrameRequest) updates) => super.copyWith((message) => updates(message as FrameRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FrameRequest copyWith(void Function(FrameRequest) updates) => super.copyWith((message) => updates(message as FrameRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FrameRequest create() => FrameRequest._();
@@ -467,18 +655,38 @@ class FrameRequest extends $pb.GeneratedMessage {
 }
 
 class AirframesClientFrame_Source_App extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AirframesClientFrame.Source.App', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
-    ..e<AirframesClientFrame_Source_App_AppType>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_App_AppType.UNKNOWN_APP_TYPE, valueOf: AirframesClientFrame_Source_App_AppType.valueOf, enumValues: AirframesClientFrame_Source_App_AppType.values)
-    ..aOS(2, 'version')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AirframesClientFrame.Source.App', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
+    ..e<AirframesClientFrame_Source_App_AppType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_App_AppType.UNKNOWN_APP_TYPE, valueOf: AirframesClientFrame_Source_App_AppType.valueOf, enumValues: AirframesClientFrame_Source_App_AppType.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
     ..hasRequiredFields = false
   ;
 
   AirframesClientFrame_Source_App._() : super();
-  factory AirframesClientFrame_Source_App() => create();
+  factory AirframesClientFrame_Source_App({
+    AirframesClientFrame_Source_App_AppType type,
+    $core.String version,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (version != null) {
+      _result.version = version;
+    }
+    return _result;
+  }
   factory AirframesClientFrame_Source_App.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AirframesClientFrame_Source_App.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   AirframesClientFrame_Source_App clone() => AirframesClientFrame_Source_App()..mergeFromMessage(this);
-  AirframesClientFrame_Source_App copyWith(void Function(AirframesClientFrame_Source_App) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source_App));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AirframesClientFrame_Source_App copyWith(void Function(AirframesClientFrame_Source_App) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source_App)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_Source_App create() => AirframesClientFrame_Source_App._();
@@ -508,21 +716,53 @@ class AirframesClientFrame_Source_App extends $pb.GeneratedMessage {
 }
 
 class AirframesClientFrame_Source_Host extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AirframesClientFrame.Source.Host', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
-    ..e<AirframesClientFrame_Source_Host_Platform>(1, 'platform', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_Host_Platform.UNKNOWN_PLATFORM, valueOf: AirframesClientFrame_Source_Host_Platform.valueOf, enumValues: AirframesClientFrame_Source_Host_Platform.values)
-    ..e<AirframesClientFrame_Source_Host_OperatingSystem>(2, 'os', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_Host_OperatingSystem.UNKNOWN_OPERATING_SYSTEM, valueOf: AirframesClientFrame_Source_Host_OperatingSystem.valueOf, enumValues: AirframesClientFrame_Source_Host_OperatingSystem.values)
-    ..aOS(3, 'version')
-    ..aOS(4, 'nodeName')
-    ..aOS(5, 'nodeIp')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AirframesClientFrame.Source.Host', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
+    ..e<AirframesClientFrame_Source_Host_Platform>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'platform', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_Host_Platform.UNKNOWN_PLATFORM, valueOf: AirframesClientFrame_Source_Host_Platform.valueOf, enumValues: AirframesClientFrame_Source_Host_Platform.values)
+    ..e<AirframesClientFrame_Source_Host_OperatingSystem>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'os', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_Host_OperatingSystem.UNKNOWN_OPERATING_SYSTEM, valueOf: AirframesClientFrame_Source_Host_OperatingSystem.valueOf, enumValues: AirframesClientFrame_Source_Host_OperatingSystem.values)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodeName')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodeIp')
     ..hasRequiredFields = false
   ;
 
   AirframesClientFrame_Source_Host._() : super();
-  factory AirframesClientFrame_Source_Host() => create();
+  factory AirframesClientFrame_Source_Host({
+    AirframesClientFrame_Source_Host_Platform platform,
+    AirframesClientFrame_Source_Host_OperatingSystem os,
+    $core.String version,
+    $core.String nodeName,
+    $core.String nodeIp,
+  }) {
+    final _result = create();
+    if (platform != null) {
+      _result.platform = platform;
+    }
+    if (os != null) {
+      _result.os = os;
+    }
+    if (version != null) {
+      _result.version = version;
+    }
+    if (nodeName != null) {
+      _result.nodeName = nodeName;
+    }
+    if (nodeIp != null) {
+      _result.nodeIp = nodeIp;
+    }
+    return _result;
+  }
   factory AirframesClientFrame_Source_Host.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AirframesClientFrame_Source_Host.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   AirframesClientFrame_Source_Host clone() => AirframesClientFrame_Source_Host()..mergeFromMessage(this);
-  AirframesClientFrame_Source_Host copyWith(void Function(AirframesClientFrame_Source_Host) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source_Host));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AirframesClientFrame_Source_Host copyWith(void Function(AirframesClientFrame_Source_Host) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source_Host)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_Source_Host create() => AirframesClientFrame_Source_Host._();
@@ -579,20 +819,48 @@ class AirframesClientFrame_Source_Host extends $pb.GeneratedMessage {
 }
 
 class AirframesClientFrame_Source extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AirframesClientFrame.Source', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
-    ..aOM<AirframesClientFrame_Source_App>(1, 'app', subBuilder: AirframesClientFrame_Source_App.create)
-    ..aOM<AirframesClientFrame_Source_Host>(2, 'host', subBuilder: AirframesClientFrame_Source_Host.create)
-    ..e<AirframesClientFrame_Source_SourceType>(3, 'type', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_SourceType.ACARS, valueOf: AirframesClientFrame_Source_SourceType.valueOf, enumValues: AirframesClientFrame_Source_SourceType.values)
-    ..e<AirframesClientFrame_Source_SourceFormat>(4, 'format', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_SourceFormat.HUMAN_READABLE_TEXT, valueOf: AirframesClientFrame_Source_SourceFormat.valueOf, enumValues: AirframesClientFrame_Source_SourceFormat.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AirframesClientFrame.Source', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
+    ..aOM<AirframesClientFrame_Source_App>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'app', subBuilder: AirframesClientFrame_Source_App.create)
+    ..aOM<AirframesClientFrame_Source_Host>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: AirframesClientFrame_Source_Host.create)
+    ..e<AirframesClientFrame_Source_SourceType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_SourceType.ACARS, valueOf: AirframesClientFrame_Source_SourceType.valueOf, enumValues: AirframesClientFrame_Source_SourceType.values)
+    ..e<AirframesClientFrame_Source_SourceFormat>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'format', $pb.PbFieldType.OE, defaultOrMaker: AirframesClientFrame_Source_SourceFormat.HUMAN_READABLE_TEXT, valueOf: AirframesClientFrame_Source_SourceFormat.valueOf, enumValues: AirframesClientFrame_Source_SourceFormat.values)
     ..hasRequiredFields = false
   ;
 
   AirframesClientFrame_Source._() : super();
-  factory AirframesClientFrame_Source() => create();
+  factory AirframesClientFrame_Source({
+    AirframesClientFrame_Source_App app,
+    AirframesClientFrame_Source_Host host,
+    AirframesClientFrame_Source_SourceType type,
+    AirframesClientFrame_Source_SourceFormat format,
+  }) {
+    final _result = create();
+    if (app != null) {
+      _result.app = app;
+    }
+    if (host != null) {
+      _result.host = host;
+    }
+    if (type != null) {
+      _result.type = type;
+    }
+    if (format != null) {
+      _result.format = format;
+    }
+    return _result;
+  }
   factory AirframesClientFrame_Source.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AirframesClientFrame_Source.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   AirframesClientFrame_Source clone() => AirframesClientFrame_Source()..mergeFromMessage(this);
-  AirframesClientFrame_Source copyWith(void Function(AirframesClientFrame_Source) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AirframesClientFrame_Source copyWith(void Function(AirframesClientFrame_Source) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_Source create() => AirframesClientFrame_Source._();
@@ -644,17 +912,33 @@ class AirframesClientFrame_Source extends $pb.GeneratedMessage {
 }
 
 class AirframesClientFrame_AirframesConfig_Feed extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AirframesClientFrame.AirframesConfig.Feed', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
-    ..aOS(1, 'id')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AirframesClientFrame.AirframesConfig.Feed', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..hasRequiredFields = false
   ;
 
   AirframesClientFrame_AirframesConfig_Feed._() : super();
-  factory AirframesClientFrame_AirframesConfig_Feed() => create();
+  factory AirframesClientFrame_AirframesConfig_Feed({
+    $core.String id,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
   factory AirframesClientFrame_AirframesConfig_Feed.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AirframesClientFrame_AirframesConfig_Feed.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   AirframesClientFrame_AirframesConfig_Feed clone() => AirframesClientFrame_AirframesConfig_Feed()..mergeFromMessage(this);
-  AirframesClientFrame_AirframesConfig_Feed copyWith(void Function(AirframesClientFrame_AirframesConfig_Feed) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_AirframesConfig_Feed));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AirframesClientFrame_AirframesConfig_Feed copyWith(void Function(AirframesClientFrame_AirframesConfig_Feed) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_AirframesConfig_Feed)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_AirframesConfig_Feed create() => AirframesClientFrame_AirframesConfig_Feed._();
@@ -675,17 +959,33 @@ class AirframesClientFrame_AirframesConfig_Feed extends $pb.GeneratedMessage {
 }
 
 class AirframesClientFrame_AirframesConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AirframesClientFrame.AirframesConfig', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
-    ..aOM<AirframesClientFrame_AirframesConfig_Feed>(1, 'feed', subBuilder: AirframesClientFrame_AirframesConfig_Feed.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AirframesClientFrame.AirframesConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
+    ..aOM<AirframesClientFrame_AirframesConfig_Feed>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'feed', subBuilder: AirframesClientFrame_AirframesConfig_Feed.create)
     ..hasRequiredFields = false
   ;
 
   AirframesClientFrame_AirframesConfig._() : super();
-  factory AirframesClientFrame_AirframesConfig() => create();
+  factory AirframesClientFrame_AirframesConfig({
+    AirframesClientFrame_AirframesConfig_Feed feed,
+  }) {
+    final _result = create();
+    if (feed != null) {
+      _result.feed = feed;
+    }
+    return _result;
+  }
   factory AirframesClientFrame_AirframesConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AirframesClientFrame_AirframesConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   AirframesClientFrame_AirframesConfig clone() => AirframesClientFrame_AirframesConfig()..mergeFromMessage(this);
-  AirframesClientFrame_AirframesConfig copyWith(void Function(AirframesClientFrame_AirframesConfig) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_AirframesConfig));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AirframesClientFrame_AirframesConfig copyWith(void Function(AirframesClientFrame_AirframesConfig) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_AirframesConfig)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_AirframesConfig create() => AirframesClientFrame_AirframesConfig._();
@@ -719,21 +1019,49 @@ class AirframesClientFrame extends $pb.GeneratedMessage {
     4 : AirframesClientFrame_Message.vdlm2decMessage,
     0 : AirframesClientFrame_Message.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AirframesClientFrame', package: const $pb.PackageName('airframes'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AirframesClientFrame', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'airframes'), createEmptyInstance: create)
     ..oo(0, [3, 4])
-    ..aOM<AirframesClientFrame_Source>(1, 'source', subBuilder: AirframesClientFrame_Source.create)
-    ..aOM<AirframesClientFrame_AirframesConfig>(2, 'airframes', subBuilder: AirframesClientFrame_AirframesConfig.create)
-    ..aOM<AcarsdecMessage>(3, 'acarsdecMessage', subBuilder: AcarsdecMessage.create)
-    ..aOM<Vdlm2decMessage>(4, 'vdlm2decMessage', subBuilder: Vdlm2decMessage.create)
+    ..aOM<AirframesClientFrame_Source>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'source', subBuilder: AirframesClientFrame_Source.create)
+    ..aOM<AirframesClientFrame_AirframesConfig>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'airframes', subBuilder: AirframesClientFrame_AirframesConfig.create)
+    ..aOM<AcarsdecMessage>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'acarsdecMessage', subBuilder: AcarsdecMessage.create)
+    ..aOM<Vdlm2decMessage>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vdlm2decMessage', subBuilder: Vdlm2decMessage.create)
     ..hasRequiredFields = false
   ;
 
   AirframesClientFrame._() : super();
-  factory AirframesClientFrame() => create();
+  factory AirframesClientFrame({
+    AirframesClientFrame_Source source,
+    AirframesClientFrame_AirframesConfig airframes,
+    AcarsdecMessage acarsdecMessage,
+    Vdlm2decMessage vdlm2decMessage,
+  }) {
+    final _result = create();
+    if (source != null) {
+      _result.source = source;
+    }
+    if (airframes != null) {
+      _result.airframes = airframes;
+    }
+    if (acarsdecMessage != null) {
+      _result.acarsdecMessage = acarsdecMessage;
+    }
+    if (vdlm2decMessage != null) {
+      _result.vdlm2decMessage = vdlm2decMessage;
+    }
+    return _result;
+  }
   factory AirframesClientFrame.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AirframesClientFrame.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   AirframesClientFrame clone() => AirframesClientFrame()..mergeFromMessage(this);
-  AirframesClientFrame copyWith(void Function(AirframesClientFrame) updates) => super.copyWith((message) => updates(message as AirframesClientFrame));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AirframesClientFrame copyWith(void Function(AirframesClientFrame) updates) => super.copyWith((message) => updates(message as AirframesClientFrame)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame create() => AirframesClientFrame._();
