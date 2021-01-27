@@ -26,6 +26,25 @@ ARG TARGETARCH
 ARG BUILDPLATFORM
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM."
 
+RUN apt update && apt install -y protobuf-compiler
+# RUN cd /tmp && wget $PROTOC_URL && \
+#     unzip protoc-${PROTOC_VERSION}-linux-x86_32.zip && \
+#     ls -l && \
+#     cp bin/protoc /usr/local/bin/protoc && \
+#     ls -l /usr/local/bin/protoc && \
+#     cp -rf include/* /usr/local/include/
+
+# RUN apt update && apt install -y autoconf automake libtool curl make g++ unzip
+# RUN git clone https://github.com/protocolbuffers/protobuf.git
+# RUN cd protobuf && git submodule update --init --recursive && \
+#     ./autogen.sh && ./configure
+# RUN cd protobuf && make && make check && make install && ldconfig
+
+RUN which protoc
+RUN pub global activate protoc_plugin
+
+RUN /usr/bin/protoc --dart_out=. lib/protos/airframes.proto
+
 WORKDIR /srv
 COPY build.sh build.sh
 COPY start.sh start.sh

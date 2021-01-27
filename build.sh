@@ -2,6 +2,7 @@
 
 echo Getting dependencies
 pub get
+pub global activate protoc_plugin
 echo
 
 echo Building protos
