@@ -19,7 +19,6 @@ dependencies:
   dart_express: ^0.5.3
 dev_dependencies:
   angel_orm_generator: ^2.0.5
-  build_runner: ^1.7.3
   json_serializable: ^3.2.5
 dependency_overrides:
   analyzer: 0.39.4
