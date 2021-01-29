@@ -63,4 +63,39 @@ class Args {
       ..addFlag('verbose', abbr: 'v', defaultsTo: false);
     return parser.parse(arguments);
   }
+
+  static printSettings(args) {
+    print('HEALTH CHECK SERVER');
+    print('Port : ${args['health-check-server-port']}');
+    print('');
+    print('DATABASE');
+    print('Host : ${args['database-host']}');
+    print('Port : ${args['database-port']}');
+    print('User : ${args['database-user']}');
+    print('Pass : *not displayed*');
+    print('Name : ${args['database-name']}');
+    print('SSL  : ${args['database-ssl']}');
+    print('');
+
+    print('INGESTS');
+    print(
+        'Airframes GRPC (Mixed) : ${args['ingest-airframes-grpc'] ? "Enabled (Transport: GRPC, Port: ${args['ingest-airframes-grpc-port']}, Format: af.protobuf.v1)" : 'Disabled'}');
+    print(
+        'Airframes JSON (Mixed) : ${args['ingest-vdlm2dec'] ? "Enabled (Transport: UDP, Port: ${args['ingest-airframes-json-port']}, Format: af.json.v1)" : 'Disabled'}');
+    print(
+        'acarsdec (ACARS)       : ${args['ingest-acarsdec'] ? "Enabled (Transport: UDP, Port: ${args['ingest-acarsdec-port']}, Format: TLeconte JSON)" : 'Disabled'}');
+    print(
+        'acarsdeco2 (ACARS)     : ${args['ingest-acarsdeco2'] ? "Enabled (Transport: TCP, Port: ${args['ingest-acarsdeco2-port']}, Format: SBS)" : 'Disabled'}');
+    print(
+        'dumpvdl2 (VDL)         : ${args['ingest-dumpvdl2'] ? "Enabled (Transport: UDP, Port: ${args['ingest-dumpvdl2-port']}, Format: PlanePlotter)" : 'Disabled'}');
+    print(
+        'JAERO C-Band (ACARS)   : ${args['ingest-jaero-c-acars'] ? "Enabled (Transport: UDP, Port: ${args['ingest-jaero-c-acars-port']}, Format: Custom)" : 'Disabled'}');
+    print(
+        'JAERO C-Band (ADS-C)   : ${args['ingest-jaero-c-adsc'] ? "Enabled (Transport: TCP, Port: ${args['ingest-jaero-c-adsc-port']}, Format: SBS)" : 'Disabled'}');
+    print(
+        'JAERO L-Band (ACARS)   : ${args['ingest-jaero-l-acars'] ? "Enabled (Transport: UDP, Port: ${args['ingest-jaero-l-acars-port']}, Format: Custom)" : 'Disabled'}');
+    print(
+        'vdlm2dec (VDL)         : ${args['ingest-vdlm2dec'] ? "Enabled (Transport: UDP, Port: ${args['ingest-vdlm2dec-port']}, Format: TLeconte JSON)" : 'Disabled'}');
+    print('');
+  }
 }
