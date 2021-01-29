@@ -78,10 +78,10 @@ parseArgs(arguments) {
     ..addFlag('health-check-server', defaultsTo: true)
     ..addOption('health-check-server-port',
         defaultsTo: Platform.environment['HEALTH_CHECK_SERVER_PORT'] ?? '5678')
-    ..addFlag('ingest-acarsdec', defaultsTo: true)
+    ..addFlag('ingest-acarsdec', defaultsTo: false)
     ..addOption('ingest-acarsdec-port',
         defaultsTo: Platform.environment['INGEST_ACARSDEC_PORT'] ?? '5550')
-    ..addFlag('ingest-airframes-grpc', defaultsTo: true)
+    ..addFlag('ingest-airframes-grpc', defaultsTo: false)
     ..addOption('ingest-airframes-grpc-port',
         defaultsTo:
             Platform.environment['INGEST_AIRFRAMES_GRPC_PORT'] ?? '6001')
@@ -173,15 +173,17 @@ Future main(List<String> arguments) async {
       config['database']['name'],
       config['database']['ssl']);
 
-  IngestServerConfig acarsdecConfig = IngestServerConfig(
-      'UDP',
-      config['ingest-acarsdec-port'],
-      'acarsdec',
-      config['nats']['host'],
-      config['nats']['port']);
-  var acarsdecServer =
-      AcarsdecIngestServer('acarsdec', acarsdecConfig, databaseConfig);
-  acarsdecServer.start();
+  if (parsedArgs['ingest-acarsdec']) {
+    IngestServerConfig acarsdecConfig = IngestServerConfig(
+        'UDP',
+        config['ingest-acarsdec-port'],
+        'acarsdec',
+        config['nats']['host'],
+        config['nats']['port']);
+    var acarsdecServer =
+        AcarsdecIngestServer('acarsdec', acarsdecConfig, databaseConfig);
+    acarsdecServer.start();
+  }
 
   // IngestServerConfig dumpvdl2Config = IngestServerConfig(
   //     'UDP',
@@ -193,15 +195,17 @@ Future main(List<String> arguments) async {
   //     Dumpvdl2IngestServer('dumpvdl2', dumpvdl2Config, databaseConfig);
   // dumpvdl2Server.start();
 
-  IngestServerConfig vdlm2decConfig = IngestServerConfig(
-      'UDP',
-      config['ingest-vdlm2dec-port'],
-      'vdlm2dec',
-      config['nats']['host'],
-      config['nats']['port']);
-  var vdlm2decServer =
-      AcarsdecIngestServer('vdlm2dec', vdlm2decConfig, databaseConfig);
-  vdlm2decServer.start();
+  if (parsedArgs['ingest-vdlm2dec']) {
+    IngestServerConfig vdlm2decConfig = IngestServerConfig(
+        'UDP',
+        config['ingest-vdlm2dec-port'],
+        'vdlm2dec',
+        config['nats']['host'],
+        config['nats']['port']);
+    var vdlm2decServer =
+        AcarsdecIngestServer('vdlm2dec', vdlm2decConfig, databaseConfig);
+    vdlm2decServer.start();
+  }
 
   // IngestServerConfig jaeroCAcarsConfig = IngestServerConfig(
   //     'UDP',
@@ -213,39 +217,44 @@ Future main(List<String> arguments) async {
   //     'jaero-c-band-acars', jaeroCAcarsConfig, databaseConfig);
   // jaeroCACARSServer.start();
 
-  IngestServerConfig jaeroCADSCConfig = IngestServerConfig(
-      'TCP',
-      config['ingest-jaero-c-adsc-port'],
-      'jaero-c-band-adsc',
-      config['nats']['host'],
-      config['nats']['port']);
-  var jaeroCADSCServer =
-      JaeroADSCIngestServer('jaero-c-adsc', jaeroCADSCConfig, databaseConfig);
-  jaeroCADSCServer.start();
+  if (parsedArgs['ingest-jaero-c-adsc']) {
+    IngestServerConfig jaeroCADSCConfig = IngestServerConfig(
+        'TCP',
+        config['ingest-jaero-c-adsc-port'],
+        'jaero-c-band-adsc',
+        config['nats']['host'],
+        config['nats']['port']);
+    var jaeroCADSCServer =
+        JaeroADSCIngestServer('jaero-c-adsc', jaeroCADSCConfig, databaseConfig);
+    jaeroCADSCServer.start();
+  }
 
   // IngestServerConfig jaeroLAcarsConfig = IngestServerConfig('UDP', config['ingest-jaero-l-acars-port'], 'jaero-l-band-acars', config['nats']['host'], config['nats']['port']);
   // var jaeroLAcarsServer = UDPIngestServer('jaero-l-band-acars', jaeroLAcarsConfig, databaseConfig);
   // jaeroLAcarsServer.start();
 
-  IngestServerConfig airframesJsonConfig = IngestServerConfig(
-      'udp',
-      config['ingest-airframes-json-port'],
-      'airframes-json',
-      config['nats']['host'],
-      config['nats']['port']);
-  var airframesJsonIngestServer = AirframesJsonIngestServer(
-      'airframes-json', airframesJsonConfig, databaseConfig);
-  airframesJsonIngestServer.start();
+  if (parsedArgs['ingest-airframes-json']) {
+    IngestServerConfig airframesJsonConfig = IngestServerConfig(
+        'udp',
+        config['ingest-airframes-json-port'],
+        'airframes-json',
+        config['nats']['host'],
+        config['nats']['port']);
+    var airframesJsonIngestServer = AirframesJsonIngestServer(
+        'airframes-json', airframesJsonConfig, databaseConfig);
+    airframesJsonIngestServer.start();
+  }
 
-  IngestServerConfig grpcConfig = IngestServerConfig(
-      'grpc',
-      config['ingest-airframes-grpc-port'],
-      'grpc',
-      config['nats']['host'],
-      config['nats']['port']);
-  var grpcIngestServer =
-      AirframesGrpcIngestServer('grpc', grpcConfig, databaseConfig);
-  grpcIngestServer.start();
+  // IngestServerConfig grpcConfig = IngestServerConfig(
+  //     'grpc',
+  //     config['ingest-airframes-grpc-port'],
+  //     'grpc',
+  //     config['nats']['host'],
+  //     config['nats']['port']);
+  // var grpcIngestServer =
+  //     AirframesGrpcIngestServer('grpc', grpcConfig, databaseConfig);
+  // grpcIngestServer.start();
 
   print('');
+  print('Exiting...');
 }
