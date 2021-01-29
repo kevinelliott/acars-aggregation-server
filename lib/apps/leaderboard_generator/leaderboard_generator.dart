@@ -66,14 +66,7 @@ Future main(List<String> arguments) async {
   config = constructConfig(parsedArgs);
   printSettings();
 
-  DatabaseConfig databaseConfig = DatabaseConfig(
-      config['database']['type'],
-      config['database']['host'],
-      config['database']['port'],
-      config['database']['user'],
-      config['database']['pass'],
-      config['database']['name'],
-      config['database']['ssl']);
+  DatabaseConfig databaseConfig = DatabaseConfig.fromMap(config['database']);
 
   print('');
 }

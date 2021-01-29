@@ -27,14 +27,7 @@ Future main(List<String> arguments) async {
   //     HealthServer(port: int.parse(parsedArgs['health-check-server-port']));
   // healthServer.start();
 
-  DatabaseConfig databaseConfig = DatabaseConfig(
-      config['database']['type'],
-      config['database']['host'],
-      config['database']['port'],
-      config['database']['user'],
-      config['database']['pass'],
-      config['database']['name'],
-      config['database']['ssl']);
+  DatabaseConfig databaseConfig = DatabaseConfig.fromMap(config['database']);
 
   if (args['ingest-acarsdec']) {
     IngestServerConfig acarsdecConfig = IngestServerConfig(

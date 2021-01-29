@@ -9,6 +9,11 @@ class DatabaseConfig {
   DatabaseConfig(this.type, this.host, this.port, this.user, this.pass,
       this.name, this.ssl) {}
 
+  DatabaseConfig.fromMap(config) {
+    DatabaseConfig(config['type'], config['host'], config['port'],
+        config['user'], config['pass'], config['name'], config['ssl']);
+  }
+
   var type = 'postgres';
   var host;
   int port;
