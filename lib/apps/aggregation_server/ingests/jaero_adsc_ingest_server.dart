@@ -7,12 +7,12 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class JaeroADSCIngestServer extends TCPIngestServer {
-  JaeroADSCIngestServer(String name, config, databaseConfig)
-      : super(name, config, databaseConfig) {
+  JaeroADSCIngestServer(String name, config, databaseConfig, natsConfig)
+      : super(name, config, databaseConfig, natsConfig) {
     this.logger = Logger('Ingest(${name})');
     this.source = Source(name.substring(0, 10), 'JAERO', 'unknown', 'tcp',
         'ADS-C', 'sbs', 'text');
-    this.natsClient = NatsClient(config.natsHost, config.natsPort);
+    this.natsClient = NatsClient(natsConfig['host'], natsConfig['port']);
 
     this.processor = JaeroADSCProcessor(
         source, databaseConfig.executor(), natsClient, logger);

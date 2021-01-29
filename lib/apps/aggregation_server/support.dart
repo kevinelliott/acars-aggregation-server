@@ -17,7 +17,7 @@ export 'processors/plane_plotter_processor.dart';
 export 'processors/processor.dart';
 export 'processors/tleconte_json_processor.dart';
 
-export 'ingest_server_config.dart';
+export 'ingest_config.dart';
 
 export 'ingests/acarsdec_ingest_server.dart';
 // export 'ingests/airframes_grpc_ingest_server.dart';

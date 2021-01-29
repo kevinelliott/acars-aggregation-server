@@ -9,13 +9,13 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class UDPIngestServer extends IngestServer {
-  UDPIngestServer(name, config, databaseConfig)
-      : super(name, config, databaseConfig) {
+  UDPIngestServer(name, config, databaseConfig, natsConfig)
+      : super(name, config, databaseConfig, natsConfig) {
     this.logger = Logger('Ingest(${name})');
     this.source = Source(
         name, 'unknown', 'unknown', 'udp', 'unknown', 'unknown', 'unknown');
     this.processor = Processor(source, logger);
-    this.natsClient = NatsClient(config.natsHost, config.natsPort);
+    this.natsClient = NatsClient(natsConfig.natsHost, natsConfig.natsPort);
   }
 
   Future start() async {

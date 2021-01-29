@@ -6,8 +6,8 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class AcarsdecIngestServer extends UDPIngestServer {
-  AcarsdecIngestServer(name, config, databaseConfig)
-      : super(name, config, databaseConfig) {
+  AcarsdecIngestServer(name, config, databaseConfig, natsConfig)
+      : super(name, config, databaseConfig, natsConfig) {
     this.source = Source(
         'acarsdec', 'acarsdec', 'unknown', 'udp', 'ACARS', 'TLeconte', 'JSON');
     this.processor = TLeconteJsonProcessor(

@@ -6,8 +6,8 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class Dumpvdl2IngestServer extends UDPIngestServer {
-  Dumpvdl2IngestServer(name, config, databaseConfig)
-      : super(name, config, databaseConfig) {
+  Dumpvdl2IngestServer(name, config, databaseConfig, natsConfig)
+      : super(name, config, databaseConfig, natsConfig) {
     this.source = Source('dumpvdl2', 'dumpvdl2', 'unknown', 'udp', 'vdl',
         'PlanePlotter', 'text');
     this.processor = PlanePlotterProcessor(

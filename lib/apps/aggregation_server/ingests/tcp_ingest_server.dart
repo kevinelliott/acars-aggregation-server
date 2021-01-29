@@ -8,13 +8,13 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class TCPIngestServer extends IngestServer {
-  TCPIngestServer(name, config, databaseConfig)
-      : super(name, config, databaseConfig) {
+  TCPIngestServer(name, config, databaseConfig, natsConfig)
+      : super(name, config, databaseConfig, natsConfig) {
     this.logger = Logger('Ingest(${name})');
     this.source = Source(
         name, 'unknown', 'unknown', 'unknown', 'tcp', 'unknown', 'unknown');
     this.processor = Processor(source, logger);
-    this.natsClient = NatsClient(config.natsHost, config.natsPort);
+    this.natsClient = NatsClient(natsConfig['host'], natsConfig['port']);
   }
 
   Future start() async {

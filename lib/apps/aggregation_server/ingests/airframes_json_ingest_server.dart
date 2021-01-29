@@ -6,8 +6,8 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class AirframesJsonIngestServer extends UDPIngestServer {
-  AirframesJsonIngestServer(name, config, databaseConfig)
-      : super(name, config, databaseConfig) {
+  AirframesJsonIngestServer(name, config, databaseConfig, natsConfig)
+      : super(name, config, databaseConfig, natsConfig) {
     this.source = Source('airframes-client', 'afc', 'unknown', 'udp', 'mixed',
         'af.json.v1', 'json');
     this.processor = AirframesJsonProcessor(
