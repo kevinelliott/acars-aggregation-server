@@ -15,13 +15,11 @@ class UDPIngestServer extends IngestServer {
     this.source = Source(
         name, 'unknown', 'unknown', 'udp', 'unknown', 'unknown', 'unknown');
     this.processor = Processor(source, logger);
-    this.natsClient = NatsClient(natsConfig.natsHost, natsConfig.natsPort);
+    this.natsManager = NatsManager(natsConfig, logger);
   }
 
   Future start() async {
-    await this.natsClient.connect();
-    this.logger.info(
-        'Connected to NATS server at ${config.natsHost} on port ${config.natsPort}.');
+    await natsManager.start();
 
     this.receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));

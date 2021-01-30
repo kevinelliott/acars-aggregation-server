@@ -1,20 +1,19 @@
 import 'package:airframes_aggregation_server/common.dart';
 import 'package:angel_orm_postgres/angel_orm_postgres.dart';
-import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
 
 class AirframesClientFrameImporter {
   AirframesClientFrame frame;
-  NatsClient natsClient;
+  NatsManager natsManager;
   PostgreSqlExecutorPool executor;
   Logger logger;
   Source source;
   ClientMessage clientMessage;
 
   AirframesClientFrameImporter(Source source, AirframesClientFrame frame,
-      NatsClient natsClient, executor, Logger logger) {
+      NatsManager natsManager, executor, Logger logger) {
     this.frame = frame;
-    this.natsClient = natsClient;
+    this.natsManager = natsManager;
     this.executor = executor;
     this.logger = logger;
     this.source = source;
@@ -90,7 +89,7 @@ class AirframesClientFrameImporter {
       station = await stationInsertQuery.insert(executor);
       this.logger.debug(
           '[${clientMessage.sourceType}] Inserted station (id: ${station.id})');
-      natsClient.publish(station.toString(), 'station.created',
+      natsManager.publish(station.toString(), 'station.created',
           onSuccess: () => {});
     } catch (e) {
       this.logger.error(
@@ -123,7 +122,7 @@ class AirframesClientFrameImporter {
         this
             .logger
             .debug('${logPrefix()} Inserted airframe (id: ${airframe.id})');
-        natsClient.publish(airframe.toString(), 'airframe.created',
+        natsManager.publish(airframe.toString(), 'airframe.created',
             onSuccess: () => {});
       } catch (e) {
         this.logger.error('${logPrefix()} Unable to insert airframe: ${e}');
@@ -199,7 +198,7 @@ class AirframesClientFrameImporter {
       flight = await flightInsertQuery.insert(executor);
       this.logger.debug(
           '[${clientMessage.sourceType}] Inserted flight (id: ${flight.id})');
-      natsClient.publish(flight.toString(), 'flight.created',
+      natsManager.publish(flight.toString(), 'flight.created',
           onSuccess: () => {});
     } catch (e) {
       this
@@ -228,7 +227,7 @@ class AirframesClientFrameImporter {
     if (updatedFlight != null) {
       this.logger.debug(
           '[${clientMessage.sourceType}] Updated flight (id: ${updatedFlight.id})');
-      natsClient.publish(updatedFlight.toString(), 'flight.updated',
+      natsManager.publish(updatedFlight.toString(), 'flight.updated',
           onSuccess: () => {});
     }
 
@@ -389,7 +388,7 @@ class AirframesClientFrameImporter {
         //           logger.fine(
         //               '[${clientMessage.sourceType} / ${clientMessage.source}] Published message.raw to NATS')
         //         });
-        natsClient.publish('{ "id": ${message.id} }', 'message.created',
+        natsManager.publish('{ "id": ${message.id} }', 'message.created',
             onSuccess: () => {
                   logger.fine(
                       '[${clientMessage.sourceType} / ${clientMessage.source}] Published message to NATS')

@@ -11,13 +11,11 @@ class Dumpvdl2IngestServer extends UDPIngestServer {
     this.source = Source('dumpvdl2', 'dumpvdl2', 'unknown', 'udp', 'vdl',
         'PlanePlotter', 'text');
     this.processor = PlanePlotterProcessor(
-        source, databaseConfig.executor(), natsClient, logger);
+        source, databaseConfig.executor(), natsManager, logger);
   }
 
   Future start() async {
-    await this.natsClient.connect();
-    this.logger.info(
-        'Connected to NATS server at ${config.natsHost} on port ${config.natsPort}.');
+    await natsManager.start();
 
     this.receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));

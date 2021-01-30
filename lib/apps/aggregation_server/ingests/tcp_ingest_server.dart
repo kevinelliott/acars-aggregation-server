@@ -14,13 +14,11 @@ class TCPIngestServer extends IngestServer {
     this.source = Source(
         name, 'unknown', 'unknown', 'unknown', 'tcp', 'unknown', 'unknown');
     this.processor = Processor(source, logger);
-    this.natsClient = NatsClient(natsConfig['host'], natsConfig['port']);
+    this.natsManager = NatsManager(natsConfig, logger);
   }
 
   Future start() async {
-    await this.natsClient.connect();
-    this.logger.info(
-        'Connected to NATS server at ${config.natsHost} on port ${config.natsPort}.');
+    await natsManager.start();
 
     this.receiver = ServerSocket.bind(InternetAddress.anyIPv4, config.port);
     receiver.then((ServerSocket server) {

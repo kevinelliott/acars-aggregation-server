@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
@@ -12,8 +11,8 @@ class IngestServer {
   var natsConfig;
 
   Logger logger;
+  NatsManager natsManager;
   final String name;
-  NatsClient natsClient;
   Processor processor;
   Source source;
 
@@ -24,7 +23,7 @@ class IngestServer {
     Logger.writer =
         ConsolePrinter(minLevel: LogLevel.fine, enableInReleaseMode: true);
     this.logger = Logger('Ingest(${name})');
-    this.natsClient = NatsClient(natsConfig['host'], natsConfig['port']);
+    this.natsManager = NatsManager(natsConfig, logger);
     this.source = Source('unknown', 'unknown', 'unknown', 'unknown', 'unknown',
         'unknown', 'unknown');
     this.processor = Processor(source, logger);

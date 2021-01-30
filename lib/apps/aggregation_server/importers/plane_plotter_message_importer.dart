@@ -1,21 +1,20 @@
 import 'package:angel_orm_postgres/angel_orm_postgres.dart';
-import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
 
 class PlanePlotterMessageImporter {
   PlanePlotterMessage ppMessage;
-  NatsClient natsClient;
+  NatsManager natsManager;
   PostgreSqlExecutorPool executor;
   Logger logger;
 
   PlanePlotterMessageImporter(PlanePlotterMessage ppMessage,
-      NatsClient natsClient, PostgreSqlExecutorPool executor, Logger logger) {
+      NatsManager natsManager, PostgreSqlExecutorPool executor, Logger logger) {
     this.ppMessage = ppMessage;
     this.executor = executor;
     this.logger = logger;
-    this.natsClient = natsClient;
+    this.natsManager = natsManager;
   }
 
   logPrefix() {
@@ -40,7 +39,7 @@ class PlanePlotterMessageImporter {
           this
               .logger
               .debug('${logPrefix()} Inserted airframe (id: ${airframe.id})');
-          natsClient.publish(airframe.toString(), 'airframe.created',
+          natsManager.publish(airframe.toString(), 'airframe.created',
               onSuccess: () => {});
         } catch (e) {
           this.logger.error('${logPrefix()} Unable to insert airframe: ${e}');
@@ -106,7 +105,7 @@ class PlanePlotterMessageImporter {
             this
                 .logger
                 .debug('${logPrefix()} Inserted flight (id: ${flight.id})');
-            natsClient.publish(flight.toString(), 'flight.created',
+            natsManager.publish(flight.toString(), 'flight.created',
                 onSuccess: () => {});
           } catch (e) {
             this.logger.error('${logPrefix()} Unable to insert flight: ${e}');
@@ -146,7 +145,7 @@ class PlanePlotterMessageImporter {
             this
                 .logger
                 .debug('${logPrefix()} Updated flight (id: ${flight.id})');
-            natsClient.publish(flight.toString(), 'flight.updated',
+            natsManager.publish(flight.toString(), 'flight.updated',
                 onSuccess: () => {});
           }
         } else {
@@ -195,7 +194,7 @@ class PlanePlotterMessageImporter {
               '${logPrefix()} Unable to insert station message count: ${e}');
         }
 
-        natsClient.publish(station.toString(), 'station.created',
+        natsManager.publish(station.toString(), 'station.created',
             onSuccess: () => {});
       } catch (e) {
         this.logger.error('${logPrefix()} Unable to insert station: ${e}');
@@ -251,7 +250,7 @@ class PlanePlotterMessageImporter {
     }
 
     if (message != null) {
-      natsClient.publish('{ "id": ${message.id} }', 'message.created',
+      natsManager.publish('{ "id": ${message.id} }', 'message.created',
           onSuccess: () => {
                 logger.fine(
                     '[${message.sourceType} / ${message.source}] Published message to NATS')

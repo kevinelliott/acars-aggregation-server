@@ -10,8 +10,8 @@ class SBSParser {
 
   Future parse(String str) async {
     var parts = str.split(',');
-    logger.fine(parts.toString());
-    logger.fine('Parts length ${parts.length}');
+    logger.fine('SBSParser: Parts = ${parts.toString()}');
+    logger.fine('SBSParser: Parts length = ${parts.length}');
 
     if (parts.length >= 22) {
       switch (parts[0]) {
@@ -29,14 +29,14 @@ class SBSParser {
       }
     } else {
       logger.error(
-          'The number of parts of the SBS message is only ${parts.length} but should be 22 or greater. Skipping!');
+          'SBSParser: The number of parts of the SBS message is only ${parts.length} but should be 22 or greater. Skipping!');
     }
   }
 
   SBSMessage parseAIR(parts) {
     SBSMessage sbsMessage;
 
-    logger.fine('New Aircraft Message');
+    logger.fine('SBSParser.parseAIR: New Aircraft Message');
     sbsMessage = SBSMessage(
         this.source,
         parts[0],
@@ -62,20 +62,24 @@ class SBSParser {
         parts[20],
         parts[21]);
 
-    logger.fine('Hex Ident     : ${sbsMessage.hexIdent}');
-    logger.fine('Flight        : ${sbsMessage.flightNumber}');
-    if (sbsMessage.altitude != null)
-      logger.fine('Altitude      : ${sbsMessage.altitude}');
-    if (sbsMessage.groundSpeed != null)
-      logger.fine('Ground Speed  : ${sbsMessage.groundSpeed}');
-    if (sbsMessage.track != null)
-      logger.fine('Track         : ${sbsMessage.track}');
+    logger.fine('SBSParser.parseAIR:   Hex Ident     : ${sbsMessage.hexIdent}');
     logger.fine(
-        'Coordinates   : ${sbsMessage.latitude}, ${sbsMessage.longitude}');
+        'SBSParser.parseAIR:   Flight        : ${sbsMessage.flightNumber}');
+    if (sbsMessage.altitude != null)
+      logger
+          .fine('SBSParser.parseAIR:   Altitude      : ${sbsMessage.altitude}');
+    if (sbsMessage.groundSpeed != null)
+      logger.fine(
+          'SBSParser.parseAIR:   Ground Speed  : ${sbsMessage.groundSpeed}');
+    if (sbsMessage.track != null)
+      logger.fine('SBSParser.parseAIR:   Track         : ${sbsMessage.track}');
+    logger.fine(
+        'SBSParser.parseAIR:   Coordinates   : ${sbsMessage.latitude}, ${sbsMessage.longitude}');
     if (sbsMessage.verticalRate != null)
-      logger.fine('Vertical Rate : ${sbsMessage.verticalRate}');
+      logger.fine(
+          'SBSParser.parseAIR:   Vertical Rate : ${sbsMessage.verticalRate}');
     if (sbsMessage.squawk != null && sbsMessage.squawk != '')
-      logger.fine('Squawk        : ${sbsMessage.squawk}');
+      logger.fine('SBSParser.parseAIR:   Squawk        : ${sbsMessage.squawk}');
 
     return sbsMessage;
   }
@@ -85,28 +89,28 @@ class SBSParser {
 
     switch (parts[1]) {
       case '1':
-        logger.fine('ES Identification and Category');
+        logger.fine('SBSParser.parseMSG: ES Identification and Category');
         break;
       case '2':
-        logger.fine('ES Surface Position Message');
+        logger.fine('SBSParser.parseMSG: ES Surface Position Message');
         break;
       case '3':
-        logger.fine('ES Airborne Position Message');
+        logger.fine('SBSParser.parseMSG: ES Airborne Position Message');
         break;
       case '4':
-        logger.fine('ES Airborne Velocity Message');
+        logger.fine('SBSParser.parseMSG: ES Airborne Velocity Message');
         break;
       case '5':
-        logger.fine('Surveillance Alt Message');
+        logger.fine('SBSParser.parseMSG: Surveillance Alt Message');
         break;
       case '6':
-        logger.fine('Surveillance ID Message');
+        logger.fine('SBSParser.parseMSG: Surveillance ID Message');
         break;
       case '7':
-        logger.fine('Air to Air Message');
+        logger.fine('SBSParser.parseMSG: Air to Air Message');
         break;
       case '8':
-        logger.fine('All Call Reply');
+        logger.fine('SBSParser.parseMSG: All Call Reply');
         break;
       default:
     }
@@ -136,20 +140,24 @@ class SBSParser {
         parts[20],
         parts[21]);
 
-    logger.fine('Hex Ident     : ${sbsMessage.hexIdent}');
-    logger.fine('Flight        : ${sbsMessage.flightNumber}');
-    if (sbsMessage.altitude != null)
-      logger.fine('Altitude      : ${sbsMessage.altitude}');
-    if (sbsMessage.groundSpeed != null)
-      logger.fine('Ground Speed  : ${sbsMessage.groundSpeed}');
-    if (sbsMessage.track != null)
-      logger.fine('Track         : ${sbsMessage.track}');
+    logger.fine('SBSParser.parseMSG:   Hex Ident     : ${sbsMessage.hexIdent}');
     logger.fine(
-        'Coordinates   : ${sbsMessage.latitude}, ${sbsMessage.longitude}');
+        'SBSParser.parseMSG:   Flight        : ${sbsMessage.flightNumber}');
+    if (sbsMessage.altitude != null)
+      logger
+          .fine('SBSParser.parseMSG:   Altitude      : ${sbsMessage.altitude}');
+    if (sbsMessage.groundSpeed != null)
+      logger.fine(
+          'SBSParser.parseMSG:   Ground Speed  : ${sbsMessage.groundSpeed}');
+    if (sbsMessage.track != null)
+      logger.fine('SBSParser.parseMSG:   Track         : ${sbsMessage.track}');
+    logger.fine(
+        'SBSParser.parseMSG:   Coordinates   : ${sbsMessage.latitude}, ${sbsMessage.longitude}');
     if (sbsMessage.verticalRate != null)
-      logger.fine('Vertical Rate : ${sbsMessage.verticalRate}');
+      logger.fine(
+          'SBSParser.parseMSG:   Vertical Rate : ${sbsMessage.verticalRate}');
     if (sbsMessage.squawk != null && sbsMessage.squawk != '')
-      logger.fine('Squawk        : ${sbsMessage.squawk}');
+      logger.fine('SBSParser.parseMSG:   Squawk        : ${sbsMessage.squawk}');
 
     return sbsMessage;
   }
@@ -157,7 +165,7 @@ class SBSParser {
   SBSMessage parseSEL(parts) {
     SBSMessage sbsMessage;
 
-    logger.fine('Selection Change Message');
+    logger.fine('SBSParser.parseSEL: Selection Change Message');
     sbsMessage = SBSMessage(
         this.source,
         parts[0],
@@ -183,20 +191,24 @@ class SBSParser {
         parts[20],
         parts[21]);
 
-    logger.fine('Hex Ident     : ${sbsMessage.hexIdent}');
-    logger.fine('Flight        : ${sbsMessage.flightNumber}');
-    if (sbsMessage.altitude != null)
-      logger.fine('Altitude      : ${sbsMessage.altitude}');
-    if (sbsMessage.groundSpeed != null)
-      logger.fine('Ground Speed  : ${sbsMessage.groundSpeed}');
-    if (sbsMessage.track != null)
-      logger.fine('Track         : ${sbsMessage.track}');
+    logger.fine('SBSParser.parseSEL:   Hex Ident     : ${sbsMessage.hexIdent}');
     logger.fine(
-        'Coordinates   : ${sbsMessage.latitude}, ${sbsMessage.longitude}');
+        'SBSParser.parseSEL:   Flight        : ${sbsMessage.flightNumber}');
+    if (sbsMessage.altitude != null)
+      logger
+          .fine('SBSParser.parseSEL:   Altitude      : ${sbsMessage.altitude}');
+    if (sbsMessage.groundSpeed != null)
+      logger.fine(
+          'SBSParser.parseSEL:   Ground Speed  : ${sbsMessage.groundSpeed}');
+    if (sbsMessage.track != null)
+      logger.fine('SBSParser.parseSEL:   Track         : ${sbsMessage.track}');
+    logger.fine(
+        'SBSParser.parseSEL:   Coordinates   : ${sbsMessage.latitude}, ${sbsMessage.longitude}');
     if (sbsMessage.verticalRate != null)
-      logger.fine('Vertical Rate : ${sbsMessage.verticalRate}');
+      logger.fine(
+          'SBSParser.parseSEL:   Vertical Rate : ${sbsMessage.verticalRate}');
     if (sbsMessage.squawk != null && sbsMessage.squawk != '')
-      logger.fine('Squawk        : ${sbsMessage.squawk}');
+      logger.fine('SBSParser.parseSEL:   Squawk        : ${sbsMessage.squawk}');
 
     return sbsMessage;
   }
@@ -204,7 +216,7 @@ class SBSParser {
   SBSMessage parseSTA(parts) {
     SBSMessage sbsMessage;
 
-    logger.fine('Status Change Message');
+    logger.fine('SBSParser.parseSTA: Status Change Message');
     sbsMessage = SBSMessage(
         this.source,
         parts[0],
@@ -230,20 +242,24 @@ class SBSParser {
         parts[20],
         parts[21]);
 
-    logger.fine('Hex Ident     : ${sbsMessage.hexIdent}');
-    logger.fine('Flight        : ${sbsMessage.flightNumber}');
-    if (sbsMessage.altitude != null)
-      logger.fine('Altitude      : ${sbsMessage.altitude}');
-    if (sbsMessage.groundSpeed != null)
-      logger.fine('Ground Speed  : ${sbsMessage.groundSpeed}');
-    if (sbsMessage.track != null)
-      logger.fine('Track         : ${sbsMessage.track}');
+    logger.fine('SBSParser.parseSTA:   Hex Ident     : ${sbsMessage.hexIdent}');
     logger.fine(
-        'Coordinates   : ${sbsMessage.latitude}, ${sbsMessage.longitude}');
+        'SBSParser.parseSTA:   Flight        : ${sbsMessage.flightNumber}');
+    if (sbsMessage.altitude != null)
+      logger
+          .fine('SBSParser.parseSTA:   Altitude      : ${sbsMessage.altitude}');
+    if (sbsMessage.groundSpeed != null)
+      logger.fine(
+          'SBSParser.parseSTA:   Ground Speed  : ${sbsMessage.groundSpeed}');
+    if (sbsMessage.track != null)
+      logger.fine('SBSParser.parseSTA:   Track         : ${sbsMessage.track}');
+    logger.fine(
+        'SBSParser.parseSTA:   Coordinates   : ${sbsMessage.latitude}, ${sbsMessage.longitude}');
     if (sbsMessage.verticalRate != null)
-      logger.fine('Vertical Rate : ${sbsMessage.verticalRate}');
+      logger.fine(
+          'SBSParser.parseSTA:   Vertical Rate : ${sbsMessage.verticalRate}');
     if (sbsMessage.squawk != null && sbsMessage.squawk != '')
-      logger.fine('Squawk        : ${sbsMessage.squawk}');
+      logger.fine('SBSParser.parseSTA:   Squawk        : ${sbsMessage.squawk}');
 
     return sbsMessage;
   }

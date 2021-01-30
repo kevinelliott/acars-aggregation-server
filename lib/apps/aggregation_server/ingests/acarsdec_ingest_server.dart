@@ -11,13 +11,11 @@ class AcarsdecIngestServer extends UDPIngestServer {
     this.source = Source(
         'acarsdec', 'acarsdec', 'unknown', 'udp', 'ACARS', 'TLeconte', 'JSON');
     this.processor = TLeconteJsonProcessor(
-        source, databaseConfig.executor(), natsClient, logger);
+        source, databaseConfig.executor(), natsManager, logger);
   }
 
   Future start() async {
-    await this.natsClient.connect();
-    this.logger.info(
-        'Connected to NATS server at ${config.natsHost} on port ${config.natsPort}.');
+    await natsManager.start();
 
     this.receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));

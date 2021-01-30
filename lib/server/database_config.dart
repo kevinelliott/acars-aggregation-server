@@ -6,14 +6,6 @@ import 'package:logging/logging.dart';
 import 'package:postgres/postgres.dart';
 
 class DatabaseConfig {
-  DatabaseConfig(this.type, this.host, this.port, this.user, this.pass,
-      this.name, this.ssl) {}
-
-  DatabaseConfig.fromMap(config) {
-    DatabaseConfig(config['type'], config['host'], config['port'],
-        config['user'], config['pass'], config['name'], config['ssl']);
-  }
-
   var type = 'postgres';
   var host;
   int port;
@@ -21,6 +13,13 @@ class DatabaseConfig {
   var pass;
   var name;
   bool ssl = false;
+
+  DatabaseConfig(this.type, this.host, this.port, this.user, this.pass,
+      this.name, this.ssl) {}
+
+  DatabaseConfig.fromMap(config)
+      : this(config['type'], config['host'], config['port'], config['user'],
+            config['pass'], config['name'], config['ssl']);
 
   executor() {
     var executor = new PostgreSqlExecutorPool(Platform.numberOfProcessors, () {
@@ -31,6 +30,7 @@ class DatabaseConfig {
           timeoutInSeconds: 30,
           useSSL: ssl);
     }, logger: new Logger('Database'));
+
     return executor;
   }
 }

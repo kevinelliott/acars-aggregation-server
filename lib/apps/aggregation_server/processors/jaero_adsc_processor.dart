@@ -7,10 +7,10 @@ import 'package:airframes_aggregation_server/apps/aggregation_server/support.dar
 
 class JaeroADSCProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
-  NatsClient natsClient;
+  NatsManager natsManager;
 
   JaeroADSCProcessor(
-      Source source, this.databaseExecutor, this.natsClient, Logger logger)
+      Source source, this.databaseExecutor, this.natsManager, Logger logger)
       : super(source, logger) {}
 
   logPrefix() {
@@ -38,7 +38,7 @@ class JaeroADSCProcessor extends Processor {
 
     if (sbsMessage != null) {
       var sbsMessageImporter = new SBSMessageImporter(
-          sbsMessage, natsClient, databaseExecutor, logger);
+          sbsMessage, natsManager, databaseExecutor, logger);
       await sbsMessageImporter.identifyTail();
 
       var station =

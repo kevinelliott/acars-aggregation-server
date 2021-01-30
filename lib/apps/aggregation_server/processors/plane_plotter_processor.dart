@@ -1,4 +1,3 @@
-import 'package:nats/nats.dart';
 import 'package:angel_orm_postgres/angel_orm_postgres.dart';
 import 'package:quick_log/quick_log.dart';
 
@@ -7,10 +6,10 @@ import 'package:airframes_aggregation_server/apps/aggregation_server/support.dar
 
 class PlanePlotterProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
-  NatsClient natsClient;
+  NatsManager natsManager;
 
   PlanePlotterProcessor(
-      Source source, this.databaseExecutor, this.natsClient, Logger logger)
+      Source source, this.databaseExecutor, this.natsManager, Logger logger)
       : super(source, logger) {}
 
   logPrefix() {
@@ -33,7 +32,7 @@ class PlanePlotterProcessor extends Processor {
   Future process(String str, String ipAddress) async {
     PlanePlotterMessage ppMessage = await parse(str);
     var ppMessageImporter = new PlanePlotterMessageImporter(
-        ppMessage, natsClient, databaseExecutor, logger);
+        ppMessage, natsManager, databaseExecutor, logger);
 
     var station =
         await ppMessageImporter.findOrCreateStationByIpAddress(ipAddress);

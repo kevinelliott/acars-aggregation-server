@@ -10,10 +10,10 @@ class AirframesGrpcProcessor {
   Source source;
   Logger logger;
   PostgreSqlExecutorPool databaseExecutor;
-  NatsClient natsClient;
+  NatsManager natsManager;
 
   AirframesGrpcProcessor(
-      this.source, this.databaseExecutor, this.natsClient, Logger logger) {}
+      this.source, this.databaseExecutor, this.natsManager, Logger logger) {}
 
   String truncateWithEllipsis(int cutoff, String myString) {
     return (myString.length <= cutoff)
@@ -67,7 +67,7 @@ class AirframesGrpcProcessor {
   Future<Message> process(
       grpc.ServiceCall call, AirframesClientFrame frame) async {
     var importer = new AirframesClientFrameImporter(
-        source, frame, natsClient, databaseExecutor, logger);
+        source, frame, natsManager, databaseExecutor, logger);
     Station station = await importer.findOrCreateStation();
     Airframe airframe = await importer.findOrCreateAirframe();
     Flight flight = await importer.updateOrCreateFlight(airframe);

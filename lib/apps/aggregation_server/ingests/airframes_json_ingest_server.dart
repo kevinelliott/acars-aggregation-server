@@ -11,13 +11,11 @@ class AirframesJsonIngestServer extends UDPIngestServer {
     this.source = Source('airframes-client', 'afc', 'unknown', 'udp', 'mixed',
         'af.json.v1', 'json');
     this.processor = AirframesJsonProcessor(
-        source, databaseConfig.executor(), natsClient, logger);
+        source, databaseConfig.executor(), natsManager, logger);
   }
 
   Future start() async {
-    await this.natsClient.connect();
-    this.logger.info(
-        'Connected to NATS server at ${config.natsHost} on port ${config.natsPort}.');
+    await natsManager.start();
 
     this.receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));

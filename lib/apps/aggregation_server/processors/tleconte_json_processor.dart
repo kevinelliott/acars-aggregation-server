@@ -7,10 +7,10 @@ import 'package:airframes_aggregation_server/apps/aggregation_server/support.dar
 
 class TLeconteJsonProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
-  NatsClient natsClient;
+  NatsManager natsManager;
 
   TLeconteJsonProcessor(
-      Source source, this.databaseExecutor, this.natsClient, Logger logger)
+      Source source, this.databaseExecutor, this.natsManager, Logger logger)
       : super(source, logger) {}
 
   Future parseJson(String str) async {
@@ -30,7 +30,7 @@ class TLeconteJsonProcessor extends Processor {
     var jsonMessage = await parseJson(str);
     if (jsonMessage != null) {
       var jsonMessageImporter = new TLeconteJsonMessageImporter(
-          source, jsonMessage, natsClient, databaseExecutor, logger);
+          source, jsonMessage, natsManager, databaseExecutor, logger);
 
       var station = await jsonMessageImporter.findOrCreateStation(ipAddress);
       var airframe = await jsonMessageImporter.findOrCreateAirframe();
