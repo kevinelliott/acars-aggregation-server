@@ -31,6 +31,7 @@ class NatsManager {
       });
       logger.info(
           'NatsManager: Connected to NATS (host: ${config['host']}, port: ${config['port']}).');
+      connected = true;
     } catch (e) {
       logger.error('NatsManager: Error: ${e.toString()}');
       logger.error(
