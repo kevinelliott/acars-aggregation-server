@@ -28,8 +28,8 @@ class AcarsdecIngestServer extends UDPIngestServer {
       var str = String.fromCharCodes(datagram.data).trim();
       logger.debug(
           'Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
-      var message = {source: source, str: str};
-      natsManager.publish(jsonEncode(message), 'message.incoming',
+      Map<String, dynamic> message = {'source': source, 'str': str};
+      natsManager.publish(JsonEncoder().convert(message), 'message.incoming',
           onSuccess: () =>
               {logger.fine('NATS: Published to message.incoming')});
       processor.logger = logger;
