@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'package:quick_log/quick_log.dart';
 import 'package:udp/udp.dart';
 
@@ -27,7 +28,8 @@ class AcarsdecIngestServer extends UDPIngestServer {
       var str = String.fromCharCodes(datagram.data).trim();
       logger.debug(
           'Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
-      natsManager.publish(str, 'message.incoming',
+      var message = {source: source, str: str};
+      natsManager.publish(jsonEncode(message), 'message.incoming',
           onSuccess: () =>
               {logger.fine('NATS: Published to message.incoming')});
       processor.logger = logger;
