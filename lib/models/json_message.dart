@@ -6,55 +6,83 @@ part 'json_message.g.dart';
 class JsonMessage {
   @JsonKey(nullable: false, fromJson: _dateTimeFromEpochUs)
   final DateTime timestamp;
+
   @JsonKey(name: 'station_id')
   final String stationIdent;
+
   String source;
+
   String sourceType;
+
   String linkDirection;
+
   @JsonKey(
       name: 'fromaddr',
       fromJson: _uintShiftAndHex,
       nullable: true,
       includeIfNull: false)
   String fromHex;
+
   @JsonKey(
       name: 'toaddr',
       fromJson: _uintShiftAndHex,
       nullable: true,
       includeIfNull: false)
   String toHex;
+
   @JsonKey(fromJson: _uintShiftAndHex)
   final String icao;
+
   final int channel;
+
   @JsonKey(name: 'freq', nullable: true)
   final double frequency;
+
   final int level;
+
+  @JsonKey(name: 'error', defaultValue: 0)
   final int error;
+
   final String mode;
+
   final String label;
+
   @JsonKey(name: 'block_id', nullable: true)
   final String blockId;
+
   @JsonKey(fromJson: _stringFromOptionalBool, toJson: _optionalNullToString)
   final String ack;
+
   String tail;
+
   String sanitizedTail;
+
   @JsonKey(name: 'flight', nullable: true)
   final String flightNumber;
+
   @JsonKey(name: 'msgno', nullable: true)
   final String messageNumber;
+
   final String data;
+
   final String text;
+
   @JsonKey(name: 'depa', nullable: true)
   final String departingAirport;
+
   @JsonKey(name: 'dsta', nullable: true)
   final String destinationAirport;
+
   @JsonKey(name: 'lat', nullable: true, includeIfNull: true)
   final double latitude;
+
   @JsonKey(name: 'lon', nullable: true, includeIfNull: true)
   final double longitude;
+
   @JsonKey(name: 'alt', nullable: true, includeIfNull: true)
   final int altitude;
-  @JsonKey(name: 'end')
+
+  @JsonKey(name: 'end', defaultValue: false)
   final bool blockEnd;
 
   JsonMessage(
