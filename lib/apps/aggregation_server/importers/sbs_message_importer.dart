@@ -5,13 +5,14 @@ import 'package:quick_log/quick_log.dart';
 import 'package:airframes_aggregation_server/common.dart';
 
 class SBSMessageImporter {
+  Source source;
   SBSMessage sbsMessage;
   Logger logger;
   NatsManager natsManager;
   PostgreSqlExecutorPool executor;
 
-  SBSMessageImporter(
-      this.sbsMessage, this.natsManager, this.executor, this.logger);
+  SBSMessageImporter(this.source, this.sbsMessage, this.natsManager,
+      this.executor, this.logger);
 
   logPrefix() {
     return '[${sbsMessage.source.name}/${sbsMessage.source.transmissionType}]';
@@ -24,26 +25,22 @@ class SBSMessageImporter {
       airframeQuery.where..tail.equals(sbsMessage.sanitizedTail);
       airframe = await airframeQuery.getOne(executor);
       if (airframe != null && airframe.id != null) {
-        this
-            .logger
-            .debug('${logPrefix()} Retrieved airframe (id: ${airframe.id})');
+        logger.debug('${logPrefix()} Retrieved airframe (id: ${airframe.id})');
       } else {
         var airframeInsertQuery = new AirframeQuery();
         airframeInsertQuery.values..tail = sbsMessage.sanitizedTail;
         try {
           airframe = await airframeInsertQuery.insert(executor);
-          this
-              .logger
-              .debug('${logPrefix()} Inserted airframe (id: ${airframe.id})');
+          logger.debug('${logPrefix()} Inserted airframe (id: ${airframe.id})');
           natsManager.publish(airframe.toString(), 'airframe.created',
               onSuccess: () => {});
         } catch (e) {
-          this.logger.error('${logPrefix()} Unable to insert airframe: ${e}');
+          logger.error('${logPrefix()} Unable to insert airframe: ${e}');
           airframe = await findOrCreateAirframe();
         }
       }
     } else {
-      this.logger.debug('${logPrefix()} No related airframe');
+      logger.debug('${logPrefix()} No related airframe');
     }
 
     return airframe;
@@ -62,9 +59,7 @@ class SBSMessageImporter {
         flight = await flightQuery.getOne(executor);
 
         if (flight != null && flight.id != null) {
-          this
-              .logger
-              .debug('${logPrefix()} Retrieved flight (id: ${flight.id})');
+          logger.debug('${logPrefix()} Retrieved flight (id: ${flight.id})');
           var flightUpdateQuery = new FlightQuery()
             ..where.id.equals(flight.idAsInt)
             ..values.status = 'in-flight'
@@ -82,7 +77,7 @@ class SBSMessageImporter {
             flightUpdateQuery.values.track = sbsMessage.track;
           }
           flight = await flightUpdateQuery.updateOne(executor);
-          this.logger.debug('${logPrefix()} Updated flight (id: ${flight.id})');
+          logger.debug('${logPrefix()} Updated flight (id: ${flight.id})');
         } else {
           var flightInsertQuery = new FlightQuery();
           flightInsertQuery.values
@@ -104,13 +99,16 @@ class SBSMessageImporter {
           }
           try {
             flight = await flightInsertQuery.insert(executor);
-            this
-                .logger
-                .debug('${logPrefix()} Inserted flight (id: ${flight.id})');
-            natsManager.publish(flight.toString(), 'flight.created',
+            logger.debug('${logPrefix()} Inserted flight (id: ${flight.id})');
+            Map<String, dynamic> flightMessage = {
+              'source': source,
+              'flight': flight
+            };
+            natsManager.publish(
+                JsonEncoder().convert(flightMessage), 'flight.created',
                 onSuccess: () => {});
           } catch (e) {
-            this.logger.error('${logPrefix()} Unable to insert flight: ${e}');
+            logger.error('${logPrefix()} Unable to insert flight: ${e}');
             flight = await updateOrCreateFlight(airframe);
           }
         }
@@ -125,9 +123,7 @@ class SBSMessageImporter {
         flight = await flightQuery.getOne(executor);
 
         if (flight != null) {
-          this
-              .logger
-              .debug("${logPrefix()} Retrieved flight (id: ${flight.id})");
+          logger.debug("${logPrefix()} Retrieved flight (id: ${flight.id})");
           var flightUpdateQuery = new FlightQuery();
           flightUpdateQuery
             ..where.id.equals(flight.idAsInt)
@@ -147,18 +143,21 @@ class SBSMessageImporter {
           }
           flight = await flightUpdateQuery.updateOne(executor);
           if (flight != null) {
-            this
-                .logger
-                .debug('${logPrefix()} Updated flight (id: ${flight.id})');
-            natsManager.publish(flight.toString(), 'flight.updated',
+            logger.debug('${logPrefix()} Updated flight (id: ${flight.id})');
+            Map<String, dynamic> flightMessage = {
+              'source': source,
+              'flight': flight
+            };
+            natsManager.publish(
+                JsonEncoder().convert(flightMessage), 'flight.updated',
                 onSuccess: () => {});
           }
         } else {
-          this.logger.debug('${logPrefix()} No recent active flight');
+          logger.debug('${logPrefix()} No recent active flight');
         }
       }
     } else {
-      this.logger.debug('${logPrefix()} No related flight');
+      logger.debug('${logPrefix()} No related flight');
     }
 
     return flight;
@@ -170,7 +169,7 @@ class SBSMessageImporter {
     var station = await stationQuery.getOne(executor);
 
     if (station != null && station.id != null) {
-      this.logger.debug('${logPrefix()} Retrieved station (id: ${station.id})');
+      logger.debug('${logPrefix()} Retrieved station (id: ${station.id})');
     } else {
       var stationInsertQuery = new StationQuery();
       stationInsertQuery.values
@@ -180,9 +179,7 @@ class SBSMessageImporter {
         ..messagesCount = 1;
       try {
         station = await stationInsertQuery.insert(executor);
-        this
-            .logger
-            .debug('${logPrefix()} Inserted station (id: ${station.id})');
+        logger.debug('${logPrefix()} Inserted station (id: ${station.id})');
 
         var stationMessageCountQuery = new StationMessageCountQuery();
         stationMessageCountQuery.values
@@ -191,17 +188,17 @@ class SBSMessageImporter {
         try {
           var stationMessageCount =
               await stationMessageCountQuery.insert(executor);
-          this.logger.debug(
+          logger.debug(
               '${logPrefix()} Inserted station message count (id: ${stationMessageCount.id}');
         } catch (e) {
-          this.logger.error(
+          logger.error(
               '${logPrefix()} Unable to insert station message count: ${e}');
         }
 
         natsManager.publish(station.toString(), 'station.created',
             onSuccess: () => {});
       } catch (e) {
-        this.logger.error('${logPrefix()} Unable to insert station: ${e}');
+        logger.error('${logPrefix()} Unable to insert station: ${e}');
       }
     }
 
@@ -212,19 +209,19 @@ class SBSMessageImporter {
     // FAA Aircraft Registration Touchup
     if (sbsMessage.hexIdent != null &&
         (sbsMessage.tail == null || sbsMessage.tail == '')) {
-      this.logger.debug(
+      logger.debug(
           '${logPrefix()} The tail is missing but we have ICAO. Checking FAA DB...');
       var faaQuery = new FaaAircraftRegistrationQuery();
       faaQuery.where..modeSCodeHex.equals(sbsMessage.hexIdent.toUpperCase());
       var faaRegistration = await faaQuery.getOne(executor);
 
       if (faaRegistration != null) {
-        this.logger.debug(
+        logger.debug(
             '${logPrefix()} Match found! Updating tail to be "N${faaRegistration.nNumber}".');
         sbsMessage.tail = 'N${faaRegistration.nNumber}';
         sbsMessage.sanitizedTail = 'N${faaRegistration.nNumber}';
       } else {
-        this.logger.debug('${logPrefix()} No match found. Leaving blank.');
+        logger.debug('${logPrefix()} No match found. Leaving blank.');
       }
     }
   }

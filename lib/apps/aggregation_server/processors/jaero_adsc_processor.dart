@@ -38,7 +38,7 @@ class JaeroADSCProcessor extends Processor {
 
     if (sbsMessage != null) {
       var sbsMessageImporter = new SBSMessageImporter(
-          sbsMessage, natsManager, databaseExecutor, logger);
+          source, sbsMessage, natsManager, databaseExecutor, logger);
       await sbsMessageImporter.identifyTail();
 
       var station =

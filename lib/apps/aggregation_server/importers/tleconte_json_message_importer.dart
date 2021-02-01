@@ -141,7 +141,12 @@ class TLeconteJsonMessageImporter {
             flight = await flightInsertQuery.insert(executor);
             logger.debug(
                 '[${jsonMessage.sourceType}] Inserted flight (id: ${flight.id})');
-            natsManager.publish(flight.toString(), 'flight.created',
+            Map<String, dynamic> flightMessage = {
+              'source': source,
+              'flight': flight
+            };
+            natsManager.publish(
+                JsonEncoder().convert(flightMessage), 'flight.created',
                 onSuccess: () => {});
           } catch (e) {
             logger.error(
