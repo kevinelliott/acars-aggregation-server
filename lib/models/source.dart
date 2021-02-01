@@ -28,4 +28,14 @@ class Source {
       this.transmissionType,
       this.dataProtocol,
       this.dataProtocolFormat);
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'application': application,
+        'applicationVersion': applicationVersion,
+        'networkProtocol': networkProtocol,
+        'transmissionType': transmissionType,
+        'dataProtocol': dataProtocol,
+        'dataProtocolFormat': dataProtocolFormat
+      };
 }
