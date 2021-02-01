@@ -184,8 +184,8 @@ class TLeconteJsonMessageImporter {
               'source': source,
               'flight': flight
             };
-
-            natsManager.publish(JsonEncoder().convert(flight), 'flight.updated',
+            natsManager.publish(
+                JsonEncoder().convert(flightMessage), 'flight.updated',
                 onSuccess: () => {});
           }
         } else {
