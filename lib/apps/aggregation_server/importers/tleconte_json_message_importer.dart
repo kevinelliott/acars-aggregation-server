@@ -45,7 +45,7 @@ class TLeconteJsonMessageImporter {
 
     if (jsonMessage.sanitizedTail != null) {
       if (jsonMessage.tail != jsonMessage.sanitizedTail) {
-        this.logger.debug(
+        logger.debug(
             "[${jsonMessage.sourceType}] Sanitized tail from '${jsonMessage.tail}' to ${jsonMessage.sanitizedTail}'");
       }
 
@@ -54,11 +54,11 @@ class TLeconteJsonMessageImporter {
         airframeQuery.where..tail.equals(jsonMessage.sanitizedTail);
         airframe = await airframeQuery.getOne(executor);
         if (airframe != null && airframe.id != null) {
-          this.logger.debug(
+          logger.debug(
               '[${jsonMessage.sourceType}] Retrieved airframe (id: ${airframe.id})');
         } else {
           if (jsonMessage.error != null && jsonMessage.error >= 2) {
-            this.logger.debug(
+            logger.debug(
                 '[${jsonMessage.sourceType}] Message error level (${jsonMessage.error}) is too high to be reliable to create an airframe');
             return;
           }
@@ -67,24 +67,22 @@ class TLeconteJsonMessageImporter {
           airframeInsertQuery.values..tail = jsonMessage.sanitizedTail;
           try {
             airframe = await airframeInsertQuery.insert(executor);
-            this.logger.debug(
+            logger.debug(
                 '[${jsonMessage.sourceType}] Inserted airframe (id: ${airframe.id})');
             natsManager.publish(airframe.toString(), 'airframe.created',
                 onSuccess: () => {});
           } catch (e) {
-            this.logger.error(
+            logger.error(
                 '[${jsonMessage.sourceType}] Unable to insert airframe: ${e}');
             airframe = await findOrCreateAirframe();
           }
         }
       } else {
-        this.logger.debug(
+        logger.debug(
             '[${jsonMessage.sourceType}] After sanitization, still no valid tail');
       }
     } else {
-      this
-          .logger
-          .debug('[${jsonMessage.sourceType}] No tail, no related airframe');
+      logger.debug('[${jsonMessage.sourceType}] No tail, no related airframe');
     }
 
     return airframe;
@@ -103,7 +101,7 @@ class TLeconteJsonMessageImporter {
         flight = await flightQuery.getOne(executor);
 
         if (flight != null && flight.id != null) {
-          this.logger.debug(
+          logger.debug(
               '[${jsonMessage.sourceType}] Retrieved flight (id: ${flight.id})');
           var flightUpdateQuery = new FlightQuery()
             ..where.id.equals(flight.idAsInt)
@@ -119,7 +117,7 @@ class TLeconteJsonMessageImporter {
             flightUpdateQuery.values.altitude = jsonMessage.altitude;
           }
           flight = await flightUpdateQuery.updateOne(executor);
-          this.logger.debug(
+          logger.debug(
               '[${jsonMessage.sourceType}] Updated flight (id: ${flight.id})');
         } else {
           var flightInsertQuery = new FlightQuery();
@@ -141,12 +139,12 @@ class TLeconteJsonMessageImporter {
           }
           try {
             flight = await flightInsertQuery.insert(executor);
-            this.logger.debug(
+            logger.debug(
                 '[${jsonMessage.sourceType}] Inserted flight (id: ${flight.id})');
             natsManager.publish(flight.toString(), 'flight.created',
                 onSuccess: () => {});
           } catch (e) {
-            this.logger.error(
+            logger.error(
                 '[${jsonMessage.sourceType}] Unable to insert flight: ${e}');
             flight = await updateOrCreateFlight(airframe);
           }
@@ -162,7 +160,7 @@ class TLeconteJsonMessageImporter {
         flight = await flightQuery.getOne(executor);
 
         if (flight != null) {
-          this.logger.debug(
+          logger.debug(
               "[${jsonMessage.sourceType}] Retrieved flight (id: ${flight.id})");
           var flightUpdateQuery = new FlightQuery();
           flightUpdateQuery
@@ -180,20 +178,22 @@ class TLeconteJsonMessageImporter {
           }
           flight = await flightUpdateQuery.updateOne(executor);
           if (flight != null) {
-            this.logger.debug(
+            logger.debug(
                 '[${jsonMessage.sourceType}] Updated flight (id: ${flight.id})');
-            natsManager.publish(flight.toString(), 'flight.updated',
+            Map<String, dynamic> flightMessage = {
+              'source': source,
+              'flight': flight
+            };
+
+            natsManager.publish(JsonEncoder().convert(flight), 'flight.updated',
                 onSuccess: () => {});
           }
         } else {
-          this
-              .logger
-              .debug("[${jsonMessage.sourceType}] No recent active flight");
+          logger.debug("[${jsonMessage.sourceType}] No recent active flight");
         }
       }
     } else {
-      this
-          .logger
+      logger
           .debug('[${jsonMessage.sourceType}] No airframe, no related flight');
     }
 
@@ -205,10 +205,10 @@ class TLeconteJsonMessageImporter {
     stationQuery.where..ident.equals(jsonMessage.stationIdent);
     var station = await stationQuery.getOne(executor);
     if (station != null && station.id != null) {
-      this.logger.debug(
+      logger.debug(
           '[${jsonMessage.sourceType}] Retrieved station (id: ${station.id}, ident: ${station.ident}, ident from msg: ${jsonMessage.stationIdent})');
     } else {
-      this.logger.debug(
+      logger.debug(
           '[${jsonMessage.sourceType}] Unable to find a station for ident: ${jsonMessage.stationIdent}');
       var stationInsertQuery = new StationQuery();
       stationInsertQuery.values
@@ -218,12 +218,12 @@ class TLeconteJsonMessageImporter {
         ..messagesCount = 1;
       try {
         station = await stationInsertQuery.insert(executor);
-        this.logger.debug(
+        logger.debug(
             '[${jsonMessage.sourceType}] Inserted station (id: ${station.id})');
         natsManager.publish(station.toString(), 'station.created',
             onSuccess: () => {});
       } catch (e) {
-        this.logger.error(
+        logger.error(
             '[${jsonMessage.sourceType}] Unable to insert station: ${e}');
       }
     }
@@ -235,19 +235,19 @@ class TLeconteJsonMessageImporter {
     // FAA Aircraft Registration Touchup
     if (jsonMessage.fromHex != null &&
         (jsonMessage.tail == null || jsonMessage.tail == '')) {
-      this.logger.debug(
+      logger.debug(
           '[${jsonMessage.sourceType}] The tail is missing but we have ICAO. Checking FAA DB...');
       var faaQuery = new FaaAircraftRegistrationQuery();
       faaQuery.where..modeSCodeHex.equals(jsonMessage.fromHex.toUpperCase());
       var faaRegistration = await faaQuery.getOne(executor);
 
       if (faaRegistration != null) {
-        this.logger.debug(
+        logger.debug(
             '[${jsonMessage.sourceType}] Match found! Updating tail to be "N${faaRegistration.nNumber}".');
         jsonMessage.tail = 'N${faaRegistration.nNumber}';
         jsonMessage.sanitizedTail = 'N${faaRegistration.nNumber}';
       } else {
-        this.logger.debug(
+        logger.debug(
             '[${jsonMessage.sourceType}] No match found. Leaving blank.');
       }
     }
@@ -269,7 +269,7 @@ class TLeconteJsonMessageImporter {
     }
 
     if (existingMessage != null) {
-      this.logger.debug(
+      logger.debug(
           '[${jsonMessage.sourceType}] Existing message! Not inserting.' +
               existingMessage.toString());
       var messageReportQuery = new MessageReportQuery();
@@ -384,7 +384,7 @@ class TLeconteJsonMessageImporter {
         }
 
         final json = jsonEncode(jsonMessage);
-        logger.fine(json.toString());
+        logger.fine('Raw JSON Message: ${json.toString()}');
         natsManager.publish(json.toString(), 'message.raw',
             onSuccess: () => {
                   logger.fine(
