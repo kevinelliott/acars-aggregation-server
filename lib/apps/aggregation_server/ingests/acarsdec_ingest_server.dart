@@ -17,16 +17,19 @@ class AcarsdecIngestServer extends UDPIngestServer {
   Future start() async {
     await natsManager.start();
 
-    this.receiver = await UDP.bind(
+    receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));
 
-    this.logger.info(
+    logger.info(
         'Listening on ${config.transport} port ${config.port} for incoming JSON messages from ${config.clientApplication} clients...');
     receiver.listen((datagram) {
-      this.logger = Logger('Ingest(${name}) #${++packetCount}');
+      logger = Logger('Ingest(${name}) #${++packetCount}');
       var str = String.fromCharCodes(datagram.data).trim();
-      this.logger.debug(
+      logger.debug(
           'Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
+      natsManager.publish(str, 'message.incoming',
+          onSuccess: () =>
+              {logger.fine('NATS: Published to message.incoming')});
       processor.logger = logger;
       processor.process(str, datagram.address.address);
     }, timeout: new Duration(days: 365));
