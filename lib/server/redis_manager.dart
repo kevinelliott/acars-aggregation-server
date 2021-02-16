@@ -35,7 +35,7 @@ class RedisManager {
     var value;
     if (connected) {
       value = await commands.get(key);
-      if (value) {
+      if (value != null) {
         value = value + 1;
       } else {
         value = 1;
@@ -52,7 +52,7 @@ class RedisManager {
       logger.info('RedisManager: Connecting to Redis at ${config['url']}...');
       client = await redis.Client.connect(config['url']);
       commands = client.asCommands<String, String>();
-      logger.info('RedisManager: Connected to NATS (url: ${config['url']}).');
+      logger.info('RedisManager: Connected to Redis (url: ${config['url']}).');
       connected = true;
     } catch (e) {
       logger.error('RedisManager: Error: ${e.toString()}');
