@@ -8,9 +8,10 @@ import 'package:airframes_aggregation_server/apps/aggregation_server/support.dar
 class JaeroACARSProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
   NatsManager natsManager;
+  RedisManager redisManager;
 
-  JaeroACARSProcessor(
-      Source source, this.databaseExecutor, this.natsManager, Logger logger)
+  JaeroACARSProcessor(Source source, this.databaseExecutor, this.natsManager,
+      this.redisManager, Logger logger)
       : super(source, logger) {}
 
   Future parse(String str) async {

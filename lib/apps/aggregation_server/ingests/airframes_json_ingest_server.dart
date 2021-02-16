@@ -12,7 +12,7 @@ class AirframesJsonIngestServer extends UDPIngestServer {
     this.source = Source('airframes-client', 'afc', 'unknown', 'udp', 'mixed',
         'af.json.v1', 'json');
     this.processor = AirframesJsonProcessor(
-        source, databaseConfig.executor(), natsManager, logger);
+        source, databaseConfig.executor(), natsManager, redisManager, logger);
   }
 
   Future start() async {

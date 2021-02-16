@@ -1,4 +1,3 @@
-import 'package:nats/nats.dart';
 import 'package:angel_orm_postgres/angel_orm_postgres.dart';
 import 'package:quick_log/quick_log.dart';
 
@@ -8,9 +7,10 @@ import 'package:airframes_aggregation_server/apps/aggregation_server/support.dar
 class JaeroADSCProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
   NatsManager natsManager;
+  RedisManager redisManager;
 
-  JaeroADSCProcessor(
-      Source source, this.databaseExecutor, this.natsManager, Logger logger)
+  JaeroADSCProcessor(Source source, this.databaseExecutor, this.natsManager,
+      this.redisManager, Logger logger)
       : super(source, logger) {}
 
   logPrefix() {
@@ -37,8 +37,8 @@ class JaeroADSCProcessor extends Processor {
     SBSMessage sbsMessage = await parse(str);
 
     if (sbsMessage != null) {
-      var sbsMessageImporter = new SBSMessageImporter(
-          source, sbsMessage, natsManager, databaseExecutor, logger);
+      var sbsMessageImporter = new SBSMessageImporter(source, sbsMessage,
+          natsManager, redisManager, databaseExecutor, logger);
       await sbsMessageImporter.identifyTail();
 
       var station =

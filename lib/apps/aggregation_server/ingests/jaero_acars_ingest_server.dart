@@ -10,6 +10,6 @@ class JaeroACARSIngestServer extends UDPIngestServer {
     this.source = Source(
         name, 'JAERO', 'unknown', 'udp', 'ACARS', 'human-readable', 'text');
     this.processor = JaeroACARSProcessor(
-        source, databaseConfig.executor(), natsManager, logger);
+        source, databaseConfig.executor(), natsManager, redisManager, logger);
   }
 }

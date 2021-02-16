@@ -11,7 +11,7 @@ class Dumpvdl2IngestServer extends UDPIngestServer {
     this.source = Source('dumpvdl2', 'dumpvdl2', 'unknown', 'udp', 'vdl',
         'PlanePlotter', 'text');
     this.processor = PlanePlotterProcessor(
-        source, databaseConfig.executor(), natsManager, logger);
+        source, databaseConfig.executor(), natsManager, redisManager, logger);
   }
 
   Future start() async {

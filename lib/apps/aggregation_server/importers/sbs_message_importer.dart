@@ -9,10 +9,11 @@ class SBSMessageImporter {
   SBSMessage sbsMessage;
   Logger logger;
   NatsManager natsManager;
+  RedisManager redisManager;
   PostgreSqlExecutorPool executor;
 
   SBSMessageImporter(this.source, this.sbsMessage, this.natsManager,
-      this.executor, this.logger);
+      this.redisManager, this.executor, this.logger);
 
   logPrefix() {
     return '[${sbsMessage.source.name}/${sbsMessage.source.transmissionType}]';
@@ -285,6 +286,11 @@ class SBSMessageImporter {
                 logger.fine(
                     '[${message.sourceType} / ${message.source}] Published message to NATS')
               });
+    }
+
+    if (station != null) {
+      redisManager
+          .increment('aggregator.stations.${station.id}.messages.all-time');
     }
 
     return message;

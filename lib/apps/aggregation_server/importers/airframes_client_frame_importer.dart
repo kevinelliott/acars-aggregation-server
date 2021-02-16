@@ -5,15 +5,22 @@ import 'package:quick_log/quick_log.dart';
 class AirframesClientFrameImporter {
   AirframesClientFrame frame;
   NatsManager natsManager;
+  RedisManager redisManager;
   PostgreSqlExecutorPool executor;
   Logger logger;
   Source source;
   ClientMessage clientMessage;
 
-  AirframesClientFrameImporter(Source source, AirframesClientFrame frame,
-      NatsManager natsManager, executor, Logger logger) {
+  AirframesClientFrameImporter(
+      Source source,
+      AirframesClientFrame frame,
+      NatsManager natsManager,
+      RedisManager redisManager,
+      executor,
+      Logger logger) {
     this.frame = frame;
     this.natsManager = natsManager;
+    this.redisManager = redisManager;
     this.executor = executor;
     this.logger = logger;
     this.source = source;

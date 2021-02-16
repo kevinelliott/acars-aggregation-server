@@ -7,9 +7,10 @@ import 'package:airframes_aggregation_server/apps/aggregation_server/support.dar
 class PlanePlotterProcessor extends Processor {
   PostgreSqlExecutorPool databaseExecutor;
   NatsManager natsManager;
+  RedisManager redisManager;
 
-  PlanePlotterProcessor(
-      Source source, this.databaseExecutor, this.natsManager, Logger logger)
+  PlanePlotterProcessor(Source source, this.databaseExecutor, this.natsManager,
+      this.redisManager, Logger logger)
       : super(source, logger) {}
 
   logPrefix() {
@@ -32,7 +33,7 @@ class PlanePlotterProcessor extends Processor {
   Future process(String str, String ipAddress) async {
     PlanePlotterMessage ppMessage = await parse(str);
     var ppMessageImporter = new PlanePlotterMessageImporter(
-        ppMessage, natsManager, databaseExecutor, logger);
+        ppMessage, natsManager, redisManager, databaseExecutor, logger);
 
     var station =
         await ppMessageImporter.findOrCreateStationByIpAddress(ipAddress);

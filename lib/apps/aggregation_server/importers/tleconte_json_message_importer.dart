@@ -6,14 +6,21 @@ import 'package:quick_log/quick_log.dart';
 class TLeconteJsonMessageImporter {
   JsonMessage jsonMessage;
   NatsManager natsManager;
+  RedisManager redisManager;
   PostgreSqlExecutorPool executor;
   Logger logger;
   Source source;
 
-  TLeconteJsonMessageImporter(Source source, JsonMessage jsonMessage,
-      NatsManager natsManager, executor, Logger logger) {
+  TLeconteJsonMessageImporter(
+      Source source,
+      JsonMessage jsonMessage,
+      NatsManager natsManager,
+      RedisManager redisManager,
+      executor,
+      Logger logger) {
     this.jsonMessage = jsonMessage;
     this.natsManager = natsManager;
+    this.redisManager = redisManager;
     this.executor = executor;
     this.logger = logger;
     this.source = source;
@@ -401,6 +408,11 @@ class TLeconteJsonMessageImporter {
                       '[${jsonMessage.sourceType} / ${jsonMessage.source}] Published message to NATS')
                 });
       }
+    }
+
+    if (station != null) {
+      redisManager
+          .increment('aggregator.stations.${station.id}.messages.all-time');
     }
 
     return message;

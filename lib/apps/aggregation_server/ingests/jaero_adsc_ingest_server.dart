@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:nats/nats.dart';
 import 'package:quick_log/quick_log.dart';
 
 import 'package:airframes_aggregation_server/common.dart';
@@ -18,7 +17,7 @@ class JaeroADSCIngestServer extends TCPIngestServer {
     redisManager = RedisManager(redisConfig, logger);
 
     this.processor = JaeroADSCProcessor(
-        source, databaseConfig.executor(), natsManager, logger);
+        source, databaseConfig.executor(), natsManager, redisManager, logger);
   }
 
   Future start() async {

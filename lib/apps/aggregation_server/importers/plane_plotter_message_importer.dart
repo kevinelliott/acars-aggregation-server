@@ -6,15 +6,21 @@ import 'package:airframes_aggregation_server/common.dart';
 class PlanePlotterMessageImporter {
   PlanePlotterMessage ppMessage;
   NatsManager natsManager;
+  RedisManager redisManager;
   PostgreSqlExecutorPool executor;
   Logger logger;
 
-  PlanePlotterMessageImporter(PlanePlotterMessage ppMessage,
-      NatsManager natsManager, PostgreSqlExecutorPool executor, Logger logger) {
+  PlanePlotterMessageImporter(
+      PlanePlotterMessage ppMessage,
+      NatsManager natsManager,
+      RedisManager redisManager,
+      PostgreSqlExecutorPool executor,
+      Logger logger) {
     this.ppMessage = ppMessage;
     this.executor = executor;
     this.logger = logger;
     this.natsManager = natsManager;
+    this.redisManager = redisManager;
   }
 
   logPrefix() {
@@ -255,6 +261,10 @@ class PlanePlotterMessageImporter {
                 logger.fine(
                     '[${message.sourceType} / ${message.source}] Published message to NATS')
               });
+      if (station != null) {
+        redisManager
+            .increment('aggregator.stations.${station.id}.messages.all-time');
+      }
     }
 
     return message;

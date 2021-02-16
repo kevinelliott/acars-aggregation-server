@@ -12,7 +12,7 @@ class AcarsdecIngestServer extends UDPIngestServer {
     this.source = Source(
         'acarsdec', 'acarsdec', 'unknown', 'udp', 'ACARS', 'TLeconte', 'JSON');
     this.processor = TLeconteJsonProcessor(
-        source, databaseConfig.executor(), natsManager, logger);
+        source, databaseConfig.executor(), natsManager, redisManager, logger);
   }
 
   Future start() async {
