@@ -25,17 +25,24 @@ class JaeroADSCIngestServer extends TCPIngestServer {
     await natsManager.start();
     await redisManager.start();
 
+    redisManager.set('aggregator.ingests.jaero-adsc.connections.session', '0');
+    redisManager.set('aggregator.ingests.jaero-adsc.packets.session', '0');
+
     receiver = ServerSocket.bind(InternetAddress.anyIPv4, config.port);
     receiver.then((ServerSocket server) {
       server.listen((Socket socket) {
         redisManager
             .increment('aggregator.ingests.jaero-adsc.connections.session');
+        redisManager
+            .increment('aggregator.ingests.jaero-adsc.connections.all-time');
         logger.debug(
             'New TCP connection from ${socket.remoteAddress.address}:${socket.remotePort}');
         socket.listen((List<int> data) {
           String result = new String.fromCharCodes(data);
           redisManager
               .increment('aggregator.ingests.jaero-adsc.packets.session');
+          redisManager
+              .increment('aggregator.ingests.jaero-adsc.packets.all-time');
           logger.debug(
               'Received TCP packet from ${socket.remoteAddress.address}:${socket.remotePort}: ${result}');
           processor.logger = logger;
