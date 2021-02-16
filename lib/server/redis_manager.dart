@@ -34,15 +34,10 @@ class RedisManager {
   increment(String key) async {
     var value;
     if (connected) {
-      value = await commands.get(key);
-      if (value != null) {
-        value = value + 1;
-      } else {
-        value = 1;
-      }
-      await commands.set(key, value);
+      value = await commands.incr(key);
+      logger.debug('RedisManager: Incremented key ${key} to ${value}.');
     } else {
-      logger.debug('RedisManager: Incrementing key ${key} to ${value}.');
+      logger.debug('RedisManager: Not incrementing key ${key}.');
     }
     return value;
   }
