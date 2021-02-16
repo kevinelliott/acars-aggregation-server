@@ -19,6 +19,8 @@ class AirframesJsonIngestServer extends UDPIngestServer {
     await natsManager.start();
     await redisManager.start();
 
+    redisManager.set('aggregator.ingests.airframes-json.packets.session', '0');
+
     this.receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));
 
@@ -29,6 +31,10 @@ class AirframesJsonIngestServer extends UDPIngestServer {
       var str = String.fromCharCodes(datagram.data).trim();
       this.logger.debug(
           'Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
+      redisManager
+          .increment('aggregator.ingests.airframes-json.packets.session');
+      redisManager
+          .increment('aggregator.ingests.airframes-json.packets.all-time');
       processor.logger = logger;
       processor.process(str, datagram.address.address);
     }, timeout: new Duration(days: 365));

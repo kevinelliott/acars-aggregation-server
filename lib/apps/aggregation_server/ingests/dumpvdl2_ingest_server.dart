@@ -18,6 +18,8 @@ class Dumpvdl2IngestServer extends UDPIngestServer {
     await natsManager.start();
     await redisManager.start();
 
+    redisManager.set('aggregator.ingests.dumpvdl2.packets.session', '0');
+
     this.receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));
 
@@ -28,6 +30,8 @@ class Dumpvdl2IngestServer extends UDPIngestServer {
       var str = String.fromCharCodes(datagram.data);
       this.logger.debug(
           'Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
+      redisManager.increment('aggregator.ingests.dumpvdl2.packets.session');
+      redisManager.increment('aggregator.ingests.dumpvdl2.packets.all-time');
       processor.logger = logger;
       processor.process(str, datagram.address.address);
     }, timeout: new Duration(days: 365));

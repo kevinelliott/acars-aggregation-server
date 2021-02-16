@@ -19,6 +19,8 @@ class AcarsdecIngestServer extends UDPIngestServer {
     await natsManager.start();
     await redisManager.start();
 
+    redisManager.set('aggregator.ingests.acarsdec.packets.session', '0');
+
     receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));
 
@@ -29,6 +31,8 @@ class AcarsdecIngestServer extends UDPIngestServer {
       var str = String.fromCharCodes(datagram.data).trim();
       logger.debug(
           'Received UDP from ${datagram.address.address}:${datagram.port}: ${str}');
+      redisManager.increment('aggregator.ingests.acarsdec.packets.session');
+      redisManager.increment('aggregator.ingests.acarsdec.packets.all-time');
       Map<String, dynamic> message = {'source': source, 'str': str};
       natsManager.publish(JsonEncoder().convert(message), 'message.incoming',
           onSuccess: () =>
