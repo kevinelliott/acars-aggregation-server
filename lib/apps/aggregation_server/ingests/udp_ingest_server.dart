@@ -9,8 +9,8 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class UDPIngestServer extends IngestServer {
-  UDPIngestServer(name, config, databaseConfig, natsConfig)
-      : super(name, config, databaseConfig, natsConfig) {
+  UDPIngestServer(name, config, databaseConfig, natsConfig, redisConfig)
+      : super(name, config, databaseConfig, natsConfig, redisConfig) {
     this.logger = Logger('Ingest(${name})');
     this.source = Source(
         name, 'unknown', 'unknown', 'udp', 'unknown', 'unknown', 'unknown');
@@ -20,6 +20,7 @@ class UDPIngestServer extends IngestServer {
 
   Future start() async {
     await natsManager.start();
+    await redisManager.start();
 
     this.receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));

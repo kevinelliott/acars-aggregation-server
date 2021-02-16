@@ -110,7 +110,7 @@ class AcarsdecMessage extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AcarsdecMessage copyWith(void Function(AcarsdecMessage) updates) => super.copyWith((message) => updates(message as AcarsdecMessage)); // ignore: deprecated_member_use
+  AcarsdecMessage copyWith(void Function(AcarsdecMessage) updates) => super.copyWith((message) => updates(message as AcarsdecMessage)) as AcarsdecMessage; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AcarsdecMessage create() => AcarsdecMessage._();
@@ -398,7 +398,7 @@ class Vdlm2decMessage extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Vdlm2decMessage copyWith(void Function(Vdlm2decMessage) updates) => super.copyWith((message) => updates(message as Vdlm2decMessage)); // ignore: deprecated_member_use
+  Vdlm2decMessage copyWith(void Function(Vdlm2decMessage) updates) => super.copyWith((message) => updates(message as Vdlm2decMessage)) as Vdlm2decMessage; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Vdlm2decMessage create() => Vdlm2decMessage._();
@@ -643,7 +643,7 @@ class FrameRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FrameRequest copyWith(void Function(FrameRequest) updates) => super.copyWith((message) => updates(message as FrameRequest)); // ignore: deprecated_member_use
+  FrameRequest copyWith(void Function(FrameRequest) updates) => super.copyWith((message) => updates(message as FrameRequest)) as FrameRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FrameRequest create() => FrameRequest._();
@@ -686,7 +686,7 @@ class AirframesClientFrame_Source_App extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AirframesClientFrame_Source_App copyWith(void Function(AirframesClientFrame_Source_App) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source_App)); // ignore: deprecated_member_use
+  AirframesClientFrame_Source_App copyWith(void Function(AirframesClientFrame_Source_App) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source_App)) as AirframesClientFrame_Source_App; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_Source_App create() => AirframesClientFrame_Source_App._();
@@ -762,7 +762,7 @@ class AirframesClientFrame_Source_Host extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AirframesClientFrame_Source_Host copyWith(void Function(AirframesClientFrame_Source_Host) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source_Host)); // ignore: deprecated_member_use
+  AirframesClientFrame_Source_Host copyWith(void Function(AirframesClientFrame_Source_Host) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source_Host)) as AirframesClientFrame_Source_Host; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_Source_Host create() => AirframesClientFrame_Source_Host._();
@@ -860,7 +860,7 @@ class AirframesClientFrame_Source extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AirframesClientFrame_Source copyWith(void Function(AirframesClientFrame_Source) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source)); // ignore: deprecated_member_use
+  AirframesClientFrame_Source copyWith(void Function(AirframesClientFrame_Source) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_Source)) as AirframesClientFrame_Source; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_Source create() => AirframesClientFrame_Source._();
@@ -938,7 +938,7 @@ class AirframesClientFrame_AirframesConfig_Feed extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AirframesClientFrame_AirframesConfig_Feed copyWith(void Function(AirframesClientFrame_AirframesConfig_Feed) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_AirframesConfig_Feed)); // ignore: deprecated_member_use
+  AirframesClientFrame_AirframesConfig_Feed copyWith(void Function(AirframesClientFrame_AirframesConfig_Feed) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_AirframesConfig_Feed)) as AirframesClientFrame_AirframesConfig_Feed; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_AirframesConfig_Feed create() => AirframesClientFrame_AirframesConfig_Feed._();
@@ -985,7 +985,7 @@ class AirframesClientFrame_AirframesConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AirframesClientFrame_AirframesConfig copyWith(void Function(AirframesClientFrame_AirframesConfig) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_AirframesConfig)); // ignore: deprecated_member_use
+  AirframesClientFrame_AirframesConfig copyWith(void Function(AirframesClientFrame_AirframesConfig) updates) => super.copyWith((message) => updates(message as AirframesClientFrame_AirframesConfig)) as AirframesClientFrame_AirframesConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame_AirframesConfig create() => AirframesClientFrame_AirframesConfig._();
@@ -1061,7 +1061,7 @@ class AirframesClientFrame extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AirframesClientFrame copyWith(void Function(AirframesClientFrame) updates) => super.copyWith((message) => updates(message as AirframesClientFrame)); // ignore: deprecated_member_use
+  AirframesClientFrame copyWith(void Function(AirframesClientFrame) updates) => super.copyWith((message) => updates(message as AirframesClientFrame)) as AirframesClientFrame; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AirframesClientFrame create() => AirframesClientFrame._();

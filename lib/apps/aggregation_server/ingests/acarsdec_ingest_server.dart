@@ -7,8 +7,8 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class AcarsdecIngestServer extends UDPIngestServer {
-  AcarsdecIngestServer(name, config, databaseConfig, natsConfig)
-      : super(name, config, databaseConfig, natsConfig) {
+  AcarsdecIngestServer(name, config, databaseConfig, natsConfig, redisConfig)
+      : super(name, config, databaseConfig, natsConfig, redisConfig) {
     this.source = Source(
         'acarsdec', 'acarsdec', 'unknown', 'udp', 'ACARS', 'TLeconte', 'JSON');
     this.processor = TLeconteJsonProcessor(
@@ -17,6 +17,7 @@ class AcarsdecIngestServer extends UDPIngestServer {
 
   Future start() async {
     await natsManager.start();
+    await redisManager.start();
 
     receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));

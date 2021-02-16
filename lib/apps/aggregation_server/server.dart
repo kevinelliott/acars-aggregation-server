@@ -14,6 +14,7 @@ Future main(List<String> arguments) async {
   var args;
   var config = {};
   var natsConfig = {};
+  var redisConfig = {};
   DatabaseConfig databaseConfig;
 
   Logger.writer = ConsolePrinter(minLevel: LogLevel.info);
@@ -24,8 +25,9 @@ Future main(List<String> arguments) async {
   args = Args.parse(arguments);
   Args.printSettings(args);
   config = Config.fromArgs(args);
-  natsConfig = config['nats'];
   databaseConfig = DatabaseConfig.fromMap(config['database']);
+  natsConfig = config['nats'];
+  redisConfig = config['redis'];
 
   // HealthServer healthServer =
   //     HealthServer(port: int.parse(parsedArgs['health-check-server-port']));
@@ -40,7 +42,7 @@ Future main(List<String> arguments) async {
           config['nats']['host'],
           config['nats']['port']);
       var acarsdecServer = AcarsdecIngestServer(
-          'acarsdec', acarsdecConfig, databaseConfig, natsConfig);
+          'acarsdec', acarsdecConfig, databaseConfig, natsConfig, redisConfig);
       acarsdecServer.start();
     }
 
@@ -62,7 +64,7 @@ Future main(List<String> arguments) async {
           config['nats']['host'],
           config['nats']['port']);
       var vdlm2decServer = AcarsdecIngestServer(
-          'vdlm2dec', vdlm2decConfig, databaseConfig, natsConfig);
+          'vdlm2dec', vdlm2decConfig, databaseConfig, natsConfig, redisConfig);
       vdlm2decServer.start();
     }
 
@@ -83,8 +85,8 @@ Future main(List<String> arguments) async {
           'jaero-c-band-adsc',
           config['nats']['host'],
           config['nats']['port']);
-      var jaeroCADSCServer = JaeroADSCIngestServer(
-          'jaero-c-adsc', jaeroCADSCConfig, databaseConfig, natsConfig);
+      var jaeroCADSCServer = JaeroADSCIngestServer('jaero-c-adsc',
+          jaeroCADSCConfig, databaseConfig, natsConfig, redisConfig);
       jaeroCADSCServer.start();
     }
 
@@ -100,7 +102,11 @@ Future main(List<String> arguments) async {
           config['nats']['host'],
           config['nats']['port']);
       var airframesJsonIngestServer = AirframesJsonIngestServer(
-          'airframes-json', airframesJsonConfig, databaseConfig, natsConfig);
+          'airframes-json',
+          airframesJsonConfig,
+          databaseConfig,
+          natsConfig,
+          redisConfig);
       airframesJsonIngestServer.start();
     }
 

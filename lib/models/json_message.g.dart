@@ -19,7 +19,7 @@ JsonMessage _$JsonMessageFromJson(Map<String, dynamic> json) {
     channel: json['channel'] as int,
     frequency: (json['freq'] as num)?.toDouble(),
     level: json['level'] as int,
-    error: json['error'] as int,
+    error: json['error'] as int ?? 0,
     mode: json['mode'] as String,
     label: json['label'] as String,
     blockId: json['block_id'] as String,
@@ -34,7 +34,7 @@ JsonMessage _$JsonMessageFromJson(Map<String, dynamic> json) {
     latitude: (json['lat'] as num)?.toDouble(),
     longitude: (json['lon'] as num)?.toDouble(),
     altitude: json['alt'] as int,
-    blockEnd: json['end'] as bool,
+    blockEnd: json['end'] as bool ?? false,
   )..sanitizedTail = json['sanitizedTail'] as String;
 }
 

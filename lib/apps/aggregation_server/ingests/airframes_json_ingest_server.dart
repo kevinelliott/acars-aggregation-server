@@ -6,8 +6,9 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class AirframesJsonIngestServer extends UDPIngestServer {
-  AirframesJsonIngestServer(name, config, databaseConfig, natsConfig)
-      : super(name, config, databaseConfig, natsConfig) {
+  AirframesJsonIngestServer(
+      name, config, databaseConfig, natsConfig, redisConfig)
+      : super(name, config, databaseConfig, natsConfig, redisConfig) {
     this.source = Source('airframes-client', 'afc', 'unknown', 'udp', 'mixed',
         'af.json.v1', 'json');
     this.processor = AirframesJsonProcessor(
@@ -16,6 +17,7 @@ class AirframesJsonIngestServer extends UDPIngestServer {
 
   Future start() async {
     await natsManager.start();
+    await redisManager.start();
 
     this.receiver = await UDP.bind(
         Endpoint.unicast(InternetAddress.anyIPv4, port: Port(config.port)));

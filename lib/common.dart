@@ -29,6 +29,7 @@ export 'orm_models/station_message_count.dart';
 
 export 'server/database_config.dart';
 export 'server/nats_manager.dart';
+export 'server/redis_manager.dart';
 
 export 'utilities/datetime_conversion.dart';
 export 'utilities/icao.dart';

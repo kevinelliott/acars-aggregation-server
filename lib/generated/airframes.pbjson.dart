@@ -3,8 +3,12 @@
 //  source: airframes.proto
 //
 // @dart = 2.7
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use acarsdecMessageDescriptor instead')
 const AcarsdecMessage$json = const {
   '1': 'AcarsdecMessage',
   '2': const [
@@ -26,6 +30,9 @@ const AcarsdecMessage$json = const {
   ],
 };
 
+/// Descriptor for `AcarsdecMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List acarsdecMessageDescriptor = $convert.base64Decode('Cg9BY2Fyc2RlY01lc3NhZ2USHAoJdGltZXN0YW1wGAEgASgBUgl0aW1lc3RhbXASHQoKc3RhdGlvbl9pZBgCIAEoCVIJc3RhdGlvbklkEhgKB2NoYW5uZWwYAyABKA1SB2NoYW5uZWwSHAoJZnJlcXVlbmN5GAQgASgBUglmcmVxdWVuY3kSFAoFbGV2ZWwYBSABKBFSBWxldmVsEhQKBWVycm9yGAYgASgNUgVlcnJvchISCgRtb2RlGAcgASgJUgRtb2RlEhQKBWxhYmVsGAggASgJUgVsYWJlbBIZCghibG9ja19pZBgJIAEoCVIHYmxvY2tJZBIQCgNhY2sYCiABKAlSA2FjaxISCgR0YWlsGAsgASgJUgR0YWlsEhYKBmZsaWdodBgMIAEoCVIGZmxpZ2h0EiUKDm1lc3NhZ2VfbnVtYmVyGA0gASgJUg1tZXNzYWdlTnVtYmVyEhIKBHRleHQYDiABKAlSBHRleHQSEAoDZW5kGA8gASgIUgNlbmQ=');
+@$core.Deprecated('Use vdlm2decMessageDescriptor instead')
 const Vdlm2decMessage$json = const {
   '1': 'Vdlm2decMessage',
   '2': const [
@@ -56,10 +63,16 @@ const Vdlm2decMessage$json = const {
   ],
 };
 
+/// Descriptor for `Vdlm2decMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List vdlm2decMessageDescriptor = $convert.base64Decode('Cg9WZGxtMmRlY01lc3NhZ2USHAoJdGltZXN0YW1wGAEgASgBUgl0aW1lc3RhbXASHQoKc3RhdGlvbl9pZBgCIAEoCVIJc3RhdGlvbklkEhgKB2NoYW5uZWwYAyABKA1SB2NoYW5uZWwSHAoJZnJlcXVlbmN5GAQgASgBUglmcmVxdWVuY3kSGwoJZnJvbV9pY2FvGAUgASgNUghmcm9tSWNhbxIXCgd0b19pY2FvGAYgASgNUgZ0b0ljYW8SFAoFbGV2ZWwYByABKBFSBWxldmVsEhQKBWVycm9yGAggASgNUgVlcnJvchISCgRtb2RlGAkgASgJUgRtb2RlEhQKBWxhYmVsGAogASgJUgVsYWJlbBIZCghibG9ja19pZBgLIAEoCVIHYmxvY2tJZBIQCgNhY2sYDCABKAlSA2FjaxISCgR0YWlsGA0gASgJUgR0YWlsEhYKBmZsaWdodBgOIAEoCVIGZmxpZ2h0EiUKDm1lc3NhZ2VfbnVtYmVyGA8gASgJUg1tZXNzYWdlTnVtYmVyEhIKBHRleHQYECABKAlSBHRleHQSEAoDZW5kGBEgASgIUgNlbmQSKwoRZGVwYXJ0dXJlX2FpcnBvcnQYEiABKAlSEGRlcGFydHVyZUFpcnBvcnQSLwoTZGVzdGluYXRpb25fYWlycG9ydBgTIAEoCVISZGVzdGluYXRpb25BaXJwb3J0Eh8KC2Fycml2YWxfZXRhGBQgASgJUgphcnJpdmFsRXRhEhkKCGdhdGVfb3V0GBUgASgJUgdnYXRlT3V0Eh0KCmdyb3VuZF9vZmYYFiABKAlSCWdyb3VuZE9mZhIbCglncm91bmRfb24YFyABKAlSCGdyb3VuZE9uEhcKB2dhdGVfaW4YGCABKAlSBmdhdGVJbg==');
+@$core.Deprecated('Use frameRequestDescriptor instead')
 const FrameRequest$json = const {
   '1': 'FrameRequest',
 };
 
+/// Descriptor for `FrameRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List frameRequestDescriptor = $convert.base64Decode('CgxGcmFtZVJlcXVlc3Q=');
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame$json = const {
   '1': 'AirframesClientFrame',
   '2': const [
@@ -74,6 +87,7 @@ const AirframesClientFrame$json = const {
   ],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_Source$json = const {
   '1': 'Source',
   '2': const [
@@ -86,6 +100,7 @@ const AirframesClientFrame_Source$json = const {
   '4': const [AirframesClientFrame_Source_SourceType$json, AirframesClientFrame_Source_SourceFormat$json],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_Source_App$json = const {
   '1': 'App',
   '2': const [
@@ -95,6 +110,7 @@ const AirframesClientFrame_Source_App$json = const {
   '4': const [AirframesClientFrame_Source_App_AppType$json],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_Source_App_AppType$json = const {
   '1': 'AppType',
   '2': const [
@@ -109,6 +125,7 @@ const AirframesClientFrame_Source_App_AppType$json = const {
   ],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_Source_Host$json = const {
   '1': 'Host',
   '2': const [
@@ -121,6 +138,7 @@ const AirframesClientFrame_Source_Host$json = const {
   '4': const [AirframesClientFrame_Source_Host_Platform$json, AirframesClientFrame_Source_Host_OperatingSystem$json],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_Source_Host_Platform$json = const {
   '1': 'Platform',
   '2': const [
@@ -133,6 +151,7 @@ const AirframesClientFrame_Source_Host_Platform$json = const {
   ],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_Source_Host_OperatingSystem$json = const {
   '1': 'OperatingSystem',
   '2': const [
@@ -143,6 +162,7 @@ const AirframesClientFrame_Source_Host_OperatingSystem$json = const {
   ],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_Source_SourceType$json = const {
   '1': 'SourceType',
   '2': const [
@@ -153,6 +173,7 @@ const AirframesClientFrame_Source_SourceType$json = const {
   ],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_Source_SourceFormat$json = const {
   '1': 'SourceFormat',
   '2': const [
@@ -166,6 +187,7 @@ const AirframesClientFrame_Source_SourceFormat$json = const {
   ],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_AirframesConfig$json = const {
   '1': 'AirframesConfig',
   '2': const [
@@ -174,6 +196,7 @@ const AirframesClientFrame_AirframesConfig$json = const {
   '3': const [AirframesClientFrame_AirframesConfig_Feed$json],
 };
 
+@$core.Deprecated('Use airframesClientFrameDescriptor instead')
 const AirframesClientFrame_AirframesConfig_Feed$json = const {
   '1': 'Feed',
   '2': const [
@@ -181,3 +204,5 @@ const AirframesClientFrame_AirframesConfig_Feed$json = const {
   ],
 };
 
+/// Descriptor for `AirframesClientFrame`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List airframesClientFrameDescriptor = $convert.base64Decode('ChRBaXJmcmFtZXNDbGllbnRGcmFtZRI+CgZzb3VyY2UYASABKAsyJi5haXJmcmFtZXMuQWlyZnJhbWVzQ2xpZW50RnJhbWUuU291cmNlUgZzb3VyY2USTQoJYWlyZnJhbWVzGAIgASgLMi8uYWlyZnJhbWVzLkFpcmZyYW1lc0NsaWVudEZyYW1lLkFpcmZyYW1lc0NvbmZpZ1IJYWlyZnJhbWVzEkcKEGFjYXJzZGVjX21lc3NhZ2UYAyABKAsyGi5haXJmcmFtZXMuQWNhcnNkZWNNZXNzYWdlSABSD2FjYXJzZGVjTWVzc2FnZRJHChB2ZGxtMmRlY19tZXNzYWdlGAQgASgLMhouYWlyZnJhbWVzLlZkbG0yZGVjTWVzc2FnZUgAUg92ZGxtMmRlY01lc3NhZ2Ua8AgKBlNvdXJjZRI8CgNhcHAYASABKAsyKi5haXJmcmFtZXMuQWlyZnJhbWVzQ2xpZW50RnJhbWUuU291cmNlLkFwcFIDYXBwEj8KBGhvc3QYAiABKAsyKy5haXJmcmFtZXMuQWlyZnJhbWVzQ2xpZW50RnJhbWUuU291cmNlLkhvc3RSBGhvc3QSRQoEdHlwZRgDIAEoDjIxLmFpcmZyYW1lcy5BaXJmcmFtZXNDbGllbnRGcmFtZS5Tb3VyY2UuU291cmNlVHlwZVIEdHlwZRJLCgZmb3JtYXQYBCABKA4yMy5haXJmcmFtZXMuQWlyZnJhbWVzQ2xpZW50RnJhbWUuU291cmNlLlNvdXJjZUZvcm1hdFIGZm9ybWF0GugBCgNBcHASRgoEdHlwZRgBIAEoDjIyLmFpcmZyYW1lcy5BaXJmcmFtZXNDbGllbnRGcmFtZS5Tb3VyY2UuQXBwLkFwcFR5cGVSBHR5cGUSGAoHdmVyc2lvbhgCIAEoCVIHdmVyc2lvbiJ/CgdBcHBUeXBlEhQKEFVOS05PV05fQVBQX1RZUEUQABIMCghBQ0FSU0RFQxABEg4KCkFDQVJTREVDTzIQAhIMCghWRExNMkRFQxADEgwKCERVTVBWREwyEAQSCQoFSkFFUk8QBRILCgdQQ19IRkRMEAYSDAoIU09SQ0VSRVIQBxqnAwoESG9zdBJQCghwbGF0Zm9ybRgBIAEoDjI0LmFpcmZyYW1lcy5BaXJmcmFtZXNDbGllbnRGcmFtZS5Tb3VyY2UuSG9zdC5QbGF0Zm9ybVIIcGxhdGZvcm0SSwoCb3MYAiABKA4yOy5haXJmcmFtZXMuQWlyZnJhbWVzQ2xpZW50RnJhbWUuU291cmNlLkhvc3QuT3BlcmF0aW5nU3lzdGVtUgJvcxIYCgd2ZXJzaW9uGAMgASgJUgd2ZXJzaW9uEhsKCW5vZGVfbmFtZRgEIAEoCVIIbm9kZU5hbWUSFwoHbm9kZV9pcBgFIAEoCVIGbm9kZUlwIlwKCFBsYXRmb3JtEhQKEFVOS05PV05fUExBVEZPUk0QABIKCgZYODZfMzIQARIKCgZYODZfNjQQAhIKCgZBUk1fVjYQAxIKCgZBUk1fVjcQBBIKCgZBUk1fNjQQBSJSCg9PcGVyYXRpbmdTeXN0ZW0SHAoYVU5LTk9XTl9PUEVSQVRJTkdfU1lTVEVNEAASCQoFTElOVVgQARIJCgVNQUNPUxACEgsKB1dJTkRPV1MQAyI0CgpTb3VyY2VUeXBlEgkKBUFDQVJTEAASBwoDVkRMEAESCAoESEZETBACEggKBEFFUk8QAyKHAQoMU291cmNlRm9ybWF0EhcKE0hVTUFOX1JFQURBQkxFX1RFWFQQABIJCgVCRUFTVBABEggKBFNCUzMQAhIRCg1QTEFORV9QTE9UVEVSEAMSEAoMSlNPTl9HRU5FUklDEAQSEQoNSlNPTl9BQ0FSU0RFQxAFEhEKDUpTT05fVkRMTTJERUMQBhpzCg9BaXJmcmFtZXNDb25maWcSSAoEZmVlZBgBIAEoCzI0LmFpcmZyYW1lcy5BaXJmcmFtZXNDbGllbnRGcmFtZS5BaXJmcmFtZXNDb25maWcuRmVlZFIEZmVlZBoWCgRGZWVkEg4KAmlkGAEgASgJUgJpZEIJCgdtZXNzYWdl');

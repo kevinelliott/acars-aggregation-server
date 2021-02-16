@@ -8,17 +8,19 @@ import 'package:airframes_aggregation_server/common.dart';
 import 'package:airframes_aggregation_server/apps/aggregation_server/support.dart';
 
 class TCPIngestServer extends IngestServer {
-  TCPIngestServer(name, config, databaseConfig, natsConfig)
-      : super(name, config, databaseConfig, natsConfig) {
+  TCPIngestServer(name, config, databaseConfig, natsConfig, redisConfig)
+      : super(name, config, databaseConfig, natsConfig, redisConfig) {
     this.logger = Logger('Ingest(${name})');
     this.source = Source(
         name, 'unknown', 'unknown', 'unknown', 'tcp', 'unknown', 'unknown');
     this.processor = Processor(source, logger);
     this.natsManager = NatsManager(natsConfig, logger);
+    this.redisManager = RedisManager(redisConfig, logger);
   }
 
   Future start() async {
     await natsManager.start();
+    await redisManager.start();
 
     this.receiver = ServerSocket.bind(InternetAddress.anyIPv4, config.port);
     receiver.then((ServerSocket server) {

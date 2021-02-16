@@ -34,7 +34,8 @@ class Config {
       'ingest-airframes-json': args['ingest-airframes-json'],
       'ingest-airframes-json-port':
           int.parse(args['ingest-airframes-json-port']),
-      'nats': {'host': args['nats-host'], 'port': int.parse(args['nats-port'])}
+      'nats': {'host': args['nats-host'], 'port': int.parse(args['nats-port'])},
+      'redis': {'url': args['redis-url']}
     };
   }
 }

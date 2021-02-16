@@ -9,9 +9,11 @@ class IngestServer {
   IngestConfig config;
   DatabaseConfig databaseConfig;
   var natsConfig;
+  var redisConfig;
 
   Logger logger;
   NatsManager natsManager;
+  RedisManager redisManager;
   final String name;
   Processor processor;
   Source source;
@@ -19,11 +21,13 @@ class IngestServer {
   var receiver;
   int packetCount = 0;
 
-  IngestServer(this.name, this.config, this.databaseConfig, this.natsConfig) {
+  IngestServer(this.name, this.config, this.databaseConfig, this.natsConfig,
+      this.redisConfig) {
     Logger.writer =
         ConsolePrinter(minLevel: LogLevel.fine, enableInReleaseMode: true);
     this.logger = Logger('Ingest(${name})');
     this.natsManager = NatsManager(natsConfig, logger);
+    this.redisManager = RedisManager(redisConfig, logger);
     this.source = Source('unknown', 'unknown', 'unknown', 'unknown', 'unknown',
         'unknown', 'unknown');
     this.processor = Processor(source, logger);

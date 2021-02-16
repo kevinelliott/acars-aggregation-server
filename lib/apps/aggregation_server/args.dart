@@ -60,6 +60,9 @@ class Args {
           defaultsTo: Platform.environment['NATS_HOST'] ?? 'localhost')
       ..addOption('nats-port',
           defaultsTo: Platform.environment['NATS_PORT'] ?? '4222')
+      ..addOption('redis-url',
+          defaultsTo:
+              Platform.environment['REDIS_URL'] ?? 'redis://localhost:6379')
       ..addFlag('verbose', abbr: 'v', defaultsTo: false);
     return parser.parse(arguments);
   }
@@ -68,7 +71,12 @@ class Args {
     print('HEALTH CHECK SERVER');
     print('Port : ${args['health-check-server-port']}');
     print('');
-    print('DATABASE');
+
+    print('DATABASE (Redis)');
+    print('URL  : ${args['redis-url']}');
+    print('');
+
+    print('DATABASE (PostgreSQL)');
     print('Host : ${args['database-host']}');
     print('Port : ${args['database-port']}');
     print('User : ${args['database-user']}');
