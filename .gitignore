@@ -3,3 +3,4 @@
 server.exe
 server.log
 .vscode
+bin/
